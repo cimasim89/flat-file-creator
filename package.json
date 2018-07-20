@@ -13,6 +13,7 @@
   "dependencies": {
     "fixy": "^1.1.0",
     "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "string-kit": "^0.7.12"
   },
   "devDependencies": {

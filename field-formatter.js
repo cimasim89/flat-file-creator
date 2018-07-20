@@ -1,6 +1,9 @@
 const lodash = require('lodash')
 const { isNumeric } = require('./utils')
 const stringFormatter = require('./string-formatter')
+const dateFormatter = require('./date-formatter')
+const integerFormatter = require('./integer-formatter')
+const floatFormatter = require('./float-formatter')
 
 const fieldFormatter = (map, data) => {
   try {
@@ -14,18 +17,16 @@ const fieldFormatter = (map, data) => {
     if (isNumeric(map.type))
       throw new Error('map field type not could be numeric')
     const type = map.type ? map.type.toLowerCase() : 'string'
+    const fieldName = map.name
     switch (type) {
       case 'string':
-        return stringFormatter(map, data)
+        return stringFormatter(map, data[fieldName])
       case 'integer':
-        console.log(map)
-        break
+        return integerFormatter(map, data[fieldName])
       case 'float':
-        console.log(map)
-        break
+        return floatFormatter(map, data[fieldName])
       case 'date':
-        console.log(map)
-        break
+        return dateFormatter(map, data[fieldName])
       default:
         throw new Error('required field type is not present')
     }
@@ -34,4 +35,4 @@ const fieldFormatter = (map, data) => {
   }
 }
 
-module.exports = { fieldFormatter }
+module.exports = fieldFormatter

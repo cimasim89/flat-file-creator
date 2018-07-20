@@ -1,4 +1,6 @@
-const { fieldFormatter } = require('./field-formatter')
+const fieldFormatter = require('./field-formatter')
+const _ = require('lodash')
+const moment = require('moment')
 
 describe('Field formatter execution raise Exception', () => {
   it('If field map is null', () => {
@@ -48,5 +50,130 @@ describe('Field formatter execution raise Exception', () => {
         null
       )
     ).toThrow('required field type is not present')
+  })
+
+  it('if type not selected passed integer', () => {
+    expect(() =>
+      fieldFormatter({ name: 'test', size: 4 }, { test: 10 })
+    ).toThrow('field has not compatible type')
+  })
+})
+
+describe('Field formatter String execution result', () => {
+  it('size 4, result lenght is 4 ', () => {
+    expect(
+      _.size(fieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }))
+    ).toBe(4)
+  })
+
+  it('size 10, result is', () => {
+    expect(
+      fieldFormatter(
+        { name: 'test', size: 10, type: 'string' },
+        { test: 'hello' }
+      )
+    ).toBe('hello     ')
+  })
+})
+
+describe('Field formatter Float execution result', () => {
+  it('size 4, result lenght is 4 ', () => {
+    expect(
+      _.size(
+        fieldFormatter(
+          { name: 'test', size: 4, type: 'float', precision: 2 },
+          { test: 10.4 }
+        )
+      )
+    ).toBe(4)
+  })
+
+  it('size 4 precision 2, result is 1040 ', () => {
+    expect(
+      fieldFormatter(
+        { name: 'test', size: 4, type: 'float', precision: 2 },
+        { test: 10.4 }
+      )
+    ).toBe('1040')
+  })
+})
+
+describe('Field formatter Date execution result', () => {
+  it('size 10, result lenght is 10 utc', () => {
+    expect(
+      _.size(
+        fieldFormatter(
+          {
+            name: 'test',
+            size: 10,
+            type: 'date',
+            format: { utc: true, dateFormat: 'YYYY/MM/DD' }
+          },
+          { test: moment() }
+        )
+      )
+    ).toBe(10)
+  })
+
+  it('size 10, result is 10', () => {
+    const date = moment()
+    const format = 'YYYY/MM/DD HH:mm:ss'
+    const result = `${date.format(format)}      `
+    expect(
+      fieldFormatter(
+        {
+          name: 'test',
+          size: 25,
+          type: 'date',
+          format: { utc: false, dateFormat: format }
+        },
+        { test: date }
+      )
+    ).toBe(result)
+  })
+})
+
+describe('Field formatter Integer execution result', () => {
+  it('size 10, result lenght is 10', () => {
+    expect(
+      _.size(
+        fieldFormatter(
+          {
+            name: 'test',
+            size: 10,
+            type: 'integer'
+          },
+          { test: 10000 }
+        )
+      )
+    ).toBe(10)
+  })
+
+  it("size 10, result is ' 1000'", () => {
+    expect(
+      fieldFormatter(
+        {
+          name: 'test',
+          size: 5,
+          type: 'integer'
+        },
+        { test: 1000 }
+      )
+    ).toBe(' 1000')
+  })
+
+  it("size 10 end padded with #, result is '1000#'", () => {
+    expect(
+      fieldFormatter(
+        {
+          name: 'test',
+          size: 5,
+          type: 'integer',
+          paddingPosition: 'end',
+          paddingSymbol: '#'
+        },
+        { test: 1000 }
+      )
+    ).toBe('1000#')
   })
 })
