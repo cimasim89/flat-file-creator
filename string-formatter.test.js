@@ -23,10 +23,29 @@ describe('String formatter execution raise Exception', () => {
     )
   })
 
-  it('If data not is a string', () => {
+  it('If data is not a string', () => {
     expect(() =>
       stringFormatter({ size: 10, name: 'someField', type: 0 }, 100)
     ).toThrow('field has not compatible type')
+  })
+
+  it('Size is less than 1', () => {
+    expect(() =>
+      stringFormatter({ size: 0, name: 'someField', type: 0 }, 100)
+    ).toThrow('map size must be greater than 0')
+  })
+
+  it('If padding position is not allowed', () => {
+    const paddingPosition = 'notvalidpad'
+    expect(() =>
+      stringFormatter({ size: 10, name: 'someField', paddingPosition }, '')
+    ).toThrow(`padding position "${paddingPosition}" not allowed`)
+  })
+
+  it('If padding symbol is more of one char', () => {
+    expect(() =>
+      stringFormatter({ size: 10, name: 'someField', paddingSymbol: '@.@' }, '')
+    ).toThrow('paddingSymbol cannot have length > 1')
   })
 })
 
