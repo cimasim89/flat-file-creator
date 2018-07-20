@@ -24,15 +24,15 @@ describe('String formatter execution raise Exception', () => {
   })
 
   it('If data is not a string', () => {
-    expect(() =>
-      stringFormatter({ size: 10, name: 'someField', type: 0 }, 100)
-    ).toThrow('field has not compatible type')
+    expect(() => stringFormatter({ size: 10, name: 'someField' }, 100)).toThrow(
+      'field has not compatible type'
+    )
   })
 
   it('Size is less than 1', () => {
-    expect(() =>
-      stringFormatter({ size: 0, name: 'someField', type: 0 }, 100)
-    ).toThrow('map size must be greater than 0')
+    expect(() => stringFormatter({ size: 0, name: 'someField' }, '')).toThrow(
+      'map size must be greater than 0'
+    )
   })
 
   it('If padding position is not allowed', () => {

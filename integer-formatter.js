@@ -7,23 +7,25 @@ const {
   getFillStringOfSymbol
 } = require('./utils')
 
-const paddingDefault = 'end'
+const paddingDefault = 'start'
 
-const stringFormatter = (map, data = '') => {
+const integerFormatter = (map, data) => {
   try {
     if (!map) throw new Error('map is null or undefined')
     if (typeof map !== 'object') throw new Error('map is not an object')
     if (_.isEmpty(map)) throw new Error('map object is empty')
     if (typeof map.size === 'undefined') throw new Error('map size is required')
     if (map.size <= 0) throw new Error('map size must be greater than 0')
-    if (isNumeric(data)) throw new Error('field has not compatible type')
-    const str = data.trim()
+    if (!isNumeric(data)) throw new Error('field has not compatible type')
+    const num = Math.round(data).toString()
+    if (_.size(num) > map.size)
+      throw new Error(`Value ${num} exceed size ${map.size}`)
     return getPadder(
       getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
     )(
-      str.substring(0, map.size),
+      num,
       getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-        map.size - _.size(str)
+        map.size - _.size(num)
       )
     )
   } catch (error) {
@@ -31,4 +33,4 @@ const stringFormatter = (map, data = '') => {
   }
 }
 
-module.exports = stringFormatter
+module.exports = integerFormatter
