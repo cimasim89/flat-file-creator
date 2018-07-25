@@ -1,16 +1,18 @@
 {
   "name": "flat-file-creator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Generate a flat positional text file of your dataset",
+  "main": "flat-file-creator.js",
   "scripts": {
-    "start": "node index.js",
     "test": "jest",
     "watch": "jest --watch *.js"
   },
   "keywords": [],
   "author": "cimasim89",
-  "license": "ISC",
+  "email": "cimasim89@gmail.com",
+  "license": "DBAD",
+  "homepage": "https://github.com/cimasim89/flat-file-creator#readme",
+  "repository": "github:cimasim89/flat-file-creator",
   "dependencies": {
     "fixy": "^1.1.0",
     "lodash": "^4.17.10",
