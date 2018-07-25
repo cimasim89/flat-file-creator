@@ -7,12 +7,20 @@
     "test": "jest",
     "watch": "jest --watch *.js"
   },
-  "keywords": [],
+  "keywords": [
+    "positional",
+    "file-generator",
+    "flat-file",
+    "positional-dataset"
+  ],
   "author": "cimasim89",
   "email": "cimasim89@gmail.com",
   "license": "DBAD",
   "homepage": "https://github.com/cimasim89/flat-file-creator#readme",
   "repository": "github:cimasim89/flat-file-creator",
+  "bugs": {
+    "url": "https://github.com/cimasim89/flat-file-creator/issues"
+  },
   "dependencies": {
     "fixy": "^1.1.0",
     "lodash": "^4.17.10",
