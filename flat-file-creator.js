@@ -1,4 +1,4 @@
-const getAsyncFlatFileCreator = require('./get-async-flat-file-creator')
+const { getAsyncFlatFileCreator } = require('./get-async-flat-file-creator')
 const rowFormatter = require('./row-formatter')
 const fieldFormatter = require('./field-formatter')
 

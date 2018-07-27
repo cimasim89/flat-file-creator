@@ -23,10 +23,10 @@ describe('String formatter execution raise Exception', () => {
     )
   })
 
-  it('If data is not a string', () => {
-    expect(() => stringFormatter({ size: 10, name: 'someField' }, 100)).toThrow(
-      'field has not compatible type'
-    )
+  it('If data is not a string and straight option', () => {
+    expect(() =>
+      stringFormatter({ size: 10, name: 'someField', straight: true }, 100)
+    ).toThrow('field has not compatible type')
   })
 
   it('Size is less than 1', () => {

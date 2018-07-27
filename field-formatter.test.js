@@ -52,9 +52,9 @@ describe('Field formatter execution raise Exception', () => {
     ).toThrow('required field type is not present')
   })
 
-  it('if type not selected passed integer', () => {
+  it('if type not selected with straight passed integer', () => {
     expect(() =>
-      fieldFormatter({ name: 'test', size: 4 }, { test: 10 })
+      fieldFormatter({ name: 'test', size: 4, straight: true }, { test: 10 })
     ).toThrow('field has not compatible type')
   })
 })
