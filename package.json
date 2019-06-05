@@ -1,6 +1,6 @@
 {
   "name": "flat-file-creator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate a flat positional text file of your dataset",
   "main": "flat-file-creator.js",
   "scripts": {
@@ -15,14 +15,14 @@
   ],
   "author": "cimasim89",
   "email": "cimasim89@gmail.com",
-  "license": "DBAD",
+  "license": "MIT",
   "homepage": "https://github.com/cimasim89/flat-file-creator#readme",
   "repository": "github:cimasim89/flat-file-creator",
   "bugs": {
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "jest": "^23.4.1",
+    "jest": "^24.8.0",
     "prettier": "^1.13.7"
   },
   "prettier": {
