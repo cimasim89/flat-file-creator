@@ -18,7 +18,9 @@ const stringFormatter = (map, data = '') => {
     if (map.size <= 0) throw new Error('map size must be greater than 0')
     if (map.straight && isNumeric(data))
       throw new Error('field has not compatible type')
-    const str = data.toString().trim()
+    const str = map.preserveEmptySpace
+      ? data.toString()
+      : data.toString().trim()
     return getPadder(
       getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
     )(
