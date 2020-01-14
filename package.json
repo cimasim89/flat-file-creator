@@ -1,6 +1,6 @@
 {
   "name": "flat-file-creator",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Generate a flat positional text file of your dataset",
   "main": "flat-file-creator.js",
   "scripts": {
@@ -22,22 +22,22 @@
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
-    "moment": "^2.22.2"
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-eslint-plugin": "^1.4.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.12.2",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "jest": "^24.8.0",
-    "prettier": "^1.13.7"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-eslint-plugin": "^2.2.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1"
   },
   "prettier": {
     "semi": false,

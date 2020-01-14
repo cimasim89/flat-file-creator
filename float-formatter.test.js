@@ -69,7 +69,7 @@ describe('Float formatter execution raise Exception', () => {
         { size: 10, name: 'someField', precision: 2 },
         'somestring'
       )
-    ).toThrow('field has not compatible type')
+    ).toThrow('field [someField] has not compatible type')
   })
 })
 
@@ -82,7 +82,7 @@ describe('Float formatter execution result', () => {
     expect(_.size(floatFormatter({ size: 4, precision: 2 }, 10.05))).toBe(4)
   })
 
-  it("size 4 precision 3 data 10.0156, result is '1000'", () => {
+  it("size 4 precision 3 data 10.0156, result is '10015'", () => {
     expect(floatFormatter({ size: 5, precision: 3 }, 10.0156)).toBe('10015')
   })
 
@@ -127,5 +127,11 @@ describe('Float formatter execution result', () => {
         10.0123
       )
     ).toBe('10012@@@@@')
+  })
+
+  it("data 10.0123 size 10 dotNotation ,result is '    10.012'", () => {
+    expect(
+      floatFormatter({ size: 10, dotNotation: true, precision: 3 }, 10.0123)
+    ).toBe('    10.012')
   })
 })

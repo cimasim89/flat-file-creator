@@ -34,7 +34,7 @@ describe('Field formatter execution raise Exception', () => {
   it('If field map type is numeric', () => {
     expect(() =>
       fieldFormatter({ size: 10, name: 'someField', type: 0 }, null)
-    ).toThrow('map field type not could be numeric')
+    ).toThrow('map field [someField] type not could be numeric')
   })
 
   it('If field map size is less or equal 0', () => {
