@@ -27,25 +27,21 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Setup
-        run: npm install
+    - name: Setup
+      run: npm install
 
-      - name: Execute linting
-        run: npm run lint
-        if: success()
+    - name: Execute linting
+      run: npm run lint
+      if: success()
 
-      - name: Execute typechecks
-        run: yarn typecheck
-        if: success()
-
-      - name: Execute tests
-        run: npm run test
-        if: success()
+    - name: Execute tests
+      run: npm run test
+      if: success()
