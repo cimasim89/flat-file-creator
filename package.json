@@ -48,5 +48,8 @@
   },
   "engines": {
     "node": ">10.0.4"
+  },
+  "jest": {
+    "globalSetup": "./jest-global-setup.js"
   }
 }

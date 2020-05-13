@@ -59,20 +59,20 @@ describe('String formatter execution result', () => {
 
   it(
     "size 30 date '2018-01-01'," +
-      " result iso string '2017-12-31T23:00:00.000Z      '",
+      " result iso string '2018-01-01T00:00:00.000Z      '",
     () => {
       expect(dateFormatter({ size: 30 }, '2018-01-01')).toBe(
-        '2017-12-31T23:00:00.000Z      '
+        '2018-01-01T00:00:00.000Z      '
       )
     }
   )
 
   it(
     "size 24 date '2018-01-01'," +
-      " result iso string '2017-12-31T23:00:00.000Z'",
+      " result iso string '2018-01-01T00:00:00.000Z'",
     () => {
       expect(dateFormatter({ size: 24 }, '2018-01-01')).toBe(
-        '2017-12-31T23:00:00.000Z'
+        '2018-01-01T00:00:00.000Z'
       )
     }
   )
@@ -92,20 +92,20 @@ describe('String formatter execution result', () => {
 
   it(
     "size 10, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD'," +
-      " result iso string '2017-12-31'",
+      " result iso string '2018-01-01'",
     () => {
       expect(
         dateFormatter(
           { size: 10, format: { utc: true, dateFormat: 'YYYY-MM-DD' } },
           '2018-01-01'
         )
-      ).toBe('2017-12-31')
+      ).toBe('2018-01-01')
     }
   )
 
   it(
     "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
-      " result iso string '2017-12-31 23:00:00 '",
+      " result iso string '2018-01-01 00:00:00 '",
     () => {
       expect(
         dateFormatter(
@@ -115,14 +115,14 @@ describe('String formatter execution result', () => {
           },
           '2018-01-01'
         )
-      ).toBe('2017-12-31 23:00:00 ')
+      ).toBe('2018-01-01 00:00:00 ')
     }
   )
 
   it(
     "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
       " paddingSymbol '@'" +
-      " result iso string '2017-12-31 23:00:00@'",
+      " result iso string '2018-01-01 00:00:00@'",
     () => {
       expect(
         dateFormatter(
@@ -133,14 +133,14 @@ describe('String formatter execution result', () => {
           },
           '2018-01-01'
         )
-      ).toBe('2017-12-31 23:00:00@')
+      ).toBe('2018-01-01 00:00:00@')
     }
   )
 
   it(
     "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
       " paddingSymbol '@', paddingPosition start" +
-      " result iso string '@2017-12-31 23:00:00'",
+      " result iso string '@2018-01-01 00:00:00'",
     () => {
       expect(
         dateFormatter(
@@ -152,14 +152,14 @@ describe('String formatter execution result', () => {
           },
           '2018-01-01'
         )
-      ).toBe('@2017-12-31 23:00:00')
+      ).toBe('@2018-01-01 00:00:00')
     }
   )
 
   it(
     "size 20, date moment() , dateFormat 'YYYY-MM-DD HH:mm:ss'," +
       " paddingSymbol '@', paddingPosition start" +
-      " result iso string '@2017-12-31 23:00:00'",
+      " result iso string '@2018-01-01 00:00:00'",
     () => {
       const date = moment()
       expect(
