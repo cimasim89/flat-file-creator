@@ -5,5 +5,5 @@ const fieldFormatter = require('./field-formatter')
 module.exports = {
   getAsyncFlatFileCreator,
   rowFormatter,
-  fieldFormatter
+  fieldFormatter,
 }

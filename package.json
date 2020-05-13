@@ -5,7 +5,9 @@
   "main": "flat-file-creator.js",
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch *.js"
+    "watch": "jest --watch *.js",
+    "lint": "eslint . --cache --ext .js",
+    "lint:fix": "eslint . --cache  --fix --ext .js"
   },
   "keywords": [
     "positional",
@@ -43,5 +45,11 @@
     "semi": false,
     "singleQuote": true,
     "proseWrap": "always"
+  },
+  "engines": {
+    "node": ">10.0.4"
+  },
+  "jest": {
+    "globalSetup": "./jest-global-setup.js"
   }
 }

@@ -2,10 +2,10 @@ const lodash = require('lodash')
 const fieldFormatter = require('./field-formatter')
 
 const defaultOptions = {
-  rowEnd: ''
+  rowEnd: '',
 }
 
-const prepareToConcatData = data => (acc, field) =>
+const prepareToConcatData = (data) => (acc, field) =>
   acc + fieldFormatter(field, data)
 
 const rowFormatter = (maps, data, options) => {
@@ -14,11 +14,7 @@ const rowFormatter = (maps, data, options) => {
   if (!data) throw new Error('data is null')
   if (typeof data !== 'object') throw new Error('data is not an object')
   const opt = { ...defaultOptions, ...options }
-  try {
-    return maps.reduce(prepareToConcatData(data), '') + opt.rowEnd
-  } catch (err) {
-    throw err
-  }
+  return maps.reduce(prepareToConcatData(data), '') + opt.rowEnd
 }
 
 module.exports = rowFormatter

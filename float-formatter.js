@@ -4,7 +4,7 @@ const {
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
-  getFillStringOfSymbol
+  getFillStringOfSymbol,
 } = require('./utils')
 
 const paddingDefault = 'start'
@@ -26,18 +26,14 @@ const floatFormatter = (map, data) => {
     : data.toFixed(precision).toString()
   if (_.size(str) > map.size)
     throw new Error(`Value ${str} exceed size ${map.size}`)
-  try {
-    return getPadder(
-      getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
-    )(
-      str,
-      getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-        map.size - _.size(str)
-      )
+  return getPadder(
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+  )(
+    str,
+    getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
+      map.size - _.size(str)
     )
-  } catch (error) {
-    throw error
-  }
+  )
 }
 
 module.exports = floatFormatter
