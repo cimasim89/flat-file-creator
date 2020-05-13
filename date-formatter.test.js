@@ -111,7 +111,7 @@ describe('String formatter execution result', () => {
         dateFormatter(
           {
             size: 20,
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' }
+            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
           },
           '2018-01-01'
         )
@@ -129,7 +129,7 @@ describe('String formatter execution result', () => {
           {
             size: 20,
             paddingSymbol: '@',
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' }
+            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
           },
           '2018-01-01'
         )
@@ -148,7 +148,7 @@ describe('String formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' }
+            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
           },
           '2018-01-01'
         )
@@ -168,7 +168,7 @@ describe('String formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' }
+            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
           },
           date
         )

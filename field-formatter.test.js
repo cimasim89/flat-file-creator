@@ -107,7 +107,7 @@ describe('Field formatter Date execution result', () => {
             name: 'test',
             size: 10,
             type: 'date',
-            format: { utc: true, dateFormat: 'YYYY/MM/DD' }
+            format: { utc: true, dateFormat: 'YYYY/MM/DD' },
           },
           { test: moment() }
         )
@@ -125,7 +125,7 @@ describe('Field formatter Date execution result', () => {
           name: 'test',
           size: 25,
           type: 'date',
-          format: { utc: false, dateFormat: format }
+          format: { utc: false, dateFormat: format },
         },
         { test: date }
       )
@@ -141,7 +141,7 @@ describe('Field formatter Integer execution result', () => {
           {
             name: 'test',
             size: 10,
-            type: 'integer'
+            type: 'integer',
           },
           { test: 10000 }
         )
@@ -155,7 +155,7 @@ describe('Field formatter Integer execution result', () => {
         {
           name: 'test',
           size: 5,
-          type: 'integer'
+          type: 'integer',
         },
         { test: 1000 }
       )
@@ -170,7 +170,7 @@ describe('Field formatter Integer execution result', () => {
           size: 5,
           type: 'integer',
           paddingPosition: 'end',
-          paddingSymbol: '#'
+          paddingSymbol: '#',
         },
         { test: 1000 }
       )

@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const appendCallbak = (resolve, reject) => err => {
+const appendCallbak = (resolve, reject) => (err) => {
   if (err) return reject(err)
   return resolve()
 }
@@ -8,7 +8,7 @@ const appendCallbak = (resolve, reject) => err => {
 const defaultOptions = {
   encoding: 'utf8',
   mode: 0o666,
-  flag: 'a'
+  flag: 'a',
 }
 
 const prepareOptions = ({ encoding, mode, flag }) => {

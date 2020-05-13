@@ -27,17 +27,17 @@ describe('row formatter execution', () => {
       {
         type: 'string',
         size: '10',
-        name: 'name'
+        name: 'name',
       },
       {
         type: 'string',
         size: '10',
-        name: 'surname'
-      }
+        name: 'surname',
+      },
     ]
     const data = {
       name: 'John',
-      surname: 'Doe'
+      surname: 'Doe',
     }
     expect(_.size(rowFormatter(map, data))).toBe(20)
   })
@@ -47,17 +47,17 @@ describe('row formatter execution', () => {
       {
         type: 'string',
         size: '10',
-        name: 'name'
+        name: 'name',
       },
       {
         type: 'string',
         size: '10',
-        name: 'surname'
-      }
+        name: 'surname',
+      },
     ]
     const data = {
       name: 'John',
-      surname: 'Doe'
+      surname: 'Doe',
     }
     expect(rowFormatter(map, data)).toBe('John      Doe       ')
   })
@@ -67,23 +67,23 @@ describe('row formatter execution', () => {
       {
         type: 'string',
         size: '10',
-        name: 'name'
+        name: 'name',
       },
       {
         type: 'string',
         size: '10',
-        name: 'surname'
+        name: 'surname',
       },
       {
         type: 'integer',
         size: '5',
-        name: 'age'
-      }
+        name: 'age',
+      },
     ]
     const data = {
       name: 'John',
       surname: 'Doe',
-      age: 20
+      age: 20,
     }
     expect(rowFormatter(map, data)).toBe('John      Doe          20')
   })
@@ -93,30 +93,30 @@ describe('row formatter execution', () => {
       {
         type: 'string',
         size: '10',
-        name: 'name'
+        name: 'name',
       },
       {
         type: 'string',
         size: '10',
-        name: 'surname'
+        name: 'surname',
       },
       {
         type: 'integer',
         size: '5',
-        name: 'age'
+        name: 'age',
       },
       {
         type: 'float',
         size: '5',
         name: 'height',
-        precision: 3
-      }
+        precision: 3,
+      },
     ]
     const data = {
       name: 'John',
       surname: 'Doe',
       age: 20,
-      height: 1.75
+      height: 1.75,
     }
     expect(rowFormatter(map, data)).toBe('John      Doe          20 1750')
   })
@@ -126,23 +126,23 @@ describe('row formatter execution', () => {
       {
         type: 'string',
         size: 10,
-        name: 'name'
+        name: 'name',
       },
       {
         type: 'string',
         size: '10',
-        name: 'surname'
+        name: 'surname',
       },
       {
         type: 'integer',
         size: 5,
-        name: 'age'
+        name: 'age',
       },
       {
         type: 'float',
         size: 5,
         name: 'height',
-        precision: 3
+        precision: 3,
       },
       {
         type: 'date',
@@ -150,16 +150,16 @@ describe('row formatter execution', () => {
         paddingPosition: 'start',
         name: 'birth',
         format: {
-          dateFormat: 'DD/MM/YYYY'
-        }
-      }
+          dateFormat: 'DD/MM/YYYY',
+        },
+      },
     ]
     const data = {
       name: 'John',
       surname: 'Doe',
       age: 20,
       height: 1.75,
-      birth: '1989-12-11'
+      birth: '1989-12-11',
     }
     expect(rowFormatter(map, data)).toBe(
       'John      Doe          20 1750 11/12/1989'
