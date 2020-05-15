@@ -1,4 +1,4 @@
-const fs = require('fs')
+import * as fs from "fs";
 
 const appendCallbak = (resolve, reject) => (err) => {
   if (err) return reject(err)
@@ -6,7 +6,7 @@ const appendCallbak = (resolve, reject) => (err) => {
 }
 
 const defaultOptions = {
-  encoding: 'utf8',
+  encoding: 'utf8' as 'utf8',
   mode: 0o666,
   flag: 'a',
 }
@@ -31,4 +31,4 @@ const fileAppendPromise = (path, data, options) =>
     fs.appendFile(path, data, appendCallbak(resolve, reject))
   })
 
-module.exports = fileAppendPromise
+export default fileAppendPromise;

@@ -1,20 +1,17 @@
-const _ = require('lodash')
-const {
+import * as _ from "lodash";
+import {
   isNumeric,
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} = require('./utils')
+} from './utils';
+import { IntegerFieldSpec, FieldValue, assertFieldSpec } from "./Types";
 
 const paddingDefault = 'start'
 
-const integerFormatter = (map, data) => {
-  if (!map) throw new Error('map is null or undefined')
-  if (typeof map !== 'object') throw new Error('map is not an object')
-  if (_.isEmpty(map)) throw new Error('map object is empty')
-  if (typeof map.size === 'undefined') throw new Error('map size is required')
-  if (map.size <= 0) throw new Error('map size must be greater than 0')
+const integerFormatter = (map: IntegerFieldSpec, data: FieldValue = '') => {
+  assertFieldSpec(map, "integer");
   if (!isNumeric(data)) throw new Error('field has not compatible type')
   const num = Math.round(data).toString()
   if (_.size(num) > map.size)
@@ -29,4 +26,4 @@ const integerFormatter = (map, data) => {
   )
 }
 
-module.exports = integerFormatter
+export default integerFormatter;

@@ -1,34 +1,32 @@
-const moment = require('moment')
-const _ = require('lodash')
-const {
+import * as moment from "moment";
+import * as _ from "lodash";
+import {
   isNumeric,
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} = require('./utils')
+} from './utils';
+import { FormatterOptions, DateFieldSpec, FieldValue, assertFieldSpec } from "./Types";
 
 const paddingDefault = 'end'
 const defaultFormat = {
   utc: false,
 }
 
-const getFormattedDateString = (date, { utc, dateFormat }) => {
+const getFormattedDateString = (date: Date, opts: FormatterOptions.Date["format"]) => {
   const base = moment(date)
   if (!base.isValid()) throw new Error(`Invalid date ${date}`)
-  const convention = utc ? base.utc() : base
-  if (!dateFormat) {
+  const convention = opts.utc ? base.utc() : base
+  if (!opts.dateFormat) {
     return convention.toISOString()
   }
-  return convention.format(dateFormat)
+  return convention.format(opts.dateFormat)
 }
 
-const dateFormatter = (map, data) => {
-  if (!map) throw new Error('map is null or undefined')
-  if (typeof map !== 'object') throw new Error('map is not an object')
-  if (_.isEmpty(map)) throw new Error('map object is empty')
-  if (typeof map.size === 'undefined') throw new Error('map size is required')
-  if (map.size <= 0) throw new Error('map size must be greater than 0')
+const dateFormatter = (map: DateFieldSpec, data: FieldValue) => {
+  assertFieldSpec(map);
+
   if (isNumeric(data)) throw new Error('field has not compatible type')
   const format = { ...defaultFormat, ...map.format }
   const resDate = getFormattedDateString(data, format)
@@ -44,4 +42,4 @@ const dateFormatter = (map, data) => {
   )
 }
 
-module.exports = dateFormatter
+export default dateFormatter;
