@@ -14,7 +14,7 @@ const stringFormatter = (map: StringFieldSpec, data: FieldValue = '') => {
   assertFieldSpec(map, "string");
   if (map.straight && isNumeric(data))
     throw new Error('field has not compatible type')
-  const str = (map.preserveEmptySpace || map.perserveEmptySpace === undefined) ? data.toString() : data.toString().trim()
+  const str = (map.preserveEmptySpace || map.preserveEmptySpace === undefined) ? data.toString() : data.toString().trim()
   return getPadder(
     getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
   )(

@@ -8,7 +8,8 @@
     "test": "jest",
     "watch": "jest --watch *.js",
     "lint": "eslint . --cache --ext .js",
-    "lint:fix": "eslint . --cache  --fix --ext .js"
+    "lint:fix": "eslint . --cache  --fix --ext .js",
+    "prepublishOnly": "tsc"
   },
   "keywords": [
     "positional",

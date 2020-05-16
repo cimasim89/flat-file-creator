@@ -1,9 +1,5 @@
 import * as fs from "fs";
-
-const appendCallbak = (resolve, reject) => (err) => {
-  if (err) return reject(err)
-  return resolve()
-}
+import { GlobalOptions } from "./Types";
 
 const defaultOptions = {
   encoding: 'utf8' as 'utf8',
@@ -11,24 +7,30 @@ const defaultOptions = {
   flag: 'a',
 }
 
-const prepareOptions = ({ encoding, mode, flag }) => {
-  let options = { ...defaultOptions }
-  options = encoding ? { ...options, encoding } : options
-  options = mode ? { ...options, mode } : options
-  options = flag ? { ...options, flag } : options
+const prepareOptions = (opts: Partial<GlobalOptions>) => {
+  let options: fs.WriteFileOptions = { ...defaultOptions }
+  options = opts.encoding ? { ...options, encoding: opts.encoding } : options
+  options = opts.mode ? { ...options, mode: opts.mode } : options
+  options = opts.flag ? { ...options, flag: opts.flag } : options
   return { ...options }
 }
 
-const fileAppendPromise = (path, data, options) =>
-  new Promise((resolve, reject) => {
+const fileAppendPromise = (path: string, data: string, options?: Partial<GlobalOptions>) => {
+  return new Promise((resolve, reject) => {
+    const appendCallback = (err: Error) => {
+      if (err) return reject(err)
+      return resolve()
+    }
+
     if (options && options.encoding)
       return fs.appendFile(
         path,
         data,
         prepareOptions(options),
-        appendCallbak(resolve, reject)
+        appendCallback,
       )
-    fs.appendFile(path, data, appendCallbak(resolve, reject))
+    fs.appendFile(path, data, appendCallback)
   })
+}
 
 export default fileAppendPromise;

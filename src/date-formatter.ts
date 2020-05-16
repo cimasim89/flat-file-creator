@@ -1,20 +1,19 @@
 import * as moment from "moment";
 import * as _ from "lodash";
 import {
-  isNumeric,
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
 } from './utils';
-import { FormatterOptions, DateFieldSpec, FieldValue, assertFieldSpec } from "./Types";
+import { DateFieldSpec, FieldValue, assertFieldSpec } from "./Types";
 
 const paddingDefault = 'end'
 const defaultFormat = {
   utc: false,
 }
 
-const getFormattedDateString = (date: Date, opts: FormatterOptions.Date["format"]) => {
+const getFormattedDateString = (date: Date | string, opts: Partial<NonNullable<DateFieldSpec["format"]>>) => {
   const base = moment(date)
   if (!base.isValid()) throw new Error(`Invalid date ${date}`)
   const convention = opts.utc ? base.utc() : base
@@ -24,10 +23,16 @@ const getFormattedDateString = (date: Date, opts: FormatterOptions.Date["format"
   return convention.format(opts.dateFormat)
 }
 
+function assertDate(d: any, fieldName: string): asserts d is Date | string {
+  if (typeof d !== "string" && typeof d.toISOString === "undefined") {
+    throw new Error(`Value for date field ${fieldName} must be a date or a string representation of a date`);
+  }
+}
+
 const dateFormatter = (map: DateFieldSpec, data: FieldValue) => {
   assertFieldSpec(map);
+  assertDate(data, map.name);
 
-  if (isNumeric(data)) throw new Error('field has not compatible type')
   const format = { ...defaultFormat, ...map.format }
   const resDate = getFormattedDateString(data, format)
   if (_.size(resDate) > map.size)

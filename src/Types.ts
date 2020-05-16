@@ -1,34 +1,6 @@
 import * as _ from "lodash";
 import { isNumeric } from "./utils";
 
-// Options for type-specific formatters
-export namespace FormatterOptions {
-  export interface Common {
-    paddingPosition: "start" | "end";
-    paddingSymbol: string;
-  }
-
-  export interface String extends Common {
-    preserveEmptySpace: boolean;
-    straight: boolean; // (should be "strict" - determines whether or not error is thrown if incoming data is numeric, rather than string)
-  }
-
-  export interface Integer extends Common {
-  }
-
-  export interface Float extends Common {
-    precision: number;
-    dotNotation: boolean;
-  }
-
-  export interface Date extends Common {
-    format: {
-      utc: boolean;
-      dateFormat: string;
-    }
-  }
-}
-
 // Options to be used to configure the file creator instance as a whole
 export interface GlobalOptions {
   rowEnd: string;
@@ -37,17 +9,39 @@ export interface GlobalOptions {
   flag?: string;
 }
 
-// Specifications for various types of fields
-export type FieldSpec = (StringFieldSpec | FloatFieldSpec | IntegerFieldSpec | DateFieldSpec) & { type?: "string" | "integer" | "float" | "date" };
+// Runtime data representing values to be written to the file
+export type FieldValue = string | number | boolean | Date;
+export type RowData = { [fieldName: string]: FieldValue };
+
+// Specifications for various types of fields.
+// Here, we make 'type' optional since field specs default to string-type
+export type FieldSpec = (StringFieldSpec | FloatFieldSpec | IntegerFieldSpec | DateFieldSpec)
+  & { type?: "string" | "integer" | "float" | "date" };
+
+export type StringFieldSpec = CommonSpec & { type: "string" } & {
+  preserveEmptySpace: boolean;
+  straight: boolean; // (should be "strict" - determines whether or not error is thrown if incoming data is numeric, rather than string)
+};
+export type IntegerFieldSpec = CommonSpec & { type: "integer" };
+export type FloatFieldSpec = CommonSpec & { type: "float" } & {
+  precision?: number;
+  dotNotation?: boolean;
+};
+export type DateFieldSpec = CommonSpec & { type: "date" } & {
+  format?: {
+    utc?: boolean;
+    dateFormat?: string;
+  }
+};
+
 declare type CommonSpec = {
   name: string;
   size: number;
+  paddingPosition?: "start" | "end";
+  paddingSymbol?: string;
 };
-export type StringFieldSpec = CommonSpec & { type: "string" } & Partial<FormatterOptions.String>;
-export type IntegerFieldSpec = CommonSpec & { type: "integer" } & Partial<FormatterOptions.Integer>;
-export type FloatFieldSpec = CommonSpec & { type: "float" } & Partial<FormatterOptions.Float>;
-export type DateFieldSpec = CommonSpec & { type: "date" } & { format?: Partial<FormatterOptions.Date["format"]> };
 
+// This overloaded method is used to assert that the given field spec is of the given type
 export function assertFieldSpec(spec: any, type: "string"): asserts spec is StringFieldSpec;
 export function assertFieldSpec(spec: any, type: "integer"): asserts spec is IntegerFieldSpec;
 export function assertFieldSpec(spec: any, type: "float"): asserts spec is FloatFieldSpec;
@@ -67,10 +61,3 @@ export function assertFieldSpec(spec: any, type?: string): asserts spec is Field
   }
 }
 
-// Runtime data representing values to be written to the file
-export type FieldValue = string | number | boolean | Date;
-export type FieldData = { [key: string]: FieldValue };
-
-// This allows us to make specific fields optional (see https://stackoverflow.com/a/54178819/2065427)
-// Usually used for incoming data that will be given default values
-export type PartialSelect<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

@@ -15,9 +15,9 @@ const floatFormatter = (map: FloatFieldSpec, data: FieldValue = '') => {
   if (!isNumeric(data))
     throw new Error(`field [${map.name}] has not compatible type`)
   const precision = !map.precision ? 0 : map.precision
-  const num = data.toFixed(precision + 1)
+  const num = data.toFixed(precision + 1);
   const str = !map.dotNotation
-    ? Math.trunc(num * Math.pow(10, precision)).toString()
+    ? Math.trunc(Number(num) * Math.pow(10, precision)).toString()
     : data.toFixed(precision).toString()
   if (_.size(str) > map.size)
     throw new Error(`Value ${str} exceed size ${map.size}`)

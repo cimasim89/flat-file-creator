@@ -1,12 +1,10 @@
-import * as lodash from "lodash";
-import { isNumeric } from "./utils";
 import stringFormatter from "./string-formatter";
 import dateFormatter from "./date-formatter";
 import integerFormatter from "./integer-formatter";
-import floatFormatter from "float-formatter";
-import { FieldSpec, FieldData, GlobalOptions, assertFieldSpec } from "./Types";
+import floatFormatter from "./float-formatter";
+import { FieldSpec, StringFieldSpec, RowData, assertFieldSpec } from "./Types";
 
-const fieldFormatter = (map: FieldSpec, data: FieldData) => {
+const fieldFormatter = (map: FieldSpec, data: RowData) => {
   assertFieldSpec(map);
   const fieldName = map.name
   switch (map.type) {
@@ -19,7 +17,7 @@ const fieldFormatter = (map: FieldSpec, data: FieldData) => {
     case 'date':
       return dateFormatter(map, data[fieldName])
     case undefined:
-      return dateFormatter({ ...map, type: "string" }, data[fieldName])
+      return stringFormatter({ ...(map as StringFieldSpec), type: "string" }, data[fieldName])
     default:
       throw new Error('required field type is not present')
   }
