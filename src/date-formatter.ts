@@ -5,7 +5,7 @@ import {
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from './utils';
+} from "./utils";
 import { DateFieldSpec, FieldValue, assertFieldSpec } from "./Types";
 
 const paddingDefault = 'end'
