@@ -14,7 +14,7 @@
     "strictNullChecks": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "types": ["node"],
+    "types": ["node","jest"],
     "noErrorTruncation": true
   },
   "include": ["./src/**/*.ts"]

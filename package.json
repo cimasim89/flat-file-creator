@@ -33,7 +33,8 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@types/node": "14.0.1",
+    "@types/jest": "^25.2.3",
+    "@types/node": "10.17.19",
     "eslint": "7.0.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-config-standard": "14.1.1",
@@ -47,6 +48,8 @@
     "husky": "^4.2.5",
     "jest": "26.0.1",
     "prettier": "2.0.5",
+    "pretty-quick": "^1.10.0",
+    "ts-jest": "^26.0.0",
     "typescript": "3.9.2"
   },
   "prettier": {
@@ -58,11 +61,15 @@
     "node": ">10.0.4"
   },
   "jest": {
-    "globalSetup": "./jest-global-setup.js"
+    "globalSetup": "./jest-global-setup.js",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }
