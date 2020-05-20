@@ -1,21 +1,24 @@
-const rowFormatter = require('./row-formatter')
-const _ = require('lodash')
+import rowFormatter from "./row-formatter";
+import * as _ from "lodash";
+
+// Version of formatter with type-checking turned off to test runtime functionality
+const rtRowFormatter: any = rowFormatter;
 
 describe('row formatter execution exceptions', () => {
   it('If mapper not is an array throw exception', () => {
-    expect(() => rowFormatter('', '')).toThrow(/array/)
+    expect(() => rtRowFormatter('', '')).toThrow(/array/)
   })
 
   it('If mapper array is empty throw exception', () => {
-    expect(() => rowFormatter([], '')).toThrow(/empty/)
+    expect(() => rtRowFormatter([], '')).toThrow(/empty/)
   })
 
   it('If data is null throw exception', () => {
-    expect(() => rowFormatter([{}], '')).toThrow('data is null')
+    expect(() => rtRowFormatter([{}], '')).toThrow('data is null')
   })
 
   it('If data is not an object throw exception', () => {
-    expect(() => rowFormatter([{}], 'some string')).toThrow(
+    expect(() => rtRowFormatter([{}], 'some string')).toThrow(
       'data is not an object'
     )
   })
@@ -39,7 +42,7 @@ describe('row formatter execution', () => {
       name: 'John',
       surname: 'Doe',
     }
-    expect(_.size(rowFormatter(map, data))).toBe(20)
+    expect(_.size(rtRowFormatter(map, data))).toBe(20)
   })
 
   it("Two string field of size 10, result is 'John      Doe       '", () => {
@@ -59,7 +62,7 @@ describe('row formatter execution', () => {
       name: 'John',
       surname: 'Doe',
     }
-    expect(rowFormatter(map, data)).toBe('John      Doe       ')
+    expect(rtRowFormatter(map, data)).toBe('John      Doe       ')
   })
 
   it("Concat field age of size 5, result is 'John      Doe       '", () => {
@@ -85,7 +88,7 @@ describe('row formatter execution', () => {
       surname: 'Doe',
       age: 20,
     }
-    expect(rowFormatter(map, data)).toBe('John      Doe          20')
+    expect(rtRowFormatter(map, data)).toBe('John      Doe          20')
   })
 
   it('Concat field height of size 5 precision 3', () => {
@@ -118,7 +121,7 @@ describe('row formatter execution', () => {
       age: 20,
       height: 1.75,
     }
-    expect(rowFormatter(map, data)).toBe('John      Doe          20 1750')
+    expect(rtRowFormatter(map, data)).toBe('John      Doe          20 1750')
   })
 
   it("Concat field birth of size 10 format 'DD/MM/YYYY'", () => {
@@ -161,7 +164,7 @@ describe('row formatter execution', () => {
       height: 1.75,
       birth: '1989-12-11',
     }
-    expect(rowFormatter(map, data)).toBe(
+    expect(rtRowFormatter(map, data)).toBe(
       'John      Doe          20 1750 11/12/1989'
     )
   })
