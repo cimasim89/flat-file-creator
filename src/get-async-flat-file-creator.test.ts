@@ -1,6 +1,6 @@
-import { getAsyncFlatFileCreator as f } from './get-async-flat-file-creator'
+import { getAsyncFlatFileCreator as f } from "./get-async-flat-file-creator";
 
-const getAsyncFlatFileCreator: any = f
+const getAsyncFlatFileCreator: any = f;
 
 describe('makeAsyncFlatFileWriter', () => {
   it('returning a promise function', () => {
