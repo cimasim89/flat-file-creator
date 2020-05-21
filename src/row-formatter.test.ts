@@ -1,8 +1,8 @@
-import rowFormatter from "./row-formatter";
-import * as _ from "lodash";
+import rowFormatter from './row-formatter'
+import * as _ from 'lodash'
 
 // Version of formatter with type-checking turned off to test runtime functionality
-const rtRowFormatter: any = rowFormatter;
+const rtRowFormatter: any = rowFormatter
 
 describe('row formatter execution exceptions', () => {
   it('If mapper not is an array throw exception', () => {
