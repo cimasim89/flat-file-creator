@@ -6,7 +6,7 @@
   "types": "./dist/flat-file-creator.d.ts",
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch *.js",
+    "watch": "jest --watch",
     "lint": "eslint --cache --format codeframe src/*.ts",
     "lint:fix": "eslint --fix --cache --format codeframe src/*.ts",
     "typecheck": "yarn ttsc --noEmit",
