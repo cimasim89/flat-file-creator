@@ -63,6 +63,8 @@ This library allows to generate a flat positional file, using an array that defi
 > ```
 >
 
+## In-Depth Explanation
+
 ### Generate your asynchronous file creator:
 The method `getAsyncFlatFileCreator` returns a function configured through the two required
 parameters, `maps` and `options`.
