@@ -42,7 +42,7 @@ export type FieldSpec = (
 ) & { type?: 'string' | 'integer' | 'float' | 'date' }
 
 // String field parameters
-type StringFieldSpec = CommonSpec & {
+export type StringFieldSpec = CommonSpec & {
   type: 'string'
 
   /**
@@ -58,12 +58,12 @@ type StringFieldSpec = CommonSpec & {
 }
 
 // Integer fields - there are no additional parameters
-type IntegerFieldSpec = CommonSpec & {
+export type IntegerFieldSpec = CommonSpec & {
   type: 'integer'
 }
 
 // Float field parameters
-type FloatFieldSpec = CommonSpec & {
+export type FloatFieldSpec = CommonSpec & {
   type: 'float'
 
   /**
@@ -82,7 +82,7 @@ type FloatFieldSpec = CommonSpec & {
 }
 
 // Date field parameters
-type DateFieldSpec = CommonSpec & {
+export type DateFieldSpec = CommonSpec & {
   type: 'date'
   format?: {
     /**
