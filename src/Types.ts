@@ -42,68 +42,62 @@ export type FieldSpec = (
 ) & { type?: 'string' | 'integer' | 'float' | 'date' }
 
 // String field parameters
-type StringFieldSpec =
-  CommonSpec &
-  {
-    type: 'string'
+type StringFieldSpec = CommonSpec & {
+  type: 'string'
 
-    /**
-     * Whether or not to trim whitespace from the value
-     * @default true
-     */
-    preserveEmptySpace: boolean
+  /**
+   * Whether or not to trim whitespace from the value
+   * @default true
+   */
+  preserveEmptySpace: boolean
 
-    /**
-     * If true, any values that are not string types will throw an exception
-     */
-    straight: boolean
-  }
+  /**
+   * If true, any values that are not string types will throw an exception
+   */
+  straight: boolean
+}
 
 // Integer fields - there are no additional parameters
-type IntegerFieldSpec =
-  CommonSpec & {
-    type: 'integer'
-  }
+type IntegerFieldSpec = CommonSpec & {
+  type: 'integer'
+}
 
 // Float field parameters
-type FloatFieldSpec =
-  CommonSpec & {
-    type: 'float'
+type FloatFieldSpec = CommonSpec & {
+  type: 'float'
 
-    /**
-     * When `dotNotation` is true, represents the number of digits to the right of the decimal
-     * point. When `dotNotation` is false, defines the multiplication factor used to obtain the
-     * integer value of the number (see `dotNotation` below).
-     */
-    precision?: number
+  /**
+   * When `dotNotation` is true, represents the number of digits to the right of the decimal
+   * point. When `dotNotation` is false, defines the multiplication factor used to obtain the
+   * integer value of the number (see `dotNotation` below).
+   */
+  precision?: number
 
-    /**
-     * When false, number is represented as an integer by multiplying by 10^[precision]. For
-     * example, if precision is 4, then the value `156.34235568183` would be represented as
-     * the integer `1563424`.
-     */
-    dotNotation?: boolean
-  }
+  /**
+   * When false, number is represented as an integer by multiplying by 10^[precision]. For
+   * example, if precision is 4, then the value `156.34235568183` would be represented as
+   * the integer `1563424`.
+   */
+  dotNotation?: boolean
+}
 
 // Date field parameters
-type DateFieldSpec =
-  CommonSpec & {
-    type: 'date'
-    format?: {
-      /**
-       * Use UTC for times
-       * @default false
-       */
-      utc?: boolean
+type DateFieldSpec = CommonSpec & {
+  type: 'date'
+  format?: {
+    /**
+     * Use UTC for times
+     * @default false
+     */
+    utc?: boolean
 
-      /**
-       * Specify an arbitrary date format (see [`moment`](https://momentjs.com/docs/#/displaying/))
-       * @default ISO format
-       */
-      dateFormat?: string
-    }
+    /**
+     * Specify an arbitrary date format (see [`moment`](https://momentjs.com/docs/#/displaying/))
+     * @default ISO format
+     */
+    dateFormat?: string
   }
-
+}
 
 declare type CommonSpec = {
   /**
