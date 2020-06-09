@@ -1,13 +1,13 @@
-import * as fs from "fs";
-import { GlobalOptions } from "./Types";
+import * as fs from 'fs'
+import { WriteOptions } from './Types'
 
 const defaultOptions = {
-  encoding: 'utf8' as 'utf8',
+  encoding: 'utf8' as const,
   mode: 0o666,
   flag: 'a',
 }
 
-const prepareOptions = (opts: Partial<GlobalOptions>) => {
+const prepareOptions = (opts: Partial<WriteOptions>) => {
   let options: fs.WriteFileOptions = { ...defaultOptions }
   options = opts.encoding ? { ...options, encoding: opts.encoding } : options
   options = opts.mode ? { ...options, mode: opts.mode } : options
@@ -15,22 +15,24 @@ const prepareOptions = (opts: Partial<GlobalOptions>) => {
   return { ...options }
 }
 
-const fileAppendPromise = (path: string, data: string, options?: Partial<GlobalOptions>) => {
+const fileAppendPromise = (
+  path: string,
+  data: string,
+  options?: Partial<WriteOptions>
+) => {
   return new Promise((resolve, reject) => {
     const appendCallback = (err: Error) => {
-      if (err) return reject(err)
+      if (err) {
+        return reject(err)
+      }
       return resolve()
     }
 
-    if (options && options.encoding)
-      return fs.appendFile(
-        path,
-        data,
-        prepareOptions(options),
-        appendCallback,
-      )
+    if (options && options.encoding) {
+      return fs.appendFile(path, data, prepareOptions(options), appendCallback)
+    }
     fs.appendFile(path, data, appendCallback)
   })
 }
 
-export default fileAppendPromise;
+export default fileAppendPromise
