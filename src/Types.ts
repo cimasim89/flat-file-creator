@@ -1,20 +1,24 @@
 import * as _ from 'lodash'
 import { isNumeric } from './utils'
 
+// Export Moment type for downstream convenience
+export { Moment } from 'moment'
+
 // Options to be used to configure the file creator instance as a whole
-export interface GlobalOptions {
+export interface ReadOptions {
   /**
    * Defines the terminator character of each line
    * @default ''
    */
-  rowEnd: string
+  rowEnd?: string
 
   /**
    * It's relative to the file encoding provided by the fs node module
    * @default 'utf8'
    */
   encoding?: BufferEncoding
-
+}
+export interface WriteOptions extends ReadOptions {
   /**
    * It's relative to the file save mode provided by the fs node module
    * @default 0o666
@@ -34,27 +38,29 @@ export type RowData = { [fieldName: string]: FieldValue }
 
 // FieldSpec is a discriminated union of all possible field spec types
 // Here, we make 'type' optional since field specs default to string-type
-export type FieldSpec = (
+export type FieldSpec =
   | StringFieldSpec
   | FloatFieldSpec
   | IntegerFieldSpec
   | DateFieldSpec
-) & { type?: 'string' | 'integer' | 'float' | 'date' }
 
 // String field parameters
 export type StringFieldSpec = CommonSpec & {
-  type: 'string'
+  /**
+   * Type is option for string fields because when type is not specified we default to 'string'
+   */
+  type?: 'string'
 
   /**
    * Whether or not to trim whitespace from the value
    * @default true
    */
-  preserveEmptySpace: boolean
+  preserveEmptySpace?: boolean
 
   /**
    * If true, any values that are not string types will throw an exception
    */
-  straight: boolean
+  straight?: boolean
 }
 
 // Integer fields - there are no additional parameters

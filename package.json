@@ -69,7 +69,10 @@
     "globalSetup": "./jest-global-setup.js",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
-    }
+    },
+    "roots": [
+      "src/"
+    ]
   },
   "husky": {
     "hooks": {
