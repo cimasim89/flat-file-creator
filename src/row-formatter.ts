@@ -1,6 +1,6 @@
 import * as lodash from 'lodash'
 import fieldFormatter from './field-formatter'
-import { FieldSpec, RowData, GlobalOptions } from './Types'
+import { FieldSpec, RowData, WriteOptions } from './Types'
 
 const defaultOptions = {
   rowEnd: '',
@@ -14,7 +14,7 @@ const prepareToConcatData = (data: RowData) => (
 const rowFormatter = (
   maps: Array<FieldSpec>,
   data: RowData,
-  options: Partial<GlobalOptions>
+  options: Partial<WriteOptions>
 ) => {
   if (typeof maps !== 'object') {
     throw new Error('mapping is not an array')
@@ -28,7 +28,7 @@ const rowFormatter = (
   if (typeof data !== 'object') {
     throw new Error('data is not an object')
   }
-  const opt: GlobalOptions = { ...defaultOptions, ...options }
+  const opt: WriteOptions = { ...defaultOptions, ...options }
   return maps.reduce(prepareToConcatData(data), '') + opt.rowEnd
 }
 
