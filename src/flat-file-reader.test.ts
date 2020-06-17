@@ -50,9 +50,39 @@ describe('FlatFileReader', () => {
   })
 
   describe('linesToData', () => {
-    test('returns correct data structures when parsing lines', () => {
+    test('returns correct data structures when parsing lines from string', () => {
       let data: TestData
       const rows = linesToData<TestData>(testLines, testFields)
+
+      expect(rows).toHaveLength(2)
+
+      data = rows[0]
+      expect(data.firstName).toBe('Jo')
+      expect(data.lastName).toBe('Revelo')
+      expect(data.dob.constructor.name).toBe('Moment')
+      expect(data.dob.year()).toBe(1986)
+      expect(data.weightKg).toBe(72.52)
+      expect(data.heightCm).toBe(183.5508)
+      expect(data.numFingers).toBe(10)
+      expect(data.favoritePet).toBe('Rocky')
+
+      data = rows[1]
+      expect(data.firstName).toBe('Ricky')
+      expect(data.lastName).toBe('Revelo')
+      expect(data.dob.constructor.name).toBe('Moment')
+      expect(data.dob.year()).toBe(1975)
+      expect(data.weightKg).toBe(89.5232153)
+      expect(data.heightCm).toBe(166.3231)
+      expect(data.numFingers).toBe(9)
+      expect(data.favoritePet).toBe('Rolly')
+
+      // This correctly fails when uncommented because `data` is correctly typed as `TestData`
+      // expect(data.nope).toBe(undefined);
+    })
+
+    test('returns correct data structures when parsing array of lines', () => {
+      let data: TestData
+      const rows = linesToData<TestData>(lines, testFields)
 
       expect(rows).toHaveLength(2)
 
