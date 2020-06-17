@@ -12,13 +12,7 @@ export const getAsyncFlatFileReader = <T = unknown>(
   // argument to the call
   return (path: string): Promise<Array<T>> => {
     return new Promise((res, rej) => {
-      // Determine the size of the final line according to our field specs for later validation
-      const lineLength = fields.reduce(
-        (n: number, f: FieldSpec) => n + f.size,
-        0
-      )
-
-      // Now read the file
+      // Read the file
       fs.readFile(
         path,
         options,
@@ -28,31 +22,47 @@ export const getAsyncFlatFileReader = <T = unknown>(
             rej(err)
           }
 
-          // Otherwise, make sure the data is a string
-          const data =
-            typeof contents === 'string'
-              ? contents
-              : contents.toString(options.encoding || 'utf8')
+          try {
+            // Otherwise, make sure the data is a string
+            const data =
+              typeof contents === 'string'
+                ? contents
+                : contents.toString(options.encoding || 'utf8')
 
-          // Now iterate through each line and parse
-          const results: Array<T> = []
-          const lines = data.split(/[\n\r]+/)
-          for (let i = 0; i < lines.length; i++) {
-            // Skip blank lines
-            if (lines[i] === '') {
-              continue
-            }
-
-            // Parse non-blank lines and push to results
-            results.push(parseLine<T>(lines[i], fields, lineLength))
+            // Finally, return the results
+            res(linesToData(data, fields))
+          } catch (e) {
+            rej(e)
           }
-
-          // Finally, return the results
-          res(results)
         }
       )
     })
   }
+}
+
+/**
+ * This function simply takes the lines from the file and parses them into the correct data
+ * structure. Note that the `contents` variable should contain the entire string contents of the
+ * file.
+ */
+export const linesToData = <T>(
+  contents: string,
+  fields: Array<FieldSpec>
+): Array<T> => {
+  // Determine the size of the final line according to our field specs for later validation
+  const lineLength = fields.reduce((n: number, f: FieldSpec) => n + f.size, 0)
+
+  // Now iterate through each line and parse
+  const results: Array<T> = []
+  const lines = contents.split(/[\n\r]+/)
+  for (let i = 0; i < lines.length; i++) {
+    // Parse non-blank lines (but don't trim, since it's possible for there to be lines with all
+    // null values)
+    if (lines[i] !== '') {
+      results.push(parseLine<T>(lines[i], fields, lineLength))
+    }
+  }
+  return results
 }
 
 /**
