@@ -46,7 +46,7 @@ export const getAsyncFlatFileReader = <T = unknown>(
  * file.
  */
 export const linesToData = <T>(
-  contents: string,
+  contents: string | Array<string>,
   fields: Array<FieldSpec>
 ): Array<T> => {
   // Determine the size of the final line according to our field specs for later validation
@@ -54,7 +54,7 @@ export const linesToData = <T>(
 
   // Now iterate through each line and parse
   const results: Array<T> = []
-  const lines = contents.split(/[\n\r]+/)
+  const lines = Array.isArray(contents) ? contents : contents.split(/[\n\r]+/)
   for (let i = 0; i < lines.length; i++) {
     // Parse non-blank lines (but don't trim, since it's possible for there to be lines with all
     // null values)
