@@ -83,7 +83,7 @@ export const parseLine = <T = unknown>(
     const fieldSpec = fields[fieldNum]
 
     // Extract the value for the given field and bump the cursor
-    let fieldVal = line.slice(cursor, cursor + fieldSpec.size)
+    const fieldVal = line.slice(cursor, cursor + fieldSpec.size)
     cursor += fieldSpec.size
 
     // Trim the value and assign it
