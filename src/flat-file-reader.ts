@@ -74,10 +74,10 @@ export const linesToData = <T>(
 export const parseLine = <T = unknown>(
   line: string,
   fields: Array<FieldSpec>,
-  expectedLineLength: number
+  expectedLineLength?: number
 ): T => {
   // Throw an exception if any line is not as expected
-  if (line.length !== expectedLineLength) {
+  if (expectedLineLength && line.length !== expectedLineLength) {
     throw new FlatFileReadLineError(
       `FlatFileReader: The given line must be ${expectedLineLength} characters long according ` +
         `to the data specification. The current line is ${line.length} characters long.`,
