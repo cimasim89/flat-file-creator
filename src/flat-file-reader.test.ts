@@ -33,6 +33,12 @@ describe('FlatFileReader', () => {
       }).toThrow(`The given line must be ${correctLength} characters long`)
     })
 
+    test('does NOT throw for incorrect line length if no length spec given', () => {
+      expect(() =>
+        parseLine<TestData>(lines[0] + 'abc', testFields)
+      ).not.toThrow(`The given line must be ${correctLength} characters long`)
+    })
+
     test('returns correct data structures', () => {
       const data = parseLine<TestData>(lines[0], testFields, correctLength)
       expect(data.firstName).toBe('Jo')
