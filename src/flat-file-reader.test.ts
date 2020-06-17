@@ -39,7 +39,7 @@ describe('FlatFileReader', () => {
     expect(data.favoritePet).toBe('Rocky')
 
     // This correctly fails when uncommented because `data` is correctly typed as `TestData`
-    //expect(data.nope).toBe(undefined);
+    // expect(data.nope).toBe(undefined);
   })
 
   test('correctly parses test file', async () => {
@@ -47,7 +47,7 @@ describe('FlatFileReader', () => {
     const read = getAsyncFlatFileReader<TestData>(testFields)
     const rows = await read(`./test-data/flat-file.txt`)
 
-    expect(rows.length).toBe(2)
+    expect(rows).toHaveLength(2)
 
     data = rows[0]
     expect(data.firstName).toBe('Jo')
