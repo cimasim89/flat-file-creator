@@ -2,8 +2,8 @@
   "name": "flat-file-creator",
   "version": "2.0.0",
   "description": "Generate a flat positional text file of your dataset",
-  "main": "./dist/flat-file-creator.js",
-  "types": "./dist/flat-file-creator.d.ts",
+  "main": "./dist/src/flat-file-creator.js",
+  "types": "./dist/src/flat-file-creator.d.ts",
   "scripts": {
     "test": "jest",
     "watch": "jest --watch",
