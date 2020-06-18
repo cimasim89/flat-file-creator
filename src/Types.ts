@@ -17,6 +17,13 @@ export interface ReadOptions {
    * @default 'utf8'
    */
   encoding?: BufferEncoding
+
+  /**
+   * If true, throw errors when data structure errors are encountered (such as inconsistent line
+   * length or mismatched input or output data). If false errors are simply swallowed.
+   * @default true
+   */
+  throwErrors?: boolean
 }
 export interface WriteOptions extends ReadOptions {
   /**

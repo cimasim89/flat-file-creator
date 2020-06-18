@@ -115,6 +115,32 @@ describe('FlatFileReader', () => {
       // This correctly fails when uncommented because `data` is correctly typed as `TestData`
       // expect(data.nope).toBe(undefined);
     })
+
+    test('throws when line length is off and options specify to throw', () => {
+      expect(() => {
+        linesToData<TestData>(
+          lines.map((l) => l + 'abcde'),
+          testFields
+        )
+      }).toThrow('The given line must be')
+      expect(() => {
+        linesToData<TestData>(
+          lines.map((l) => l + 'abcde'),
+          testFields,
+          { throwErrors: true }
+        )
+      }).toThrow('The given line must be')
+    })
+
+    test("DOESN'T throw when line length is off and options specify not to throw", () => {
+      expect(() => {
+        linesToData<TestData>(
+          lines.map((l) => l + 'abcde'),
+          testFields,
+          { throwErrors: false }
+        )
+      }).not.toThrow('The given line must be')
+    })
   })
 
   describe('getAsyncFlatFileReader', () => {
