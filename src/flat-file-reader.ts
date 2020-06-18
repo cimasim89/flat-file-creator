@@ -146,19 +146,17 @@ export const interpret = <T = unknown>(
   for (let i = 0; i < fields.length; i++) {
     const field = fields[i]
 
-    // If the field is a blank string, set it to null, or throw if non optional
+    // If the field is a blank string, set it to default, if defined, or throw
     if (result[field.name] === '') {
-      /*
-      if (field.optional) {
-        result[field.name] = null;
-        continue;
+      if (typeof field.default !== "undefined") {
+        result[field.name] = field.default
+        continue
+      } else {
+        throw new FlatFileReadFieldTypeError(
+          `Field '${field.name}' is required, but not defined`,
+          field.name
+        )
       }
-      */
-
-      throw new FlatFileReadFieldTypeError(
-        `Field '${field.name}' is required, but not defined`,
-        field.name
-      )
     }
 
     // Otherwise, parse the value
@@ -212,7 +210,10 @@ export const interpret = <T = unknown>(
 
       // TODO: Make sure this parses correctly according to the given options
       case 'date': {
-        result[field.name] = moment(result[field.name])
+        result[field.name] = moment(
+          result[field.name],
+          (field.format && field.format.dateFormat) ? field.format.dateFormat : undefined
+        )
         break
       }
 
