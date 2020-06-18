@@ -15,10 +15,12 @@ const stringFormatter = (map: StringFieldSpec, data: FieldValue = '') => {
   if (map.straight && isNumeric(data)) {
     throw new Error('field has not compatible type')
   }
-  const str =
-    map.preserveEmptySpace || map.preserveEmptySpace === undefined
-      ? data.toString()
-      : data.toString().trim()
+
+  let str = data === null ? '' : data.toString();
+  if (map.preserveEmptySpace || map.preserveEmptySpace === undefined) {
+    str = str.trim();
+  }
+
   return getPadder(
     getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
   )(

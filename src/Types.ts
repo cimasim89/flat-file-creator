@@ -40,7 +40,7 @@ export interface WriteOptions extends ReadOptions {
 }
 
 // Runtime data representing values to be written to the file
-export type FieldValue = string | number | boolean | Date
+export type FieldValue = string | number | boolean | Date | null
 export type RowData = { [fieldName: string]: FieldValue }
 
 // FieldSpec is a discriminated union of all possible field spec types
@@ -136,6 +136,12 @@ declare type CommonSpec = {
    * @default ' ' (space)
    */
   paddingSymbol?: string
+
+  /**
+   * If specified, this value will be used if a value for the field is not given. If not specified
+   * and options.throwErrors is not false, an error will be thrown.
+   */
+  default?: FieldValue
 }
 
 // This overloaded method is used to assert that the given field spec is of the given type
