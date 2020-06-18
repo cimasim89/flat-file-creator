@@ -30,7 +30,7 @@ export const getAsyncFlatFileReader = <T = unknown>(
                 : contents.toString(options.encoding || 'utf8')
 
             // Finally, return the results
-            res(linesToData(data, fields))
+            res(linesToData(data, fields, options))
           } catch (e) {
             rej(e)
           }
@@ -47,7 +47,8 @@ export const getAsyncFlatFileReader = <T = unknown>(
  */
 export const linesToData = <T>(
   contents: string | Array<string>,
-  fields: Array<FieldSpec>
+  fields: Array<FieldSpec>,
+  options: { throwErrors?: boolean } = {}
 ): Array<T> => {
   // Determine the size of the final line according to our field specs for later validation
   const lineLength = fields.reduce((n: number, f: FieldSpec) => n + f.size, 0)
@@ -59,7 +60,13 @@ export const linesToData = <T>(
     // Parse non-blank lines (but don't trim, since it's possible for there to be lines with all
     // null values)
     if (lines[i] !== '') {
-      results.push(parseLine<T>(lines[i], fields, lineLength))
+      results.push(
+        parseLine<T>(
+          lines[i],
+          fields,
+          options.throwErrors !== false ? lineLength : undefined
+        )
+      )
     }
   }
   return results
@@ -77,7 +84,10 @@ export const parseLine = <T = unknown>(
   expectedLineLength?: number
 ): T => {
   // Throw an exception if any line is not as expected
-  if (expectedLineLength && line.length !== expectedLineLength) {
+  if (
+    typeof expectedLineLength === 'number' &&
+    line.length !== expectedLineLength
+  ) {
     throw new FlatFileReadLineError(
       `FlatFileReader: The given line must be ${expectedLineLength} characters long according ` +
         `to the data specification. The current line is ${line.length} characters long.`,
