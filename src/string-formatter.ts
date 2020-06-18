@@ -1,20 +1,26 @@
-import * as _ from "lodash";
+import * as _ from 'lodash'
 import {
   isNumeric,
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from './utils';
-import { StringFieldSpec, FieldValue, assertFieldSpec } from "./Types";
+} from './utils'
+import { StringFieldSpec, FieldValue, assertFieldSpec } from './Types'
 
 const paddingDefault = 'end'
 
 const stringFormatter = (map: StringFieldSpec, data: FieldValue = '') => {
-  assertFieldSpec(map, "string");
-  if (map.straight && isNumeric(data))
+  assertFieldSpec(map, 'string')
+  if (map.straight && isNumeric(data)) {
     throw new Error('field has not compatible type')
-  const str = (map.preserveEmptySpace || map.preserveEmptySpace === undefined) ? data.toString() : data.toString().trim()
+  }
+
+  let str = data === null ? '' : data.toString();
+  if (map.preserveEmptySpace || map.preserveEmptySpace === undefined) {
+    str = str.trim();
+  }
+
   return getPadder(
     getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
   )(
@@ -25,4 +31,4 @@ const stringFormatter = (map: StringFieldSpec, data: FieldValue = '') => {
   )
 }
 
-export default stringFormatter;
+export default stringFormatter
