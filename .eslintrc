@@ -28,6 +28,7 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/prefer-interface": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "babel/semi": "off",
     "curly": ["error", "all"],
     "global-require": "off",
