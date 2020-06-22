@@ -1,51 +1,54 @@
-const fieldFormatter = require('./field-formatter')
-const _ = require('lodash')
-const moment = require('moment')
+import fieldFormatter from './field-formatter'
+import * as _ from 'lodash'
+import * as moment from 'moment'
+
+// Version of fieldFormatter with type-checking turned off to test runtime functionality
+const rtFieldFormatter: any = fieldFormatter
 
 describe('Field formatter execution raise Exception', () => {
   it('If field map is null', () => {
-    expect(() => fieldFormatter(null, null)).toThrow(
-      'fieldMap is null or undefined'
+    expect(() => rtFieldFormatter(null, null)).toThrow(
+      'map is null or undefined'
     )
   })
 
   it('If field map is not an object', () => {
-    expect(() => fieldFormatter('something', null)).toThrow(
-      'fieldMap is not an object'
+    expect(() => rtFieldFormatter('something', null)).toThrow(
+      'map is not an object'
     )
   })
 
   it('If field map object is empty', () => {
-    expect(() => fieldFormatter({}, null)).toThrow('fieldMap object is empty')
+    expect(() => rtFieldFormatter({}, null)).toThrow('map object is empty')
   })
 
   it('If field map object not contain name', () => {
-    expect(() => fieldFormatter({ size: 10, type: 'string' }, null)).toThrow(
+    expect(() => rtFieldFormatter({ size: 10, type: 'string' }, null)).toThrow(
       'map field name is required'
     )
   })
 
   it('If field map object not contain size', () => {
     expect(() =>
-      fieldFormatter({ name: 'someField', type: 'string' }, null)
+      rtFieldFormatter({ name: 'someField', type: 'string' }, null)
     ).toThrow('map size is required')
   })
 
   it('If field map type is numeric', () => {
     expect(() =>
-      fieldFormatter({ size: 10, name: 'someField', type: 0 }, null)
+      rtFieldFormatter({ size: 10, name: 'someField', type: 0 }, null)
     ).toThrow('map field [someField] type not could be numeric')
   })
 
   it('If field map size is less or equal 0', () => {
     expect(() =>
-      fieldFormatter({ size: 0, type: 'string', name: 'someField' }, null)
-    ).toThrow('map size must be great than 0')
+      rtFieldFormatter({ size: 0, type: 'string', name: 'someField' }, null)
+    ).toThrow('map size must be greater than 0')
   })
 
   it('If field map type not exists', () => {
     expect(() =>
-      fieldFormatter(
+      rtFieldFormatter(
         { size: 10, type: 'notexistinftype', name: 'someField' },
         null
       )
@@ -54,7 +57,7 @@ describe('Field formatter execution raise Exception', () => {
 
   it('if type not selected with straight passed integer', () => {
     expect(() =>
-      fieldFormatter({ name: 'test', size: 4, straight: true }, { test: 10 })
+      rtFieldFormatter({ name: 'test', size: 4, straight: true }, { test: 10 })
     ).toThrow('field has not compatible type')
   })
 })
@@ -62,13 +65,13 @@ describe('Field formatter execution raise Exception', () => {
 describe('Field formatter String execution result', () => {
   it('size 4, result lenght is 4 ', () => {
     expect(
-      _.size(fieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }))
+      _.size(rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }))
     ).toBe(4)
   })
 
   it('size 10, result is', () => {
     expect(
-      fieldFormatter(
+      rtFieldFormatter(
         { name: 'test', size: 10, type: 'string' },
         { test: 'hello' }
       )
@@ -80,7 +83,7 @@ describe('Field formatter Float execution result', () => {
   it('size 4, result lenght is 4 ', () => {
     expect(
       _.size(
-        fieldFormatter(
+        rtFieldFormatter(
           { name: 'test', size: 4, type: 'float', precision: 2 },
           { test: 10.4 }
         )
@@ -90,7 +93,7 @@ describe('Field formatter Float execution result', () => {
 
   it('size 4 precision 2, result is 1040 ', () => {
     expect(
-      fieldFormatter(
+      rtFieldFormatter(
         { name: 'test', size: 4, type: 'float', precision: 2 },
         { test: 10.4 }
       )
@@ -102,12 +105,12 @@ describe('Field formatter Date execution result', () => {
   it('size 10, result lenght is 10 utc', () => {
     expect(
       _.size(
-        fieldFormatter(
+        rtFieldFormatter(
           {
             name: 'test',
             size: 10,
             type: 'date',
-            format: { utc: true, dateFormat: 'YYYY/MM/DD' }
+            format: { utc: true, dateFormat: 'YYYY/MM/DD' },
           },
           { test: moment() }
         )
@@ -120,12 +123,12 @@ describe('Field formatter Date execution result', () => {
     const format = 'YYYY/MM/DD HH:mm:ss'
     const result = `${date.format(format)}      `
     expect(
-      fieldFormatter(
+      rtFieldFormatter(
         {
           name: 'test',
           size: 25,
           type: 'date',
-          format: { utc: false, dateFormat: format }
+          format: { utc: false, dateFormat: format },
         },
         { test: date }
       )
@@ -137,11 +140,11 @@ describe('Field formatter Integer execution result', () => {
   it('size 10, result lenght is 10', () => {
     expect(
       _.size(
-        fieldFormatter(
+        rtFieldFormatter(
           {
             name: 'test',
             size: 10,
-            type: 'integer'
+            type: 'integer',
           },
           { test: 10000 }
         )
@@ -151,11 +154,11 @@ describe('Field formatter Integer execution result', () => {
 
   it("size 10, result is ' 1000'", () => {
     expect(
-      fieldFormatter(
+      rtFieldFormatter(
         {
           name: 'test',
           size: 5,
-          type: 'integer'
+          type: 'integer',
         },
         { test: 1000 }
       )
@@ -164,13 +167,13 @@ describe('Field formatter Integer execution result', () => {
 
   it("size 10 end padded with #, result is '1000#'", () => {
     expect(
-      fieldFormatter(
+      rtFieldFormatter(
         {
           name: 'test',
           size: 5,
           type: 'integer',
           paddingPosition: 'end',
-          paddingSymbol: '#'
+          paddingSymbol: '#',
         },
         { test: 1000 }
       )

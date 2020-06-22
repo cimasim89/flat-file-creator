@@ -1,4 +1,6 @@
-const { getAsyncFlatFileCreator } = require('./get-async-flat-file-creator.js')
+import { getAsyncFlatFileCreator as f } from './get-async-flat-file-creator'
+
+const getAsyncFlatFileCreator: any = f
 
 describe('makeAsyncFlatFileWriter', () => {
   it('returning a promise function', () => {
