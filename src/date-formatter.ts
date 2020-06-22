@@ -6,7 +6,12 @@ import {
   getPadder,
   getFillStringOfSymbol,
 } from './utils'
-import { DateFieldSpec, FieldValue, DateFieldValue, assertFieldSpec } from './Types'
+import {
+  DateFieldSpec,
+  FieldValue,
+  DateFieldValue,
+  assertFieldSpec,
+} from './Types'
 
 const paddingDefault = 'end'
 const defaultFormat = {
@@ -28,10 +33,13 @@ const getFormattedDateString = (
   return convention.format(opts.dateFormat)
 }
 
-function assertDateFieldValue(d: any, fieldName: string): asserts d is DateFieldValue {
+function assertDateFieldValue(
+  d: any,
+  fieldName: string
+): asserts d is DateFieldValue {
   if (
     d !== null &&
-    typeof d !== "undefined" && 
+    typeof d !== 'undefined' &&
     typeof d !== 'string' &&
     typeof d.toISOString === 'undefined' &&
     typeof d.year === 'undefined'
@@ -47,9 +55,7 @@ const dateFormatter = (map: DateFieldSpec, data: FieldValue) => {
   assertDateFieldValue(data, map.name)
 
   const format = { ...defaultFormat, ...map.format }
-  const resDate = data ?
-    getFormattedDateString(data, format)
-    : "";
+  const resDate = data ? getFormattedDateString(data, format) : ''
 
   if (_.size(resDate) > map.size) {
     throw new Error(`Date ${resDate} exceed size ${map.size}`)

@@ -148,7 +148,7 @@ export const interpret = <T = unknown>(
 
     // If the field is a blank string, set it to default, if defined, or throw
     if (result[field.name] === '') {
-      if (typeof field.default !== "undefined") {
+      if (typeof field.default !== 'undefined') {
         result[field.name] = field.default
         continue
       } else {
@@ -212,7 +212,9 @@ export const interpret = <T = unknown>(
       case 'date': {
         result[field.name] = moment(
           result[field.name],
-          (field.format && field.format.dateFormat) ? field.format.dateFormat : undefined
+          field.format && field.format.dateFormat
+            ? field.format.dateFormat
+            : undefined
         )
         break
       }
