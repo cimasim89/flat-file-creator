@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import { GlobalOptions } from './Types'
 
 const defaultOptions = {
-  encoding: 'utf8' as 'utf8',
+  encoding: 'utf8' as const,
   mode: 0o666,
   flag: 'a',
 }
