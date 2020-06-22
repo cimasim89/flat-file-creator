@@ -183,12 +183,26 @@ type StringFieldSpec =
      * If true, any values that are not string types will throw an exception
      */
     straight?: boolean
+
+    /**
+     * If provided, this value is used as the default value when no value is provided in the data.
+     * If not provided, failure to provide a value for this field will result in an exception unless
+     * `options.throwErrors` is set to false.
+     */
+    default?: string | null
   }
 
 // Integer fields - there are no additional parameters
 type IntegerFieldSpec =
   CommonSpec & {
     type: 'integer'
+
+    /**
+     * If provided, this value is used as the default value when no value is provided in the data.
+     * If not provided, failure to provide a value for this field will result in an exception unless
+     * `options.throwErrors` is set to false.
+     */
+    default?: number | null
   }
 
 // Float field parameters
@@ -209,6 +223,13 @@ type FloatFieldSpec =
      * the integer `1563424`.
      */
     dotNotation?: boolean
+
+    /**
+     * If provided, this value is used as the default value when no value is provided in the data.
+     * If not provided, failure to provide a value for this field will result in an exception unless
+     * `options.throwErrors` is set to false.
+     */
+    default?: number | null
   }
 
 // Date field parameters
@@ -228,6 +249,13 @@ type DateFieldSpec =
        */
       dateFormat?: string
     }
+
+    /**
+     * If provided, this value is used as the default value when no value is provided in the data.
+     * If not provided, failure to provide a value for this field will result in an exception unless
+     * `options.throwErrors` is set to false.
+     */
+    default?: Date | Moment | string | null
   }
 
 // This is a discriminated union of all field spec types

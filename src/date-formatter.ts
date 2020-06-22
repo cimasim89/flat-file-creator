@@ -1,21 +1,26 @@
-import * as moment from "moment";
-import * as _ from "lodash";
+import * as moment from 'moment'
+import * as _ from 'lodash'
 import {
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from "./utils";
-import { DateFieldSpec, FieldValue, assertFieldSpec } from "./Types";
+} from './utils'
+import { DateFieldSpec, FieldValue, DateFieldValue, assertFieldSpec } from './Types'
 
 const paddingDefault = 'end'
 const defaultFormat = {
   utc: false,
 }
 
-const getFormattedDateString = (date: Date | string, opts: Partial<NonNullable<DateFieldSpec["format"]>>) => {
+const getFormattedDateString = (
+  date: Date | moment.Moment | string,
+  opts: Partial<NonNullable<DateFieldSpec['format']>>
+) => {
   const base = moment(date)
-  if (!base.isValid()) throw new Error(`Invalid date ${date}`)
+  if (!base.isValid()) {
+    throw new Error(`Invalid date ${date}`)
+  }
   const convention = opts.utc ? base.utc() : base
   if (!opts.dateFormat) {
     return convention.toISOString()
@@ -23,20 +28,33 @@ const getFormattedDateString = (date: Date | string, opts: Partial<NonNullable<D
   return convention.format(opts.dateFormat)
 }
 
-function assertDate(d: any, fieldName: string): asserts d is Date | string {
-  if (typeof d !== "string" && typeof d.toISOString === "undefined") {
-    throw new Error(`Value for date field ${fieldName} must be a date or a string representation of a date`);
+function assertDateFieldValue(d: any, fieldName: string): asserts d is DateFieldValue {
+  if (
+    d !== null &&
+    typeof d !== "undefined" && 
+    typeof d !== 'string' &&
+    typeof d.toISOString === 'undefined' &&
+    typeof d.year === 'undefined'
+  ) {
+    throw new Error(
+      `Value for date field ${fieldName} must be a date or a string representation of a date`
+    )
   }
 }
 
 const dateFormatter = (map: DateFieldSpec, data: FieldValue) => {
-  assertFieldSpec(map);
-  assertDate(data, map.name);
+  assertFieldSpec(map)
+  assertDateFieldValue(data, map.name)
 
   const format = { ...defaultFormat, ...map.format }
-  const resDate = getFormattedDateString(data, format)
-  if (_.size(resDate) > map.size)
+  const resDate = data ?
+    getFormattedDateString(data, format)
+    : "";
+
+  if (_.size(resDate) > map.size) {
     throw new Error(`Date ${resDate} exceed size ${map.size}`)
+  }
+
   return getPadder(
     getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
   )(
@@ -47,4 +65,4 @@ const dateFormatter = (map: DateFieldSpec, data: FieldValue) => {
   )
 }
 
-export default dateFormatter;
+export default dateFormatter
