@@ -1,7 +1,11 @@
-import { FieldSpec, ReadOptions } from './Types'
-import { FlatFileReadLineError, FlatFileReadFieldTypeError } from './Errors'
-import * as moment from 'moment'
 import * as fs from 'fs'
+import * as moment from 'moment'
+import {
+  FlatFileReadLineError,
+  FlatFileReadFieldTypeError,
+  FlatFileEnumError,
+} from './Errors'
+import { FieldSpec, ReadOptions } from './Types'
 
 // Return a function that can read a flat based on the given spec
 export const getAsyncFlatFileReader = <T = unknown>(
@@ -221,7 +225,22 @@ export const interpret = <T = unknown>(
 
       case 'string':
       case undefined: {
-        // already string - nothing to do here
+        // If this is an enum field, unserialize
+        if (field.enum !== undefined) {
+          if (field.enum[result[field.name]] !== undefined) {
+            result[field.name] = field.enum[result[field.name]]
+          } else {
+            throw new FlatFileEnumError(
+              `Incoming value for field '${field.name}' should have been one of the accepted ` +
+                `enum keys ["${Object.keys(field.enum).join(`", "`)}"]${
+                  typeof field.default !== 'undefined' && field.default === null
+                    ? ` or null`
+                    : ``
+                }, but found '${result[field.name]}'`,
+              field.name
+            )
+          }
+        }
       }
     }
   }

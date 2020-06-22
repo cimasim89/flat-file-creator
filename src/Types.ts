@@ -68,6 +68,19 @@ export type StringFieldSpec = CommonSpec & {
   type?: 'string'
 
   /**
+   * If the field has a set list of values, you can specify them using the 'enum' key. Since
+   * upstream providers may implement various key-value paradigms, this field is an arbitrary map
+   * of string keys to string values, as opposed to an array of fields. For example:
+   *
+   * {
+   *   "01": "received",
+   *   "02": "fulfilled",
+   *   "03": "rejected",
+   * }
+   */
+  enum?: { [serializedKey: string]: string }
+
+  /**
    * Whether or not to trim whitespace from the value
    * @default true
    */
