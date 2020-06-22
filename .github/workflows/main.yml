@@ -45,3 +45,4 @@ jobs:
     - name: Execute tests
       run: npm run test
       if: success()
+
