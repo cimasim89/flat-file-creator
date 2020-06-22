@@ -45,7 +45,11 @@ export type StringFieldValue = string | null | undefined
 export type IntegerFieldValue = number | null | undefined
 export type FloatFieldValue = number | null | undefined
 export type DateFieldValue = Date | Moment | string | null | undefined
-export type FieldValue = StringFieldValue | IntegerFieldValue | FloatFieldValue | DateFieldValue
+export type FieldValue =
+  | StringFieldValue
+  | IntegerFieldValue
+  | FloatFieldValue
+  | DateFieldValue
 export type RowData = { [fieldName: string]: FieldValue }
 
 // FieldSpec is a discriminated union of all possible field spec types
@@ -74,24 +78,24 @@ export type StringFieldSpec = CommonSpec & {
    */
   straight?: boolean
 
-	/**
-	 * If provided, this value is used as the default value when no value is provided in the data.
-	 * If not provided, failure to provide a value for this field will result in an exception unless
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
    * `options.throwErrors` is set to false.
-	 */
-	default?: string | null
+   */
+  default?: string | null
 }
 
 // Integer fields - there are no additional parameters
 export type IntegerFieldSpec = CommonSpec & {
   type: 'integer'
 
-	/**
-	 * If provided, this value is used as the default value when no value is provided in the data.
-	 * If not provided, failure to provide a value for this field will result in an exception unless
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
    * `options.throwErrors` is set to false.
-	 */
-	default?: number | null
+   */
+  default?: number | null
 }
 
 // Float field parameters
@@ -112,12 +116,12 @@ export type FloatFieldSpec = CommonSpec & {
    */
   dotNotation?: boolean
 
-	/**
-	 * If provided, this value is used as the default value when no value is provided in the data.
-	 * If not provided, failure to provide a value for this field will result in an exception unless
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
    * `options.throwErrors` is set to false.
-	 */
-	default?: number | null
+   */
+  default?: number | null
 }
 
 // Date field parameters
@@ -137,12 +141,12 @@ export type DateFieldSpec = CommonSpec & {
     dateFormat?: string
   }
 
-	/**
-	 * If provided, this value is used as the default value when no value is provided in the data.
-	 * If not provided, failure to provide a value for this field will result in an exception unless
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
    * `options.throwErrors` is set to false.
-	 */
-	default?: Date | Moment | string | null
+   */
+  default?: Date | Moment | string | null
 }
 
 declare type CommonSpec = {
