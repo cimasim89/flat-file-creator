@@ -50,6 +50,27 @@ describe('String formatter execution raise Exception', () => {
       rtStringFormatter({ size: 10, name: 'someField', type: 'string', paddingSymbol: '@.@' }, '')
     ).toThrow('paddingSymbol cannot have length > 1')
   })
+
+  test(`If enum specified and value is not in the enum keys or values`, () => {
+    expect(() =>
+      rtStringFormatter(
+        {
+          size: 2,
+          name: 'someField',
+          type: 'string',
+          enum: {
+            '01': 'received',
+            '02': 'cleared',
+          },
+        },
+        'dropped'
+      )
+    ).toThrow(
+      "Value for field 'someField' should have been one of the accepted values [" +
+        '"received", "cleared"' +
+        "], but you passed 'dropped'"
+    )
+  })
 })
 
 describe('String formatter execution result', () => {
@@ -100,5 +121,37 @@ describe('String formatter execution result', () => {
         'str ing'
       )
     ).toBe('@@@str ing')
+  })
+
+  test(`enums are properly serialized`, () => {
+    expect(
+      rtStringFormatter(
+        {
+          size: 2,
+          name: 'someField',
+          type: 'string',
+          enum: {
+            '01': 'received',
+            '02': 'cleared',
+          },
+        },
+        'received'
+      )
+    ).toBe('01')
+
+    expect(
+      rtStringFormatter(
+        {
+          size: 2,
+          name: 'someField',
+          type: 'string',
+          enum: {
+            '01': 'received',
+            '02': 'cleared',
+          },
+        },
+        '02'
+      )
+    ).toBe('02')
   })
 })
