@@ -16,9 +16,9 @@ const stringFormatter = (map: StringFieldSpec, data: FieldValue = '') => {
     throw new Error('field has not compatible type')
   }
 
-  let str = data === null ? '' : data.toString();
+  let str = data === null ? '' : data.toString()
   if (map.preserveEmptySpace || map.preserveEmptySpace === undefined) {
-    str = str.trim();
+    str = str.trim()
   }
 
   return getPadder(
