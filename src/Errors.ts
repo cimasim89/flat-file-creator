@@ -17,3 +17,9 @@ export class FlatFileReadFieldTypeError extends FlatFileError {
     super(msg, `READ_FIELD_TYPE`)
   }
 }
+
+export class FlatFileEnumError extends FlatFileError {
+  public constructor(msg: string, public readonly fieldName: string) {
+    super(msg, `BAD_ENUM`)
+  }
+}
