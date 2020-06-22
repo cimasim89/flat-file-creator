@@ -29,7 +29,7 @@ describe('Date formatter execution raise Exception', () => {
   })
 
   it('If data is not a date', () => {
-    const date = ''
+    const date = 'richard pryor'
     expect(() =>
       rtDateFormatter({ size: 10, name: 'someField' }, date)
     ).toThrow(`Invalid date ${date}`)
