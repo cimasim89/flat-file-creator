@@ -190,6 +190,12 @@ type StringFieldSpec =
      * `options.throwErrors` is set to false.
      */
     default?: string | null
+
+    /**
+     * An optional description of the field. This can be used both for in-line
+     * documentation/reference and also to produce better error messages.
+     */
+    desc?: string
   }
 
 // Integer fields - there are no additional parameters
