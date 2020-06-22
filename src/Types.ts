@@ -173,6 +173,12 @@ declare type CommonSpec = {
    * @default ' ' (space)
    */
   paddingSymbol?: string
+
+  /**
+   * An optional description of the field. This can be used both for in-line
+   * documentation/reference and also to produce better error messages.
+   */
+  desc?: string
 }
 
 // This overloaded method is used to assert that the given field spec is of the given type
