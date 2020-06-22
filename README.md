@@ -41,11 +41,11 @@ const rowDef: Array<FieldSpec> = [
     size: "1",
     type: "integer",
   }
-];
+]
 
 // Instantiate a creator and a reader with your definitions
-const createFile = getAsyncFlatFileCreator(rowDef);
-const readFile = getAsyncFlatFileReader<MyData>(rowDef);
+const createFile = getAsyncFlatFileCreator(rowDef)
+const readFile = getAsyncFlatFileReader<MyData>(rowDef)
 
 // Define some data
 const rows: Array<MyData> = [
@@ -59,13 +59,13 @@ const rows: Array<MyData> = [
     lastName: "Springfield",
     dob: new Date("1996-01-01")
   },
-];
+]
 
 // Create a file using your data
 await createFile(rows, "/tmp/my-file.txt")
 
 // Now read that file back into program space
-const data = await readFile("/tmp/my-file.txt");
+const data = await readFile("/tmp/my-file.txt")
 
 // Now `data` is the same as `rows`
 // Use it.....
@@ -100,13 +100,13 @@ export interface ReadOptions {
    * Defines the terminator character of each line
    * @default ''
    */
-  rowEnd?: string;
+  rowEnd?: string
 
   /**
    * It's relative to the file encoding provided by the fs node module
    * @default 'utf8'
    */
-  encoding?: BufferEncoding;
+  encoding?: BufferEncoding
 
   /**
    * If true, throw errors when data structure errors are encountered (such as inconsistent line
@@ -122,13 +122,13 @@ export interface WriteOptions extends ReadOptions {
    * It's relative to the file save mode provided by the fs node module
    * @default 0o666
    */
-  mode?: number;
+  mode?: number
 
   /**
    * It's relative to the file save flag provided by the fs node module
    * @default 'a'
    */
-  flag?: string;
+  flag?: string
 }
 ```
 
@@ -147,7 +147,7 @@ type CommonSpec = {
   name: string
 
   /**
-   * The total dimension that the field will have in the generated file;
+   * The total dimension that the field will have in the generated file
    */
   size: number
 
@@ -209,6 +209,12 @@ type IntegerFieldSpec =
      * `options.throwErrors` is set to false.
      */
     default?: number | null
+
+    /**
+     * An optional description of the field. This can be used both for in-line
+     * documentation/reference and also to produce better error messages.
+     */
+    desc?: string
   }
 
 // Float field parameters
@@ -236,6 +242,12 @@ type FloatFieldSpec =
      * `options.throwErrors` is set to false.
      */
     default?: number | null
+
+    /**
+     * An optional description of the field. This can be used both for in-line
+     * documentation/reference and also to produce better error messages.
+     */
+    desc?: string
   }
 
 // Date field parameters
@@ -262,6 +274,12 @@ type DateFieldSpec =
      * `options.throwErrors` is set to false.
      */
     default?: Date | Moment | string | null
+
+    /**
+     * An optional description of the field. This can be used both for in-line
+     * documentation/reference and also to produce better error messages.
+     */
+    desc?: string
   }
 
 // This is a discriminated union of all field spec types
@@ -270,7 +288,7 @@ type FieldSpec = (
   | FloatFieldSpec
   | IntegerFieldSpec
   | DateFieldSpec
-);
+)
 
 ```
 
@@ -282,7 +300,7 @@ convert read or write rows of data to a flat file. Row data is represented as an
 
 ```ts
 type RowData = {
-    [fieldName: string]: string | number | boolean | Date;
+    [fieldName: string]: string | number | boolean | Date
 }
 ```
 
