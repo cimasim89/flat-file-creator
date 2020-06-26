@@ -1,4 +1,7 @@
-import { getAsyncFlatFileCreator } from './get-async-flat-file-creator'
+import {
+  getAsyncFlatFileCreator,
+  dataToLines,
+} from './get-async-flat-file-creator'
 import {
   getAsyncFlatFileReader,
   linesToData,
@@ -11,6 +14,7 @@ import * as Types from './Types'
 export {
   getAsyncFlatFileCreator,
   getAsyncFlatFileReader,
+  dataToLines,
   linesToData,
   parseLine,
   rowFormatter,
