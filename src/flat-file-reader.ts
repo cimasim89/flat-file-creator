@@ -168,7 +168,7 @@ export const interpret = <T = unknown>(
     // We'll use this int function in a couple different places, so make it available here
     const getInt = (val: string, fieldName: string): number => {
       if (val.match(/^-?[0-9]+$/) || val.match(/^-?[0-9]+e[0-9]+$/)) {
-        return <number>JSON.parse(val)
+        return Number(val)
       } else {
         throw new FlatFileReadFieldTypeError(
           `Field '${fieldName}' is supposed to be an integer but is not. Actual value: ${val}`,
