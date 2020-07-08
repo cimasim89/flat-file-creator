@@ -1,9 +1,9 @@
-import fieldFormatter from "./field-formatter";
-import * as _ from "lodash";
-import * as moment from "moment";
+import fieldFormatter from './field-formatter'
+import * as _ from 'lodash'
+import * as moment from 'moment'
 
 // Version of fieldFormatter with type-checking turned off to test runtime functionality
-const rtFieldFormatter: any = fieldFormatter;
+const rtFieldFormatter: any = fieldFormatter
 
 describe('Field formatter execution raise Exception', () => {
   it('If field map is null', () => {
