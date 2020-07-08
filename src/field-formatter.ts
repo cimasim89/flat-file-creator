@@ -4,9 +4,9 @@ import integerFormatter from './integer-formatter'
 import floatFormatter from './float-formatter'
 import { FieldSpec, StringFieldSpec, RowData, assertFieldSpec } from './Types'
 
-const fieldFormatter = (map: FieldSpec, data: RowData) => {
+const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
   assertFieldSpec(map)
-  const fieldName = map.name
+  const fieldName = <keyof T>map.name
   switch (map.type) {
     case 'string':
       return stringFormatter(map, data[fieldName])

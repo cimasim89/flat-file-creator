@@ -50,7 +50,7 @@ export type FieldValue =
   | IntegerFieldValue
   | FloatFieldValue
   | DateFieldValue
-export type RowData = { [fieldName: string]: FieldValue }
+export type RowData<T> = { [fieldName in keyof T]: FieldValue }
 
 // FieldSpec is a discriminated union of all possible field spec types
 // Here, we make 'type' optional since field specs default to string-type
