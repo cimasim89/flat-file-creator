@@ -2,20 +2,20 @@ import fileAppendPromise from './file-append-promise'
 import rowFormatter from './row-formatter'
 import { FieldSpec, RowData, WriteOptions } from './Types'
 
-const rowWriterMapper = (
+const rowWriterMapper = <T>(
   maps: Array<FieldSpec>,
   path: string,
   options: Partial<WriteOptions>
 ) => {
-  return (data: RowData) =>
-    fileAppendPromise(path, rowFormatter(maps, data, options), options)
+  return (data: RowData<T>) =>
+    fileAppendPromise(path, rowFormatter<T>(maps, data, options), options)
 }
 
-export const getAsyncFlatFileCreator = (
+export const getAsyncFlatFileCreator = <T>(
   maps: Array<FieldSpec>,
   options: Partial<WriteOptions>
 ) => {
-  return (data: Array<RowData>, path: string) =>
+  return (data: Array<RowData<T>>, path: string) =>
     Promise.all(data.map(rowWriterMapper(maps, path, options)))
 }
 
@@ -25,10 +25,10 @@ export const getAsyncFlatFileCreator = (
  * that it's output is an array, rather than a single string. (This allows the user to specify
  * which line ending characters they wish to use.)
  */
-export const dataToLines = (
-  data: Array<RowData>,
+export const dataToLines = <T>(
+  data: Array<RowData<T>>,
   fields: Array<FieldSpec>,
   options?: { throwErrors?: boolean }
-) => {
-  return data.map((d) => rowFormatter(fields, d, options || {}))
+): Array<string> => {
+  return data.map((d) => rowFormatter<T>(fields, d, options || {}))
 }

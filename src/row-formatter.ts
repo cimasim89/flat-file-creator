@@ -6,14 +6,14 @@ const defaultOptions = {
   rowEnd: '',
 }
 
-const prepareToConcatData = (data: RowData) => (
+const prepareToConcatData = <T>(data: RowData<T>) => (
   acc: string,
   field: FieldSpec
-) => acc + fieldFormatter(field, data)
+) => acc + fieldFormatter<T>(field, data)
 
-const rowFormatter = (
+const rowFormatter = <T>(
   maps: Array<FieldSpec>,
-  data: RowData,
+  data: RowData<T>,
   options: Partial<WriteOptions>
 ) => {
   if (typeof maps !== 'object') {
@@ -29,7 +29,7 @@ const rowFormatter = (
     throw new Error('data is not an object')
   }
   const opt: WriteOptions = { ...defaultOptions, ...options }
-  return maps.reduce(prepareToConcatData(data), '') + opt.rowEnd
+  return maps.reduce(prepareToConcatData<T>(data), '') + opt.rowEnd
 }
 
 export default rowFormatter
