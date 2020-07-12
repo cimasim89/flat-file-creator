@@ -1,13 +1,17 @@
 import * as _ from 'lodash'
 import { isNumeric } from './utils'
+import { Moment } from 'moment'
+
+// Export Moment type for downstream convenience
+export { Moment }
 
 // Options to be used to configure the file creator instance as a whole
-export interface GlobalOptions {
+export interface ReadOptions {
   /**
    * Defines the terminator character of each line
    * @default ''
    */
-  rowEnd: string
+  rowEnd?: string
 
   /**
    * It's relative to the file encoding provided by the fs node module
@@ -15,6 +19,14 @@ export interface GlobalOptions {
    */
   encoding?: BufferEncoding
 
+  /**
+   * If true, throw errors when data structure errors are encountered (such as inconsistent line
+   * length or mismatched input or output data). If false errors are simply swallowed.
+   * @default true
+   */
+  throwErrors?: boolean
+}
+export interface WriteOptions extends ReadOptions {
   /**
    * It's relative to the file save mode provided by the fs node module
    * @default 0o666
@@ -29,37 +41,74 @@ export interface GlobalOptions {
 }
 
 // Runtime data representing values to be written to the file
-export type FieldValue = string | number | boolean | Date
-export type RowData = { [fieldName: string]: FieldValue }
+export type StringFieldValue = string | null | undefined
+export type IntegerFieldValue = number | null | undefined
+export type FloatFieldValue = number | null | undefined
+export type DateFieldValue = Date | Moment | string | null | undefined
+export type FieldValue =
+  | StringFieldValue
+  | IntegerFieldValue
+  | FloatFieldValue
+  | DateFieldValue
+export type RowData<T> = { [fieldName in keyof T]: FieldValue }
 
 // FieldSpec is a discriminated union of all possible field spec types
 // Here, we make 'type' optional since field specs default to string-type
-export type FieldSpec = (
+export type FieldSpec =
   | StringFieldSpec
   | FloatFieldSpec
   | IntegerFieldSpec
   | DateFieldSpec
-) & { type?: 'string' | 'integer' | 'float' | 'date' }
 
 // String field parameters
 export type StringFieldSpec = CommonSpec & {
-  type: 'string'
+  /**
+   * Type is option for string fields because when type is not specified we default to 'string'
+   */
+  type?: 'string'
+
+  /**
+   * If the field has a set list of values, you can specify them using the 'enum' key. Since
+   * upstream providers may implement various key-value paradigms, this field is an arbitrary map
+   * of string keys to string values, as opposed to an array of fields. For example:
+   *
+   * {
+   *   "01": "received",
+   *   "02": "fulfilled",
+   *   "03": "rejected",
+   * }
+   */
+  enum?: { [serializedKey: string]: string }
 
   /**
    * Whether or not to trim whitespace from the value
    * @default true
    */
-  preserveEmptySpace: boolean
+  preserveEmptySpace?: boolean
 
   /**
    * If true, any values that are not string types will throw an exception
    */
-  straight: boolean
+  straight?: boolean
+
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
+   * `options.throwErrors` is set to false.
+   */
+  default?: string | null
 }
 
 // Integer fields - there are no additional parameters
 export type IntegerFieldSpec = CommonSpec & {
   type: 'integer'
+
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
+   * `options.throwErrors` is set to false.
+   */
+  default?: number | null
 }
 
 // Float field parameters
@@ -79,6 +128,13 @@ export type FloatFieldSpec = CommonSpec & {
    * the integer `1563424`.
    */
   dotNotation?: boolean
+
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
+   * `options.throwErrors` is set to false.
+   */
+  default?: number | null
 }
 
 // Date field parameters
@@ -97,6 +153,13 @@ export type DateFieldSpec = CommonSpec & {
      */
     dateFormat?: string
   }
+
+  /**
+   * If provided, this value is used as the default value when no value is provided in the data.
+   * If not provided, failure to provide a value for this field will result in an exception unless
+   * `options.throwErrors` is set to false.
+   */
+  default?: Date | Moment | string | null
 }
 
 declare type CommonSpec = {
@@ -123,6 +186,12 @@ declare type CommonSpec = {
    * @default ' ' (space)
    */
   paddingSymbol?: string
+
+  /**
+   * An optional description of the field. This can be used both for in-line
+   * documentation/reference and also to produce better error messages.
+   */
+  desc?: string
 }
 
 // This overloaded method is used to assert that the given field spec is of the given type

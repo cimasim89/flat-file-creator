@@ -1,6 +1,6 @@
 {
   "name": "flat-file-creator",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "Generate a flat positional text file of your dataset",
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.155",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0"
   },
   "devDependencies": {
@@ -69,7 +69,10 @@
     "globalSetup": "./jest-global-setup.js",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
-    }
+    },
+    "roots": [
+      "src/"
+    ]
   },
   "husky": {
     "hooks": {
