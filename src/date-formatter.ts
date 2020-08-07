@@ -6,12 +6,7 @@ import {
   getPadder,
   getFillStringOfSymbol,
 } from './utils'
-import {
-  DateFieldSpec,
-  FieldValue,
-  DateFieldValue,
-  assertFieldSpec,
-} from './Types'
+import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './Types'
 
 const paddingDefault = 'end'
 const defaultFormat = {
@@ -50,15 +45,28 @@ function assertDateFieldValue(
   }
 }
 
-const dateFormatter = (map: DateFieldSpec, data: FieldValue) => {
+const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   assertFieldSpec(map)
-  assertDateFieldValue(data, map.name)
 
-  const format = { ...defaultFormat, ...map.format }
-  const resDate = data ? getFormattedDateString(data, format) : ''
+  // If the data is null or undefined and has a default value defined, use that, otherwise set
+  // to incoming data
+  data = data === undefined || data === null ? map.default : data
 
-  if (_.size(resDate) > map.size) {
-    throw new Error(`Date ${resDate} exceed size ${map.size}`)
+  let resDate: string
+
+  if (data === undefined) {
+    throw new Error(`No value supplied and no default set`)
+  } else if (data === null) {
+    resDate = ''
+  } else {
+    assertDateFieldValue(data, map.name)
+
+    const format = { ...defaultFormat, ...map.format }
+    resDate = data ? getFormattedDateString(data, format) : ''
+
+    if (_.size(resDate) > map.size) {
+      throw new Error(`Date ${resDate} exceed size ${map.size}`)
+    }
   }
 
   return getPadder(

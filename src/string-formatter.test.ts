@@ -220,4 +220,58 @@ describe('String formatter execution result', () => {
       )
     ).toBe('02')
   })
+
+  const t = [0, 1]
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`uses default when set and given '${v}' as value`, () => {
+      expect(
+        rtStringFormatter(
+          {
+            size: 10,
+            paddingPosition: 'start',
+            paddingSymbol: '@',
+            name: 'someField',
+            type: 'string',
+            default: 'testtest',
+          },
+          v
+        )
+      ).toBe('@@testtest')
+    })
+  })
+
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`throws error when '${v}' given as value and no default set`, () => {
+      expect(() => {
+        rtStringFormatter(
+          {
+            size: 20,
+            paddingSymbol: '@',
+            paddingPosition: 'start',
+            name: 'someField',
+            type: 'string',
+          },
+          v
+        )
+      }).toThrow('No value supplied and no default set')
+    })
+  })
+
+  test(`supplies empty string when default is null`, () => {
+    expect(
+      rtStringFormatter(
+        {
+          size: 5,
+          paddingSymbol: '@',
+          paddingPosition: 'start',
+          name: 'someField',
+          type: 'string',
+          default: null,
+        },
+        null
+      )
+    ).toBe(`@@@@@`)
+  })
 })

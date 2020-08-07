@@ -169,4 +169,58 @@ describe('Integer formatter execution result', () => {
       )
     ).toBe('1000@@@@@@')
   })
+
+  const t = [0, 1]
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`uses default when set and given '${v}' as value`, () => {
+      expect(
+        rtIntegerFormatter(
+          {
+            size: 10,
+            paddingPosition: 'end',
+            paddingSymbol: '@',
+            name: 'someField',
+            type: 'integer',
+            default: 1234,
+          },
+          v
+        )
+      ).toBe('1234@@@@@@')
+    })
+  })
+
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`throws error when '${v}' given as value and no default set`, () => {
+      expect(() => {
+        rtIntegerFormatter(
+          {
+            size: 20,
+            paddingSymbol: '@',
+            paddingPosition: 'start',
+            name: 'someField',
+            type: 'integer',
+          },
+          v
+        )
+      }).toThrow('No value supplied and no default set')
+    })
+  })
+
+  test(`supplies empty string when default is null`, () => {
+    expect(
+      rtIntegerFormatter(
+        {
+          size: 5,
+          paddingSymbol: '@',
+          paddingPosition: 'end',
+          name: 'someField',
+          type: 'integer',
+          default: null,
+        },
+        null
+      )
+    ).toBe(`@@@@@`)
+  })
 })

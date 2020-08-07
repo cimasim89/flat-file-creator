@@ -223,4 +223,62 @@ describe('Float formatter execution result', () => {
       )
     ).toBe('    10.012')
   })
+
+  const t = [0, 1]
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`uses default when set and given '${v}' as value`, () => {
+      expect(
+        rtFloatFormatter(
+          {
+            size: 10,
+            dotNotation: true,
+            precision: 3,
+            name: 'test',
+            type: 'float',
+            default: 15,
+          },
+          v
+        )
+      ).toBe('    15.000')
+    })
+  })
+
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`throws error when '${v}' given as value and no default set`, () => {
+      expect(() => {
+        rtFloatFormatter(
+          {
+            size: 20,
+            dotNotation: true,
+            precision: 3,
+            paddingSymbol: '@',
+            paddingPosition: 'start',
+            name: 'someField',
+            type: 'float',
+          },
+          v
+        )
+      }).toThrow('No value supplied and no default set')
+    })
+  })
+
+  test(`supplies empty string when default is null`, () => {
+    expect(
+      rtFloatFormatter(
+        {
+          size: 5,
+          paddingSymbol: '@',
+          paddingPosition: 'start',
+          dotNotation: true,
+          precision: 3,
+          name: 'someField',
+          type: 'float',
+          default: null,
+        },
+        null
+      )
+    ).toBe(`@@@@@`)
+  })
 })

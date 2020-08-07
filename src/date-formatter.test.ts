@@ -60,7 +60,7 @@ describe('Date formatter execution raise Exception', () => {
   })
 })
 
-describe('String formatter execution result', () => {
+describe('Date formatter execution result', () => {
   it('size 50 and new Date, result lenght is 50', () => {
     expect(
       _.size(
@@ -214,4 +214,61 @@ describe('String formatter execution result', () => {
       ).toBe(`@${date.format('YYYY-MM-DD HH:mm:ss')}`)
     }
   )
+
+  const t = [0, 1]
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`uses default when set and given '${v}' as value`, () => {
+      expect(
+        rtDateFormatter(
+          {
+            size: 20,
+            paddingSymbol: '@',
+            paddingPosition: 'start',
+            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            name: 'someField',
+            type: 'date',
+            default: '2020-01-01 08:00:00',
+          },
+          v
+        )
+      ).toBe(`@2020-01-01 08:00:00`)
+    })
+  })
+
+  t.map((n) => {
+    const v = n === 0 ? null : undefined
+    test(`throws error when '${v}' given as value and no default set`, () => {
+      expect(() => {
+        rtDateFormatter(
+          {
+            size: 20,
+            paddingSymbol: '@',
+            paddingPosition: 'start',
+            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            name: 'someField',
+            type: 'date',
+          },
+          v
+        )
+      }).toThrow('No value supplied and no default set')
+    })
+  })
+
+  test(`supplies empty string when default is null`, () => {
+    expect(
+      rtDateFormatter(
+        {
+          size: 5,
+          paddingSymbol: '@',
+          paddingPosition: 'start',
+          format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+          name: 'someField',
+          type: 'date',
+          default: null,
+        },
+        null
+      )
+    ).toBe(`@@@@@`)
+  })
 })
