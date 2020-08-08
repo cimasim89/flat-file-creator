@@ -55,7 +55,7 @@
     "pretty-quick": "2.0.1",
     "ts-jest": "26.1.0",
     "ttypescript": "^1.5.10",
-    "typescript": "3.9.5"
+    "typescript": "3.9.7"
   },
   "prettier": {
     "semi": false,
