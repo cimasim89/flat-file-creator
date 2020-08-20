@@ -24,14 +24,21 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
   } else if (data === null) {
     str = ''
   } else {
+    // Make sure value is numeric and then coerce it into an official Number type
     if (!isNumeric(data)) {
       throw new Error(`field [${map.name}] has not compatible type`)
     }
+    const num = Number(data)
+
+    // Format it according to the options passed
     const precision = !map.precision ? 0 : map.precision
-    const num = data.toFixed(precision + 1)
-    str = !map.dotNotation
-      ? Math.trunc(Number(num) * Math.pow(10, precision)).toString()
-      : data.toFixed(precision).toString()
+    if (map.dotNotation) {
+      str = num.toFixed(precision).toString()
+    } else {
+      str = Math.trunc(num * Math.pow(10, precision)).toString()
+    }
+
+    // Make sure it fits
     if (_.size(str) > map.size) {
       throw new Error(`Value ${str} exceed size ${map.size}`)
     }
