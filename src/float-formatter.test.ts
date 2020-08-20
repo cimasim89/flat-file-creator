@@ -97,7 +97,7 @@ describe('Float formatter execution raise Exception', () => {
 })
 
 describe('Float formatter execution result', () => {
-  it('size 4 and data 10, result lenght is 4 ', () => {
+  it('size 4 and data 10, result length is 4 ', () => {
     expect(
       _.size(
         rtFloatFormatter(
@@ -108,7 +108,7 @@ describe('Float formatter execution result', () => {
     ).toBe(4)
   })
 
-  it('size 4 precision 2 data 10.05, result lenght is 4', () => {
+  it('size 4 precision 2 data 10.05, result length is 4', () => {
     expect(
       _.size(
         rtFloatFormatter(
@@ -128,7 +128,7 @@ describe('Float formatter execution result', () => {
     ).toBe('10015')
   })
 
-  it('size 10 precision 3 data 10.05555, result lenght is 10', () => {
+  it('size 10 precision 3 data 10.05555, result length is 10', () => {
     expect(
       _.size(
         rtFloatFormatter(
