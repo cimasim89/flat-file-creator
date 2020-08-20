@@ -36,7 +36,9 @@ const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
     }
   } catch (e) {
     if (map) {
-      e.message = `Field ${map.name}: ${e.message}`
+      e.message =
+        `Field ${map.name}: ${e.message} ` +
+        `(data: ${data ? `'${data[<keyof T>map.name]}'` : `unknown`})`
     }
     throw e
   }
