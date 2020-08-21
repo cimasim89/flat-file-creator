@@ -8,8 +8,16 @@ const defaultOptions = {
 
 const prepareToConcatData = <T>(data: RowData<T>) => (
   acc: string,
-  field: FieldSpec
-) => acc + fieldFormatter<T>(field, data)
+  field: FieldSpec,
+  i: number
+) => {
+  try {
+    return acc + fieldFormatter<T>(field, data)
+  } catch (e) {
+    e.message = `Row Index ${i}: ${e.message}`
+    throw e
+  }
+}
 
 const rowFormatter = <T>(
   maps: Array<FieldSpec>,
