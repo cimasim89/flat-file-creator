@@ -188,7 +188,7 @@ type StringFieldSpec =
 
     /**
      * Whether or not to trim whitespace from the value
-     * @default true
+     * @default false
      */
     preserveEmptySpace?: boolean
 
