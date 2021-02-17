@@ -30,12 +30,12 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
   } else {
     str = data
     // If we don't want to preserve white space, trim it now
-    if (map.preserveEmptySpace || map.preserveEmptySpace === undefined) {
+    if (!map.preserveEmptySpace) {
       str = str.trim()
     }
 
     // If this is an enum field, convert the value to serialized form
-    if (data !== null && map.enum !== undefined) {
+    if (map.enum !== undefined) {
       // If we find the string in the values of the enum, convert it to a key
       let i = Object.values(map.enum).indexOf(str)
       if (i > -1) {

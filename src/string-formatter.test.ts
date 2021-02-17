@@ -274,4 +274,45 @@ describe('String formatter execution result', () => {
       )
     ).toBe(`@@@@@`)
   })
+
+  test(`remove empty space when preserveEmptySpace in not defined`, () => {
+    expect(
+      rtStringFormatter(
+        {
+          size: 10,
+          name: 'someField',
+          type: 'string',
+        },
+        '   test'
+      )
+    ).toBe(`test      `)
+  })
+
+  test(`preserve empty space when preserveEmptySpace is true`, () => {
+    expect(
+      rtStringFormatter(
+        {
+          name: 'someField',
+          preserveEmptySpace: true,
+          size: 10,
+          type: 'string',
+        },
+        '   test'
+      )
+    ).toBe(`   test   `)
+  })
+
+  test(`remove empty space when preserveEmptySpace is false`, () => {
+    expect(
+      rtStringFormatter(
+        {
+          name: 'someField',
+          preserveEmptySpace: false,
+          size: 10,
+          type: 'string',
+        },
+        '   test   '
+      )
+    ).toBe(`test      `)
+  })
 })
