@@ -28,34 +28,34 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.155",
+    "husky": "^6.0.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^12.0.0",
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "12.0.0",
     "@types/jest": "26.0.20",
     "@types/node": "14.14.28",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "eslint": "^7.20.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-import-resolver-typescript": "^2.4.0",
+    "@typescript-eslint/eslint-plugin": "4.15.1",
+    "@typescript-eslint/parser": "4.15.1",
+    "eslint": "7.20.0",
+    "eslint-config-prettier": "7.2.0",
+    "eslint-config-standard": "16.0.2",
+    "eslint-import-resolver-typescript": "2.4.0",
     "eslint-plugin-eslint-plugin": "2.3.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.5",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jest": "24.1.5",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "husky": "^6.0.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-promise": "4.3.1",
+    "eslint-plugin-standard": "5.0.0",
     "jest": "26.6.3",
     "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
     "ts-jest": "26.5.1",
     "ttypescript": "1.5.12",
-    "typescript": "^4.1.5"
+    "typescript": "4.1.5"
   },
   "prettier": {
     "semi": false,
@@ -73,11 +73,5 @@
     "roots": [
       "src/"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
