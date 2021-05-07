@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "04:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - cimasim89
+  assignees:
+  - cimasim89
+  labels:
+  - status/CR-NEEDED
+  - kind/DEPENDENCIES
+  versioning-strategy: increase
+
