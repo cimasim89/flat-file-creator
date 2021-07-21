@@ -33,7 +33,7 @@
     "moment": "^2.29.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "12.1.1",
+    "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
     "@types/jest": "26.0.23",
     "@types/node": "15.0.2",
