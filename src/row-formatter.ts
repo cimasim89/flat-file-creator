@@ -6,18 +6,16 @@ const defaultOptions = {
   rowEnd: '',
 }
 
-const prepareToConcatData = <T>(data: RowData<T>) => (
-  acc: string,
-  field: FieldSpec,
-  i: number
-) => {
-  try {
-    return acc + fieldFormatter<T>(field, data)
-  } catch (e) {
-    e.message = `Row Index ${i}: ${e.message}`
-    throw e
+const prepareToConcatData =
+  <T>(data: RowData<T>) =>
+  (acc: string, field: FieldSpec, i: number) => {
+    try {
+      return acc + fieldFormatter<T>(field, data)
+    } catch (e) {
+      e.message = `Row Index ${i}: ${e.message}`
+      throw e
+    }
   }
-}
 
 const rowFormatter = <T>(
   maps: Array<FieldSpec>,

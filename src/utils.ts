@@ -28,9 +28,7 @@ export const getFillStringOfSymbol = (sym: string) => (length: number) => {
   return length > 0 ? sym.repeat(length) : ''
 }
 
-export const getPadder = (position: 'start' | 'end') => (
-  str: string,
-  fill: string
-) => {
-  return position === 'start' ? fill + str : str + fill
-}
+export const getPadder =
+  (position: 'start' | 'end') => (str: string, fill: string) => {
+    return position === 'start' ? fill + str : str + fill
+  }
