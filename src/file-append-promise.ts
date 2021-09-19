@@ -18,25 +18,15 @@ const prepareOptions = (opts: Partial<WriteOptions>) => {
 const fileAppendPromise = (
   path: string,
   data: string,
-  options?: Partial<WriteOptions>
+  options: Partial<WriteOptions>
 ) => {
   return new Promise((resolve, reject) => {
-    const appendCallback = (path: string) => (err: Error) => {
-      if (err) {
-        return reject(err)
-      }
-      return resolve(path)
+    try {
+      fs.appendFileSync(path, data, prepareOptions(options))
+      resolve(path)
+    } catch (error) {
+      return reject(error)
     }
-
-    if (options && options.encoding) {
-      return fs.appendFile(
-        path,
-        data,
-        prepareOptions(options),
-        appendCallback(path)
-      )
-    }
-    fs.appendFile(path, data, appendCallback(path))
   })
 }
 
