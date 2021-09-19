@@ -5,6 +5,9 @@
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
   "scripts": {
+    "prepare": "husky install",
+    "pretty-quick": "pretty-quick --staged",
+    "commitlint": "commitlint --edit",
     "test": "jest",
     "watch": "jest --watch",
     "lint": "eslint --cache --format codeframe src/*.ts",
@@ -39,7 +42,7 @@
     "@types/node": "16.7.10",
     "@typescript-eslint/eslint-plugin": "4.31.0",
     "@typescript-eslint/parser": "4.31.1",
-    "eslint": "^7.32.0",
+    "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
     "eslint-import-resolver-typescript": "2.4.0",
@@ -53,9 +56,9 @@
     "jest": "27.1.1",
     "prettier": "2.3.2",
     "pretty-quick": "3.1.1",
-    "ts-jest": "^27.0.5",
+    "ts-jest": "27.0.5",
     "ttypescript": "1.5.12",
-    "typescript": "4.4.3"
+    "typescript": "^3.8.2 || ^4.0.2"
   },
   "prettier": {
     "semi": false,
