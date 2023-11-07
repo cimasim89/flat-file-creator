@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { WriteOptions } from './Types'
+import { WriteOptions } from './types'
 
 const defaultOptions = {
   encoding: 'utf8' as const,

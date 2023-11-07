@@ -9,7 +9,7 @@ import {
 } from './flat-file-reader'
 import * as rowFormatter from './row-formatter'
 import * as fieldFormatter from './field-formatter'
-import * as Types from './Types'
+import * as Types from './types'
 
 export {
   getAsyncFlatFileCreator,

@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { isNumeric } from './utils'
+import { isNumeric } from '../utils'
 import { Moment } from 'moment'
 
 // Export Moment type for downstream convenience

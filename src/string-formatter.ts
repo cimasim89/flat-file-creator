@@ -6,7 +6,7 @@ import {
   getPadder,
   getFillStringOfSymbol,
 } from './utils'
-import { StringFieldSpec, StringFieldValue, assertFieldSpec } from './Types'
+import { StringFieldSpec, StringFieldValue, assertFieldSpec } from './types'
 import { FlatFileEnumError } from './Errors'
 
 const paddingDefault = 'end'

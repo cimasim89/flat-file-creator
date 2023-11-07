@@ -11,7 +11,7 @@ import {
   IntegerFieldValue,
   FloatFieldValue,
   DateFieldValue,
-} from './Types'
+} from './types'
 
 const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
   try {

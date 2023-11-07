@@ -6,7 +6,7 @@ import {
   getPadder,
   getFillStringOfSymbol,
 } from './utils'
-import { IntegerFieldSpec, IntegerFieldValue, assertFieldSpec } from './Types'
+import { IntegerFieldSpec, IntegerFieldValue, assertFieldSpec } from './types'
 
 const paddingDefault = 'start'
 

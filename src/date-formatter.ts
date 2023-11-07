@@ -6,7 +6,7 @@ import {
   getPadder,
   getFillStringOfSymbol,
 } from './utils'
-import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './Types'
+import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './types'
 
 const paddingDefault = 'end'
 const defaultFormat = {

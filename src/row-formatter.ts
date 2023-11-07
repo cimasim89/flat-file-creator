@@ -1,6 +1,6 @@
 import * as lodash from 'lodash'
 import fieldFormatter from './field-formatter'
-import { FieldSpec, RowData, WriteOptions } from './Types'
+import { FieldSpec, RowData, WriteOptions } from './types'
 
 const defaultOptions = {
   rowEnd: '',
