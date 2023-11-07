@@ -49,13 +49,13 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
             `Value for field '${
               map.name
             }' should have been one of the accepted values ["${Object.values(
-              map.enum
+              map.enum,
             ).join(`", "`)}"]${
               typeof map.default !== 'undefined' && map.default === null
                 ? ` or null`
                 : ``
             }, but you passed '${str}'`,
-            map.name
+            map.name,
           )
         }
       }
@@ -63,12 +63,12 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
   }
 
   return getPadder(
-    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault),
   )(
     str.substring(0, map.size),
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(str)
-    )
+      map.size - _.size(str),
+    ),
   )
 }
 

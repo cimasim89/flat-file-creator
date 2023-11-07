@@ -7,13 +7,13 @@ const rtFloatFormatter: any = floatFormatter
 describe('Float formatter execution raise Exception', () => {
   it('If map is null', () => {
     expect(() => rtFloatFormatter(null, null)).toThrow(
-      'map is null or undefined'
+      'map is null or undefined',
     )
   })
 
   it('If map is not an object', () => {
     expect(() => rtFloatFormatter('something', null)).toThrow(
-      'map is not an object'
+      'map is not an object',
     )
   })
 
@@ -25,20 +25,20 @@ describe('Float formatter execution raise Exception', () => {
     expect(() =>
       rtFloatFormatter(
         { name: 'test', paddingPosition: 'end', precision: 2 },
-        null
-      )
+        null,
+      ),
     ).toThrow('map size is required')
   })
 
   it('Is size is less than 1', () => {
     expect(() =>
-      rtFloatFormatter({ size: 0, name: 'someField', precision: 2 }, 100)
+      rtFloatFormatter({ size: 0, name: 'someField', precision: 2 }, 100),
     ).toThrow('map size must be greater than 0')
   })
 
   it('precision must be specified', () => {
     expect(() =>
-      rtFloatFormatter({ size: 10, name: 'someField', type: 'float' }, 100)
+      rtFloatFormatter({ size: 10, name: 'someField', type: 'float' }, 100),
     ).toThrow('float precision must be specified')
   })
 
@@ -50,8 +50,8 @@ describe('Float formatter execution raise Exception', () => {
     expect(() =>
       rtFloatFormatter(
         { size, name: 'someField', precision, type: 'float' },
-        data
-      )
+        data,
+      ),
     ).toThrow(`Value ${res} exceed size ${size}`)
   })
 
@@ -66,8 +66,8 @@ describe('Float formatter execution raise Exception', () => {
           precision: 2,
           type: 'float',
         },
-        100
-      )
+        100,
+      ),
     ).toThrow(`padding position "${paddingPosition}" not allowed`)
   })
 
@@ -81,8 +81,8 @@ describe('Float formatter execution raise Exception', () => {
           precision: 2,
           type: 'float',
         },
-        100
-      )
+        100,
+      ),
     ).toThrow('paddingSymbol cannot have length > 1')
   })
 
@@ -90,8 +90,8 @@ describe('Float formatter execution raise Exception', () => {
     expect(() =>
       rtFloatFormatter(
         { size: 10, name: 'someField', precision: 2, type: 'float' },
-        'somestring'
-      )
+        'somestring',
+      ),
     ).toThrow('field [someField] has not compatible type')
   })
 })
@@ -102,9 +102,9 @@ describe('Float formatter execution result', () => {
       _.size(
         rtFloatFormatter(
           { size: 4, precision: 0, name: 'test', type: 'float' },
-          10
-        )
-      )
+          10,
+        ),
+      ),
     ).toBe(4)
   })
 
@@ -113,9 +113,9 @@ describe('Float formatter execution result', () => {
       _.size(
         rtFloatFormatter(
           { size: 4, precision: 2, name: 'test', type: 'float' },
-          10.05
-        )
-      )
+          10.05,
+        ),
+      ),
     ).toBe(4)
   })
 
@@ -123,8 +123,8 @@ describe('Float formatter execution result', () => {
     expect(
       rtFloatFormatter(
         { size: 5, precision: 3, name: 'test', type: 'float' },
-        10.0156
-      )
+        10.0156,
+      ),
     ).toBe('10015')
   })
 
@@ -133,9 +133,9 @@ describe('Float formatter execution result', () => {
       _.size(
         rtFloatFormatter(
           { size: 10, precision: 3, name: 'test', type: 'float' },
-          10.05555
-        )
-      )
+          10.05555,
+        ),
+      ),
     ).toBe(10)
   })
 
@@ -143,8 +143,8 @@ describe('Float formatter execution result', () => {
     expect(
       rtFloatFormatter(
         { size: 10, precision: 2, name: 'test', type: 'float' },
-        10.05
-      )
+        10.05,
+      ),
     ).toBe('      1005')
   })
 
@@ -158,8 +158,8 @@ describe('Float formatter execution result', () => {
           name: 'test',
           type: 'float',
         },
-        10.0123
-      )
+        10.0123,
+      ),
     ).toBe('        10')
   })
 
@@ -173,8 +173,8 @@ describe('Float formatter execution result', () => {
           name: 'test',
           type: 'float',
         },
-        10.0123
-      )
+        10.0123,
+      ),
     ).toBe('1001      ')
   })
 
@@ -188,8 +188,8 @@ describe('Float formatter execution result', () => {
           name: 'test',
           type: 'float',
         },
-        10.0123
-      )
+        10.0123,
+      ),
     ).toBe('@@@@@10012')
   })
 
@@ -204,8 +204,8 @@ describe('Float formatter execution result', () => {
           name: 'test',
           type: 'float',
         },
-        10.0123
-      )
+        10.0123,
+      ),
     ).toBe('10012@@@@@')
   })
 
@@ -219,8 +219,8 @@ describe('Float formatter execution result', () => {
           name: 'test',
           type: 'float',
         },
-        10.0123
-      )
+        10.0123,
+      ),
     ).toBe('    10.012')
   })
 
@@ -238,8 +238,8 @@ describe('Float formatter execution result', () => {
             type: 'float',
             default: 15,
           },
-          v
-        )
+          v,
+        ),
       ).toBe('    15.000')
     })
   })
@@ -258,7 +258,7 @@ describe('Float formatter execution result', () => {
             name: 'someField',
             type: 'float',
           },
-          v
+          v,
         )
       }).toThrow('No value supplied and no default set')
     })
@@ -277,8 +277,8 @@ describe('Float formatter execution result', () => {
           type: 'float',
           default: null,
         },
-        null
-      )
+        null,
+      ),
     ).toBe(`@@@@@`)
   })
 })

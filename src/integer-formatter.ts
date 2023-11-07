@@ -12,7 +12,7 @@ const paddingDefault = 'start'
 
 const integerFormatter = (
   map: IntegerFieldSpec,
-  data: IntegerFieldValue = null
+  data: IntegerFieldValue = null,
 ) => {
   assertFieldSpec(map, 'integer')
 
@@ -37,12 +37,12 @@ const integerFormatter = (
   }
 
   return getPadder(
-    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault),
   )(
     num,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(num)
-    )
+      map.size - _.size(num),
+    ),
   )
 }
 

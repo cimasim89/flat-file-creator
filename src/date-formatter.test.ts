@@ -8,13 +8,13 @@ const rtDateFormatter: any = dateFormatter
 describe('Date formatter execution raise Exception', () => {
   it('If map is null', () => {
     expect(() => rtDateFormatter(null, null)).toThrow(
-      'map is null or undefined'
+      'map is null or undefined',
     )
   })
 
   it('If map is not an object', () => {
     expect(() => rtDateFormatter('something', null)).toThrow(
-      'map is not an object'
+      'map is not an object',
     )
   })
 
@@ -24,20 +24,20 @@ describe('Date formatter execution raise Exception', () => {
 
   it('If field map object not contain size', () => {
     expect(() =>
-      rtDateFormatter({ name: 'test', paddingPosition: 'end' }, null)
+      rtDateFormatter({ name: 'test', paddingPosition: 'end' }, null),
     ).toThrow('map size is required')
   })
 
   it('If data is not a date', () => {
     const date = 'richard pryor'
     expect(() =>
-      rtDateFormatter({ size: 10, name: 'someField' }, date)
+      rtDateFormatter({ size: 10, name: 'someField' }, date),
     ).toThrow(`Invalid date ${date}`)
   })
 
   it('Size is less than 1', () => {
     expect(() => rtDateFormatter({ size: 0, name: 'someField' }, '')).toThrow(
-      'map size must be greater than 0'
+      'map size must be greater than 0',
     )
   })
 
@@ -45,7 +45,7 @@ describe('Date formatter execution raise Exception', () => {
     const date = new Date()
     const paddingPosition = 'notvalidpad'
     expect(() =>
-      rtDateFormatter({ size: 50, name: 'someField', paddingPosition }, date)
+      rtDateFormatter({ size: 50, name: 'someField', paddingPosition }, date),
     ).toThrow(`padding position "${paddingPosition}" not allowed`)
   })
 
@@ -54,8 +54,8 @@ describe('Date formatter execution raise Exception', () => {
     expect(() =>
       rtDateFormatter(
         { size: 50, name: 'someField', paddingSymbol: '@.@' },
-        date
-      )
+        date,
+      ),
     ).toThrow('paddingSymbol cannot have length > 1')
   })
 })
@@ -66,9 +66,9 @@ describe('Date formatter execution result', () => {
       _.size(
         rtDateFormatter(
           { size: 50, name: 'someField', type: 'date' },
-          new Date()
-        )
-      )
+          new Date(),
+        ),
+      ),
     ).toBe(50)
   })
 
@@ -79,10 +79,10 @@ describe('Date formatter execution result', () => {
       expect(
         rtDateFormatter(
           { size: 30, name: 'someField', type: 'date' },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01T00:00:00.000Z      ')
-    }
+    },
   )
 
   it(
@@ -92,10 +92,10 @@ describe('Date formatter execution result', () => {
       expect(
         rtDateFormatter(
           { size: 24, name: 'someField', type: 'date' },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01T00:00:00.000Z')
-    }
+    },
   )
 
   it(
@@ -110,10 +110,10 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01')
-    }
+    },
   )
 
   it(
@@ -128,10 +128,10 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01')
-    }
+    },
   )
 
   it(
@@ -146,10 +146,10 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01 00:00:00 ')
-    }
+    },
   )
 
   it(
@@ -166,10 +166,10 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01 00:00:00@')
-    }
+    },
   )
 
   it(
@@ -187,10 +187,10 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('@2018-01-01 00:00:00')
-    }
+    },
   )
 
   it(
@@ -209,10 +209,10 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          date
-        )
+          date,
+        ),
       ).toBe(`@${date.format('YYYY-MM-DD HH:mm:ss')}`)
-    }
+    },
   )
 
   const t = [0, 1]
@@ -230,8 +230,8 @@ describe('Date formatter execution result', () => {
             type: 'date',
             default: '2020-01-01 08:00:00',
           },
-          v
-        )
+          v,
+        ),
       ).toBe(`@2020-01-01 08:00:00`)
     })
   })
@@ -249,7 +249,7 @@ describe('Date formatter execution result', () => {
             name: 'someField',
             type: 'date',
           },
-          v
+          v,
         )
       }).toThrow('No value supplied and no default set')
     })
@@ -267,8 +267,8 @@ describe('Date formatter execution result', () => {
           type: 'date',
           default: null,
         },
-        null
-      )
+        null,
+      ),
     ).toBe(`@@@@@`)
   })
 })

@@ -19,7 +19,7 @@ describe('row formatter execution exceptions', () => {
 
   it('If data is not an object throw exception', () => {
     expect(() => rtRowFormatter([{}], 'some string')).toThrow(
-      'data is not an object'
+      'data is not an object',
     )
   })
 })
@@ -165,7 +165,7 @@ describe('row formatter execution', () => {
       birth: '1989-12-11',
     }
     expect(rtRowFormatter(map, data)).toBe(
-      'John      Doe          20 1750 11/12/1989'
+      'John      Doe          20 1750 11/12/1989',
     )
   })
 })

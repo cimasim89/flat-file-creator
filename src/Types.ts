@@ -197,24 +197,24 @@ declare type CommonSpec = {
 // This overloaded method is used to assert that the given field spec is of the given type
 export function assertFieldSpec(
   spec: any,
-  type: 'string'
+  type: 'string',
 ): asserts spec is StringFieldSpec
 export function assertFieldSpec(
   spec: any,
-  type: 'integer'
+  type: 'integer',
 ): asserts spec is IntegerFieldSpec
 export function assertFieldSpec(
   spec: any,
-  type: 'float'
+  type: 'float',
 ): asserts spec is FloatFieldSpec
 export function assertFieldSpec(
   spec: any,
-  type: 'date'
+  type: 'date',
 ): asserts spec is DateFieldSpec
 export function assertFieldSpec(spec: any): asserts spec is FieldSpec
 export function assertFieldSpec(
   spec: any,
-  type?: string
+  type?: string,
 ): asserts spec is FieldSpec {
   if (!spec) {
     throw new Error('map is null or undefined')
@@ -240,7 +240,7 @@ export function assertFieldSpec(
   if (type) {
     if (type !== spec.type) {
       throw new Error(
-        `map field [${spec.name}] is for ${spec.type}, not the required ${type}`
+        `map field [${spec.name}] is for ${spec.type}, not the required ${type}`,
       )
     }
     if (type === 'float' && typeof spec.precision === 'undefined') {

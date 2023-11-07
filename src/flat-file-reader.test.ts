@@ -18,21 +18,21 @@ describe('FlatFileReader', () => {
   describe('parseLine', () => {
     test('throws when line is not correct length', () => {
       expect(() =>
-        parseLine<TestData>(lines[0] + 'abc', testFields, correctLength)
+        parseLine<TestData>(lines[0] + 'abc', testFields, correctLength),
       ).toThrow(`The given line must be ${correctLength} characters long`)
 
       expect(() => {
         parseLine<TestData>(
           lines[0].slice(0, correctLength - 3),
           testFields,
-          correctLength
+          correctLength,
         )
       }).toThrow(`The given line must be ${correctLength} characters long`)
     })
 
     test('does NOT throw for incorrect line length if no length spec given', () => {
       expect(() =>
-        parseLine<TestData>(lines[0] + 'abc', testFields)
+        parseLine<TestData>(lines[0] + 'abc', testFields),
       ).not.toThrow(`The given line must be ${correctLength} characters long`)
     })
 
@@ -56,10 +56,10 @@ describe('FlatFileReader', () => {
       expect(() =>
         parseLine('05', [
           { name: 'test', size: 2, type: 'string', enum: { '01': 'good' } },
-        ])
+        ]),
       ).toThrow(
         "Incoming value for field 'test' should have been one of the accepted enum keys " +
-          '["01"], but found \'05\''
+          '["01"], but found \'05\'',
       )
     })
   })
@@ -133,14 +133,14 @@ describe('FlatFileReader', () => {
       expect(() => {
         linesToData<TestData>(
           lines.map((l) => l + 'abcde'),
-          testFields
+          testFields,
         )
       }).toThrow('The given line must be')
       expect(() => {
         linesToData<TestData>(
           lines.map((l) => l + 'abcde'),
           testFields,
-          { throwErrors: true }
+          { throwErrors: true },
         )
       }).toThrow('The given line must be')
     })
@@ -150,7 +150,7 @@ describe('FlatFileReader', () => {
         linesToData<TestData>(
           lines.map((l) => l + 'abcde'),
           testFields,
-          { throwErrors: false }
+          { throwErrors: false },
         )
       }).not.toThrow('The given line must be')
     })

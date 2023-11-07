@@ -15,22 +15,21 @@ const defaultFormat = {
 
 const getFormattedDateString = (
   date: Date | moment.Moment | string,
-  opts: Partial<NonNullable<DateFieldSpec['format']>>
+  opts: Partial<NonNullable<DateFieldSpec['format']>>,
 ) => {
-  const base = moment(date)
+  const base = moment(date, moment.ISO_8601).utc(opts.utc).clone()
   if (!base.isValid()) {
     throw new Error(`Invalid date ${date}`)
   }
-  const convention = opts.utc ? base.utc() : base
   if (!opts.dateFormat) {
-    return convention.toISOString()
+    return base.toISOString()
   }
-  return convention.format(opts.dateFormat)
+  return base.format(opts.dateFormat)
 }
 
 function assertDateFieldValue(
   d: any,
-  fieldName: string
+  fieldName: string,
 ): asserts d is DateFieldValue {
   if (
     d !== null &&
@@ -40,7 +39,7 @@ function assertDateFieldValue(
     typeof d.year === 'undefined'
   ) {
     throw new Error(
-      `Value for date field ${fieldName} must be a date or a string representation of a date`
+      `Value for date field ${fieldName} must be a date or a string representation of a date`,
     )
   }
 }
@@ -70,12 +69,12 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   }
 
   return getPadder(
-    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault),
   )(
     resDate,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(resDate)
-    )
+      map.size - _.size(resDate),
+    ),
   )
 }
 

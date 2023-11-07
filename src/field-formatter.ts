@@ -29,7 +29,7 @@ const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
       case undefined:
         return stringFormatter(
           { ...(map as StringFieldSpec), type: 'string' },
-          <StringFieldValue>data[fieldName]
+          <StringFieldValue>data[fieldName],
         )
       default:
         throw new Error('required field type is not present')

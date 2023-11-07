@@ -7,12 +7,12 @@ const rtStringFormatter: any = stringFormatter
 describe('String formatter execution raise Exception', () => {
   it('If map is null', () => {
     expect(() => rtStringFormatter(null, null)).toThrow(
-      'map is null or undefined'
+      'map is null or undefined',
     )
   })
   it('If map is not an object', () => {
     expect(() => rtStringFormatter('something', null)).toThrow(
-      'map is not an object'
+      'map is not an object',
     )
   })
 
@@ -22,7 +22,7 @@ describe('String formatter execution raise Exception', () => {
 
   it('If field map object not contain size', () => {
     expect(() =>
-      rtStringFormatter({ paddingPosition: 'end', name: 'someField' }, null)
+      rtStringFormatter({ paddingPosition: 'end', name: 'someField' }, null),
     ).toThrow('map size is required')
   })
 
@@ -30,14 +30,14 @@ describe('String formatter execution raise Exception', () => {
     expect(() =>
       rtStringFormatter(
         { size: 10, name: 'someField', type: 'string', straight: true },
-        100
-      )
+        100,
+      ),
     ).toThrow('field has not compatible type')
   })
 
   it('Size is less than 1', () => {
     expect(() => rtStringFormatter({ size: 0, name: 'someField' }, '')).toThrow(
-      'map size must be greater than 0'
+      'map size must be greater than 0',
     )
   })
 
@@ -46,8 +46,8 @@ describe('String formatter execution raise Exception', () => {
     expect(() =>
       rtStringFormatter(
         { size: 10, name: 'someField', type: 'string', paddingPosition },
-        ''
-      )
+        '',
+      ),
     ).toThrow(`padding position "${paddingPosition}" not allowed`)
   })
 
@@ -55,8 +55,8 @@ describe('String formatter execution raise Exception', () => {
     expect(() =>
       rtStringFormatter(
         { size: 10, name: 'someField', type: 'string', paddingSymbol: '@.@' },
-        ''
-      )
+        '',
+      ),
     ).toThrow('paddingSymbol cannot have length > 1')
   })
 
@@ -72,12 +72,12 @@ describe('String formatter execution raise Exception', () => {
             '02': 'cleared',
           },
         },
-        'dropped'
-      )
+        'dropped',
+      ),
     ).toThrow(
       "Value for field 'someField' should have been one of the accepted values [" +
         '"received", "cleared"' +
-        "], but you passed 'dropped'"
+        "], but you passed 'dropped'",
     )
   })
 })
@@ -86,8 +86,8 @@ describe('String formatter execution result', () => {
   it("size 10 and data '', result lenght is 10 ", () => {
     expect(
       _.size(
-        rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, '')
-      )
+        rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, ''),
+      ),
     ).toBe(10)
   })
 
@@ -96,9 +96,9 @@ describe('String formatter execution result', () => {
       _.size(
         rtStringFormatter(
           { size: 10, name: 'someField', type: 'string' },
-          'somelongstring'
-        )
-      )
+          'somelongstring',
+        ),
+      ),
     ).toBe(10)
   })
 
@@ -106,8 +106,8 @@ describe('String formatter execution result', () => {
     expect(
       rtStringFormatter(
         { size: 10, name: 'someField', type: 'string' },
-        'somelongstring'
-      )
+        'somelongstring',
+      ),
     ).toBe('somelongst')
   })
 
@@ -116,9 +116,9 @@ describe('String formatter execution result', () => {
       _.size(
         rtStringFormatter(
           { size: 10, name: 'someField', type: 'string' },
-          'somestring'
-        )
-      )
+          'somestring',
+        ),
+      ),
     ).toBe(10)
   })
 
@@ -126,8 +126,8 @@ describe('String formatter execution result', () => {
     expect(
       rtStringFormatter(
         { size: 10, name: 'someField', type: 'string' },
-        'somestring'
-      )
+        'somestring',
+      ),
     ).toBe('somestring')
   })
 
@@ -136,9 +136,9 @@ describe('String formatter execution result', () => {
       _.size(
         rtStringFormatter(
           { size: 10, name: 'someField', type: 'string' },
-          'str ing'
-        )
-      )
+          'str ing',
+        ),
+      ),
     ).toBe(10)
   })
 
@@ -146,8 +146,8 @@ describe('String formatter execution result', () => {
     expect(
       rtStringFormatter(
         { size: 10, name: 'someField', type: 'string' },
-        'str ing'
-      )
+        'str ing',
+      ),
     ).toBe('str ing   ')
   })
 
@@ -160,8 +160,8 @@ describe('String formatter execution result', () => {
           name: 'someField',
           type: 'string',
         },
-        'str ing'
-      )
+        'str ing',
+      ),
     ).toBe('   str ing')
   })
 
@@ -169,8 +169,8 @@ describe('String formatter execution result', () => {
     expect(
       rtStringFormatter(
         { size: 10, paddingSymbol: '@', name: 'someField', type: 'string' },
-        'str ing'
-      )
+        'str ing',
+      ),
     ).toBe('str ing@@@')
   })
 
@@ -184,8 +184,8 @@ describe('String formatter execution result', () => {
           name: 'someField',
           type: 'string',
         },
-        'str ing'
-      )
+        'str ing',
+      ),
     ).toBe('@@@str ing')
   })
 
@@ -201,8 +201,8 @@ describe('String formatter execution result', () => {
             '02': 'cleared',
           },
         },
-        'received'
-      )
+        'received',
+      ),
     ).toBe('01')
 
     expect(
@@ -216,8 +216,8 @@ describe('String formatter execution result', () => {
             '02': 'cleared',
           },
         },
-        '02'
-      )
+        '02',
+      ),
     ).toBe('02')
   })
 
@@ -235,8 +235,8 @@ describe('String formatter execution result', () => {
             type: 'string',
             default: 'testtest',
           },
-          v
-        )
+          v,
+        ),
       ).toBe('@@testtest')
     })
   })
@@ -253,7 +253,7 @@ describe('String formatter execution result', () => {
             name: 'someField',
             type: 'string',
           },
-          v
+          v,
         )
       }).toThrow('No value supplied and no default set')
     })
@@ -270,8 +270,8 @@ describe('String formatter execution result', () => {
           type: 'string',
           default: null,
         },
-        null
-      )
+        null,
+      ),
     ).toBe(`@@@@@`)
   })
 
@@ -283,8 +283,8 @@ describe('String formatter execution result', () => {
           name: 'someField',
           type: 'string',
         },
-        '   test'
-      )
+        '   test',
+      ),
     ).toBe(`test      `)
   })
 
@@ -297,8 +297,8 @@ describe('String formatter execution result', () => {
           size: 10,
           type: 'string',
         },
-        '   test'
-      )
+        '   test',
+      ),
     ).toBe(`   test   `)
   })
 
@@ -311,8 +311,8 @@ describe('String formatter execution result', () => {
           size: 10,
           type: 'string',
         },
-        '   test   '
-      )
+        '   test   ',
+      ),
     ).toBe(`test      `)
   })
 })

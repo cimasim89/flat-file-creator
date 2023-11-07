@@ -45,12 +45,12 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
   }
 
   return getPadder(
-    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault),
   )(
     str,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(str)
-    )
+      map.size - _.size(str),
+    ),
   )
 }
 
