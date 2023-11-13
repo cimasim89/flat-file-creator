@@ -27,7 +27,7 @@
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.172",
+    "@types/lodash": "^4.14.201",
     "husky": "^7.0.2",
     "lodash": "^4.17.20",
     "moment": "^2.29.1"
