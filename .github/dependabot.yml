@@ -7,9 +7,9 @@ updates:
     time: "04:00"
   open-pull-requests-limit: 10
   reviewers:
-  - cimasim89
+  - direisc
   assignees:
-  - cimasim89
+  - direisc
   labels:
   - status/CR-NEEDED
   - kind/DEPENDENCIES
