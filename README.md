@@ -1,8 +1,9 @@
-# Flat File Creator
+# @file/positional
+
+Forked from: [Flat File Creator](https://github.com/cimasim89/flat-file-creator)
 
 This library allows you to read or write flat files according to a given specification passed as
 an argument.
-
 
 ### TL;DR
 
@@ -70,7 +71,6 @@ const data = await readFile("/tmp/my-file.txt")
 // Now `data` is the same as `rows`
 // Use it.....
 ```
-
 
 ## In-Depth Explanation
 
@@ -319,4 +319,3 @@ type RowData = {
 
 Note that for the file reader, you can pass a type argument on instantiation of the function that
 will determine the type of rows coming out of the file.
-
