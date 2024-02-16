@@ -73,7 +73,7 @@ jobs:
         #Location of the generate coverage file
         filename: 'coverage/clover.xml'
         fail_on_negative_difference: true
-        artifact_download_workflow_names: 'ci,cron'
+        artifact_download_workflow_names: 'ci,cron,coverage'
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
       #Make sure the report was generated and that the event is actually a pull request, run if failed or success
