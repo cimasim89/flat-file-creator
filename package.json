@@ -1,7 +1,7 @@
 {
-  "name": "file-positional",
+  "name": "flat-file-creator",
+  "version": "2.2.1",
   "private": false,
-  "version": "1.0.0",
   "description": "Generate a flat positional text file of your dataset",
   "type": "module",
   "main": "./dist/flat-file-creator.js",
@@ -27,12 +27,13 @@
     "flat-file",
     "positional-dataset"
   ],
-  "author": "direisc",
+  "author": "cimasim89",
+  "email": "cimasim89@gmail.com",
   "license": "MIT",
-  "homepage": "https://github.com/direisc/flat-file-creator#readme",
-  "repository": "github:direisc/flat-file-creator",
+  "homepage": "https://github.com/cimasim89/flat-file-creator#readme",
+  "repository": "github:cimasim89/flat-file-creator",
   "bugs": {
-    "url": "https://github.com/direisc/flat-file-creator/issues"
+    "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
     "lodash": "^4.17.21",
