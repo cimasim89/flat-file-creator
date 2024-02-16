@@ -20,7 +20,7 @@ const prepareToConcatData =
 const rowFormatter = <T>(
   maps: Array<FieldSpec>,
   data: RowData<T>,
-  options: Partial<WriteOptions>
+  options?: Partial<WriteOptions>
 ) => {
   if (typeof maps !== 'object') {
     throw new Error('mapping is not an array')
