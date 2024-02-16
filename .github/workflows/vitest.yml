@@ -1,0 +1,50 @@
+name: 'vitest'
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+#Cancel previous run multiple runs
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+#https://github.com/marocchino/sticky-pull-request-comment/tree/v2/#basic
+permissions: write-all
+
+jobs:
+  coverage:
+    # recommended from https://pnpm.io/continuous-integration#github-actions
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [20]
+
+    permissions:
+      # Required to checkout the code
+      contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: pnpm
+    - name: Install dependencies
+      run: pnpm install
+    - name: Test
+      run: pnpm test
+    - name: 'Report Coverage'
+      # Set if: always() to also generate the report if tests are failing
+      # Only works if you set `reportOnFailure: true` in your vite config as specified above
+      if: always()
+      uses:  davelosert/vitest-coverage-report-action@v2

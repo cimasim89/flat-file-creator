@@ -1,0 +1,69 @@
+name: 'coverage'
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+#Cancel previous run multiple runs
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+#https://github.com/marocchino/sticky-pull-request-comment/tree/v2/#basic
+permissions: write-all
+
+jobs:
+  coverage:
+    # recommended from https://pnpm.io/continuous-integration#github-actions
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [20]
+
+    permissions:
+      # Required to checkout the code
+      contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: pnpm
+    - name: Install dependencies
+      run: pnpm install
+    - name: Test
+      run: pnpm test
+    # - name: 'Report Coverage'
+    #   # Set if: always() to also generate the report if tests are failing
+    #   # Only works if you set `reportOnFailure: true` in your vite config as specified above
+    #   if: always()
+    #   uses:  davelosert/vitest-coverage-report-action@v2
+
+    #Step to generate coverage file
+    - name: Generate Coverage Report
+      uses: clearlyip/code-coverage-report-action@v4
+      id: code_coverage_report_action
+      #Dont run for dependabot unless you fix PR comment permissions
+      if: ${{ github.actor != 'dependabot[bot]'}}
+      with:
+        #Location of the generate coverage file
+        filename: 'coverage/clover.xml'
+        fail_on_negative_difference: true
+        artifact_download_workflow_names: 'ci,cron'
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      #Make sure the report was generated and that the event is actually a pull request, run if failed or success
+      if: steps.code_coverage_report_action.outputs.file != '' && github.event_name == 'pull_request' && (success() || failure())
+      with:
+        recreate: true
+        path: code-coverage-results.md
