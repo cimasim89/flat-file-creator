@@ -1,8 +1,9 @@
+import { describe, expect, it } from 'vitest'
 import {
-  getAsyncFlatFileCreator as f,
   dataToLines,
-} from './get-async-flat-file-creator'
-import { testFields, testData, TestData, testLines } from './TestData'
+  getAsyncFlatFileCreator as f,
+} from './get-async-flat-file-creator.js'
+import { testData, TestData, testFields, testLines } from './TestData.js'
 
 const getAsyncFlatFileCreator: any = f
 
@@ -14,7 +15,7 @@ describe('makeAsyncFlatFileWriter', () => {
 
 describe('dataToLines', () => {
   it('should serialize data to an array of lines', () => {
-    expect(dataToLines<TestData>(testData, testFields).join(`\n`)).toEqual(
+    expect(dataToLines<TestData>(testData, testFields).join('\n')).toEqual(
       testLines
     )
   })

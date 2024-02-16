@@ -1,5 +1,6 @@
-import stringFormatter from './string-formatter'
-import * as _ from 'lodash'
+import lodash from 'lodash'
+import { describe, expect, it, test } from 'vitest'
+import stringFormatter from './string-formatter.js'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtStringFormatter: any = stringFormatter
@@ -60,7 +61,7 @@ describe('String formatter execution raise Exception', () => {
     ).toThrow('paddingSymbol cannot have length > 1')
   })
 
-  test(`If enum specified and value is not in the enum keys or values`, () => {
+  test('If enum specified and value is not in the enum keys or values', () => {
     expect(() =>
       rtStringFormatter(
         {
@@ -83,17 +84,17 @@ describe('String formatter execution raise Exception', () => {
 })
 
 describe('String formatter execution result', () => {
-  it("size 10 and data '', result lenght is 10 ", () => {
+  it("size 10 and data '', result length is 10 ", () => {
     expect(
-      _.size(
+      lodash.size(
         rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, '')
       )
     ).toBe(10)
   })
 
-  it("size 10 and long data 'somelongstring', result lenght is 10 ", () => {
+  it("size 10 and long data 'somelongstring', result length is 10 ", () => {
     expect(
-      _.size(
+      lodash.size(
         rtStringFormatter(
           { size: 10, name: 'someField', type: 'string' },
           'somelongstring'
@@ -111,9 +112,9 @@ describe('String formatter execution result', () => {
     ).toBe('somelongst')
   })
 
-  it("size 10 and same size data 'somestring', result lenght is 10 ", () => {
+  it("size 10 and same size data 'somestring', result length is 10 ", () => {
     expect(
-      _.size(
+      lodash.size(
         rtStringFormatter(
           { size: 10, name: 'someField', type: 'string' },
           'somestring'
@@ -131,9 +132,9 @@ describe('String formatter execution result', () => {
     ).toBe('somestring')
   })
 
-  it("size 10 and spaced data 'str ing', result lenght is 10", () => {
+  it("size 10 and spaced data 'str ing', result length is 10", () => {
     expect(
-      _.size(
+      lodash.size(
         rtStringFormatter(
           { size: 10, name: 'someField', type: 'string' },
           'str ing'
@@ -189,7 +190,7 @@ describe('String formatter execution result', () => {
     ).toBe('@@@str ing')
   })
 
-  test(`enums are properly serialized`, () => {
+  test('enums are properly serialized', () => {
     expect(
       rtStringFormatter(
         {
@@ -259,7 +260,7 @@ describe('String formatter execution result', () => {
     })
   })
 
-  test(`supplies empty string when default is null`, () => {
+  test('supplies empty string when default is null', () => {
     expect(
       rtStringFormatter(
         {
@@ -272,10 +273,10 @@ describe('String formatter execution result', () => {
         },
         null
       )
-    ).toBe(`@@@@@`)
+    ).toBe('@@@@@')
   })
 
-  test(`remove empty space when preserveEmptySpace in not defined`, () => {
+  test('remove empty space when preserveEmptySpace in not defined', () => {
     expect(
       rtStringFormatter(
         {
@@ -285,10 +286,10 @@ describe('String formatter execution result', () => {
         },
         '   test'
       )
-    ).toBe(`test      `)
+    ).toBe('test      ')
   })
 
-  test(`preserve empty space when preserveEmptySpace is true`, () => {
+  test('preserve empty space when preserveEmptySpace is true', () => {
     expect(
       rtStringFormatter(
         {
@@ -299,10 +300,10 @@ describe('String formatter execution result', () => {
         },
         '   test'
       )
-    ).toBe(`   test   `)
+    ).toBe('   test   ')
   })
 
-  test(`remove empty space when preserveEmptySpace is false`, () => {
+  test('remove empty space when preserveEmptySpace is false', () => {
     expect(
       rtStringFormatter(
         {
@@ -313,6 +314,6 @@ describe('String formatter execution result', () => {
         },
         '   test   '
       )
-    ).toBe(`test      `)
+    ).toBe('test      ')
   })
 })

@@ -1,13 +1,13 @@
-import * as _ from 'lodash'
+import lodash from 'lodash'
+import { FlatFileEnumError } from './Errors.js'
+import { StringFieldSpec, StringFieldValue, assertFieldSpec } from './Types.js'
 import {
-  isNumeric,
+  getFillStringOfSymbol,
+  getPadder,
   getPaddingPositionOrDef,
   getPaddingSymbol,
-  getPadder,
-  getFillStringOfSymbol,
-} from './utils'
-import { StringFieldSpec, StringFieldValue, assertFieldSpec } from './Types'
-import { FlatFileEnumError } from './Errors'
+  isNumeric,
+} from './utils.js'
 
 const paddingDefault = 'end'
 
@@ -24,7 +24,7 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
   let str: string
 
   if (data === undefined) {
-    throw new Error(`No value supplied and no default set`)
+    throw new Error('No value supplied and no default set')
   } else if (data === null) {
     str = ''
   } else {
@@ -50,10 +50,10 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
               map.name
             }' should have been one of the accepted values ["${Object.values(
               map.enum
-            ).join(`", "`)}"]${
+            ).join('", "')}"]${
               typeof map.default !== 'undefined' && map.default === null
-                ? ` or null`
-                : ``
+                ? ' or null'
+                : ''
             }, but you passed '${str}'`,
             map.name
           )
@@ -67,7 +67,7 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
   )(
     str.substring(0, map.size),
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(str)
+      map.size - lodash.size(str)
     )
   )
 }

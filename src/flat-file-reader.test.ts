@@ -1,10 +1,11 @@
-import * as fs from 'fs'
+import fs from 'node:fs'
+import { afterEach, beforeEach, describe, expect, test } from 'vitest'
+import { TestData, testFields, testLines } from './TestData.js'
 import {
   getAsyncFlatFileReader,
   linesToData,
   parseLine,
-} from './flat-file-reader'
-import { testFields, TestData, testLines } from './TestData'
+} from './flat-file-reader.js'
 
 describe('FlatFileReader', () => {
   let lines: Array<string> = []
@@ -158,8 +159,8 @@ describe('FlatFileReader', () => {
 
   describe('getAsyncFlatFileReader', () => {
     afterEach(() => {
-      if (fs.existsSync(`./test-data.txt`)) {
-        fs.unlinkSync(`./test-data.txt`)
+      if (fs.existsSync('./test-data.txt')) {
+        fs.unlinkSync('./test-data.txt')
       }
     })
 
@@ -167,8 +168,8 @@ describe('FlatFileReader', () => {
       let data: TestData
       const read = getAsyncFlatFileReader<TestData>(testFields)
 
-      fs.writeFileSync(`./test-data.txt`, testLines)
-      const rows = await read(`./test-data.txt`)
+      fs.writeFileSync('./test-data.txt', testLines)
+      const rows = await read('./test-data.txt')
 
       expect(rows).toHaveLength(2)
 

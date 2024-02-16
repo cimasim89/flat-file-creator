@@ -1,5 +1,6 @@
-import rowFormatter from './row-formatter'
-import * as _ from 'lodash'
+import lodash from 'lodash'
+import { describe, expect, it } from 'vitest'
+import rowFormatter from './row-formatter.js'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtRowFormatter: any = rowFormatter
@@ -42,7 +43,7 @@ describe('row formatter execution', () => {
       name: 'John',
       surname: 'Doe',
     }
-    expect(_.size(rtRowFormatter(map, data))).toBe(20)
+    expect(lodash.size(rtRowFormatter(map, data))).toBe(20)
   })
 
   it("Two string field of size 10, result is 'John      Doe       '", () => {

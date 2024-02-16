@@ -1,6 +1,6 @@
-import * as _ from 'lodash'
-import { isNumeric } from './utils'
+import lodash from 'lodash'
 import { Moment } from 'moment'
+import { isNumeric } from './utils.js'
 
 // Export Moment type for downstream convenience
 export { Moment }
@@ -222,7 +222,7 @@ export function assertFieldSpec(
   if (typeof spec !== 'object') {
     throw new Error('map is not an object')
   }
-  if (_.isEmpty(spec)) {
+  if (lodash.isEmpty(spec)) {
     throw new Error('map object is empty')
   }
   if (typeof spec.name === 'undefined') {
