@@ -1,5 +1,6 @@
-import floatFormatter from './float-formatter'
-import * as _ from 'lodash'
+import lodash from 'lodash'
+import { describe, expect, it, test } from 'vitest'
+import floatFormatter from './float-formatter.js'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtFloatFormatter: any = floatFormatter
@@ -99,7 +100,7 @@ describe('Float formatter execution raise Exception', () => {
 describe('Float formatter execution result', () => {
   it('size 4 and data 10, result length is 4 ', () => {
     expect(
-      _.size(
+      lodash.size(
         rtFloatFormatter(
           { size: 4, precision: 0, name: 'test', type: 'float' },
           10
@@ -110,7 +111,7 @@ describe('Float formatter execution result', () => {
 
   it('size 4 precision 2 data 10.05, result length is 4', () => {
     expect(
-      _.size(
+      lodash.size(
         rtFloatFormatter(
           { size: 4, precision: 2, name: 'test', type: 'float' },
           10.05
@@ -130,7 +131,7 @@ describe('Float formatter execution result', () => {
 
   it('size 10 precision 3 data 10.05555, result length is 10', () => {
     expect(
-      _.size(
+      lodash.size(
         rtFloatFormatter(
           { size: 10, precision: 3, name: 'test', type: 'float' },
           10.05555
@@ -264,7 +265,7 @@ describe('Float formatter execution result', () => {
     })
   })
 
-  test(`supplies empty string when default is null`, () => {
+  test('supplies empty string when default is null', () => {
     expect(
       rtFloatFormatter(
         {
@@ -279,6 +280,6 @@ describe('Float formatter execution result', () => {
         },
         null
       )
-    ).toBe(`@@@@@`)
+    ).toBe('@@@@@')
   })
 })

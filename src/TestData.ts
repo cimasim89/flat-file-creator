@@ -1,9 +1,9 @@
-import { FieldSpec, Moment } from '../src/Types'
+import { FieldSpec, Moment } from '../src/Types.js'
 
 // prettier-ignore
 export const testLines =
-  `Jo                  Revelo              1986-01-01T00:00:00.000Z   72.5200   183550810Rocky     01\n` +
-  `Ricky               Revelo              1975-01-01T00:00:00.000Z85239.5232   1663231 9Rolly       `
+  'Jo                  Revelo              1986-01-01T00:00:00.000Z   72.5200   183550810Rocky     01\n' +
+  'Ricky               Revelo              1975-01-01T00:00:00.000Z85239.5232   1663231 9Rolly       '
 
 export const testFields: Array<FieldSpec> = [
   {
@@ -73,23 +73,23 @@ export interface TestData {
 
 export const testData = [
   {
-    firstName: `Jo`,
-    lastName: `Revelo`,
-    dob: `1986-01-01`,
+    firstName: 'Jo',
+    lastName: 'Revelo',
+    dob: '1986-01-01',
     weightKg: 72.52,
     heightCm: 183.5508,
     numFingers: 10,
-    favoritePet: `Rocky`,
-    status: `pending`,
+    favoritePet: 'Rocky',
+    status: 'pending',
   },
   {
-    firstName: `Ricky`,
-    lastName: `Revelo`,
-    dob: `1975-01-01`,
+    firstName: 'Ricky',
+    lastName: 'Revelo',
+    dob: '1975-01-01',
     weightKg: 85239.5232,
     heightCm: 166.32313992,
     numFingers: 9,
-    favoritePet: `Rolly`,
+    favoritePet: 'Rolly',
     status: null,
   },
 ]

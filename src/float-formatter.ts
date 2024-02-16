@@ -1,12 +1,12 @@
-import * as _ from 'lodash'
+import lodash from 'lodash'
+import { FloatFieldSpec, FloatFieldValue, assertFieldSpec } from './Types.js'
 import {
-  isNumeric,
+  getFillStringOfSymbol,
+  getPadder,
   getPaddingPositionOrDef,
   getPaddingSymbol,
-  getPadder,
-  getFillStringOfSymbol,
-} from './utils'
-import { FloatFieldSpec, FloatFieldValue, assertFieldSpec } from './Types'
+  isNumeric,
+} from './utils.js'
 
 const paddingDefault = 'start'
 
@@ -20,7 +20,7 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
   let str: string
 
   if (data === undefined) {
-    throw new Error(`No value supplied and no default set`)
+    throw new Error('No value supplied and no default set')
   } else if (data === null) {
     str = ''
   } else {
@@ -39,7 +39,7 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
     }
 
     // Make sure it fits
-    if (_.size(str) > map.size) {
+    if (lodash.size(str) > map.size) {
       throw new Error(`Value ${str} exceed size ${map.size}`)
     }
   }
@@ -49,7 +49,7 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
   )(
     str,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(str)
+      map.size - lodash.size(str)
     )
   )
 }

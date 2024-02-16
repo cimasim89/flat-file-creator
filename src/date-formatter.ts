@@ -1,12 +1,12 @@
-import * as moment from 'moment'
-import * as _ from 'lodash'
+import _ from 'lodash'
+import moment from 'moment'
+import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './Types.js'
 import {
+  getFillStringOfSymbol,
+  getPadder,
   getPaddingPositionOrDef,
   getPaddingSymbol,
-  getPadder,
-  getFillStringOfSymbol,
-} from './utils'
-import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './Types'
+} from './utils.js'
 
 const paddingDefault = 'end'
 const defaultFormat = {
@@ -55,7 +55,7 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   let resDate: string
 
   if (data === undefined) {
-    throw new Error(`No value supplied and no default set`)
+    throw new Error('No value supplied and no default set')
   } else if (data === null) {
     resDate = ''
   } else {

@@ -1,6 +1,7 @@
-import fieldFormatter from './field-formatter'
-import * as _ from 'lodash'
-import * as moment from 'moment'
+import lodash from 'lodash'
+import moment from 'moment'
+import { describe, expect, it } from 'vitest'
+import fieldFormatter from './field-formatter.js'
 
 // Version of fieldFormatter with type-checking turned off to test runtime functionality
 const rtFieldFormatter: any = fieldFormatter
@@ -63,9 +64,11 @@ describe('Field formatter execution raise Exception', () => {
 })
 
 describe('Field formatter String execution result', () => {
-  it('size 4, result lenght is 4 ', () => {
+  it('size 4, result length is 4 ', () => {
     expect(
-      _.size(rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }))
+      lodash.size(
+        rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' })
+      )
     ).toBe(4)
   })
 
@@ -80,9 +83,9 @@ describe('Field formatter String execution result', () => {
 })
 
 describe('Field formatter Float execution result', () => {
-  it('size 4, result lenght is 4 ', () => {
+  it('size 4, result length is 4 ', () => {
     expect(
-      _.size(
+      lodash.size(
         rtFieldFormatter(
           { name: 'test', size: 4, type: 'float', precision: 2 },
           { test: 10.4 }
@@ -102,9 +105,9 @@ describe('Field formatter Float execution result', () => {
 })
 
 describe('Field formatter Date execution result', () => {
-  it('size 10, result lenght is 10 utc', () => {
+  it('size 10, result length is 10 utc', () => {
     expect(
-      _.size(
+      lodash.size(
         rtFieldFormatter(
           {
             name: 'test',
@@ -137,9 +140,9 @@ describe('Field formatter Date execution result', () => {
 })
 
 describe('Field formatter Integer execution result', () => {
-  it('size 10, result lenght is 10', () => {
+  it('size 10, result length is 10', () => {
     expect(
-      _.size(
+      lodash.size(
         rtFieldFormatter(
           {
             name: 'test',

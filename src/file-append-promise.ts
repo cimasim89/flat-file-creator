@@ -1,5 +1,6 @@
-import * as fs from 'fs'
-import { WriteOptions } from './Types'
+import { ObjectEncodingOptions } from 'node:fs'
+import fs from 'node:fs/promises'
+import { WriteOptions } from './Types.js'
 
 const defaultOptions = {
   encoding: 'utf8' as const,
@@ -7,37 +8,26 @@ const defaultOptions = {
   flag: 'a',
 }
 
+type Options = ObjectEncodingOptions & fs.FlagAndOpenMode
+
 const prepareOptions = (opts: Partial<WriteOptions>) => {
-  let options: fs.WriteFileOptions = { ...defaultOptions }
+  let options: Options = { ...defaultOptions }
   options = opts.encoding ? { ...options, encoding: opts.encoding } : options
   options = opts.mode ? { ...options, mode: opts.mode } : options
   options = opts.flag ? { ...options, flag: opts.flag } : options
   return { ...options }
 }
 
-const fileAppendPromise = (
+const fileAppendPromise = async (
   path: string,
   data: string,
   options?: Partial<WriteOptions>
 ) => {
-  return new Promise((resolve, reject) => {
-    const appendCallback = (path: string) => (err: Error) => {
-      if (err) {
-        return reject(err)
-      }
-      return resolve(path)
-    }
-
-    if (options && options.encoding) {
-      return fs.appendFile(
-        path,
-        data,
-        prepareOptions(options),
-        appendCallback(path)
-      )
-    }
-    fs.appendFile(path, data, appendCallback(path))
-  })
+  if (options && options.encoding) {
+    fs.appendFile(path, data, prepareOptions(options))
+    return
+  }
+  fs.appendFile(path, data)
 }
 
 export default fileAppendPromise

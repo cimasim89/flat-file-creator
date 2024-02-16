@@ -1,6 +1,7 @@
-import dateFormatter from './date-formatter'
-import * as _ from 'lodash'
-import * as moment from 'moment'
+import lodash from 'lodash'
+import moment from 'moment'
+import { describe, expect, it, test } from 'vitest'
+import dateFormatter from './date-formatter.js'
 
 // Version of dateFormatter with type-checking turned off to test runtime functionality
 const rtDateFormatter: any = dateFormatter
@@ -61,9 +62,9 @@ describe('Date formatter execution raise Exception', () => {
 })
 
 describe('Date formatter execution result', () => {
-  it('size 50 and new Date, result lenght is 50', () => {
+  it('size 50 and new Date, result length is 50', () => {
     expect(
-      _.size(
+      lodash.size(
         rtDateFormatter(
           { size: 50, name: 'someField', type: 'date' },
           new Date()
@@ -232,7 +233,7 @@ describe('Date formatter execution result', () => {
           },
           v
         )
-      ).toBe(`@2020-01-01 08:00:00`)
+      ).toBe('@2020-01-01 08:00:00')
     })
   })
 
@@ -255,7 +256,7 @@ describe('Date formatter execution result', () => {
     })
   })
 
-  test(`supplies empty string when default is null`, () => {
+  test('supplies empty string when default is null', () => {
     expect(
       rtDateFormatter(
         {
@@ -269,6 +270,6 @@ describe('Date formatter execution result', () => {
         },
         null
       )
-    ).toBe(`@@@@@`)
+    ).toBe('@@@@@')
   })
 })

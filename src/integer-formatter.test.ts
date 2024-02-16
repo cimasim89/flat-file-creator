@@ -1,5 +1,6 @@
-import integerFormatter from './integer-formatter'
-import * as _ from 'lodash'
+import lodash from 'lodash'
+import { describe, expect, it, test } from 'vitest'
+import integerFormatter from './integer-formatter.js'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtIntegerFormatter: any = integerFormatter
@@ -68,17 +69,17 @@ describe('Integer formatter execution raise Exception', () => {
 })
 
 describe('Integer formatter execution result', () => {
-  it('size 4 and data 10, result lenght is 4 ', () => {
+  it('size 4 and data 10, result length is 4 ', () => {
     expect(
-      _.size(
+      lodash.size(
         rtIntegerFormatter({ size: 4, name: 'someField', type: 'integer' }, 10)
       )
     ).toBe(4)
   })
 
-  it('size 4 and same size data 1000, result lenght is 4', () => {
+  it('size 4 and same size data 1000, result length is 4', () => {
     expect(
-      _.size(
+      lodash.size(
         rtIntegerFormatter(
           { size: 4, name: 'someField', type: 'integer' },
           1000
@@ -93,9 +94,9 @@ describe('Integer formatter execution result', () => {
     ).toBe('1000')
   })
 
-  it('size 10 and data 1000, result lenght is 10', () => {
+  it('size 10 and data 1000, result length is 10', () => {
     expect(
-      _.size(
+      lodash.size(
         rtIntegerFormatter(
           { size: 10, name: 'someField', type: 'integer' },
           1000
@@ -208,7 +209,7 @@ describe('Integer formatter execution result', () => {
     })
   })
 
-  test(`supplies empty string when default is null`, () => {
+  test('supplies empty string when default is null', () => {
     expect(
       rtIntegerFormatter(
         {
@@ -221,6 +222,6 @@ describe('Integer formatter execution result', () => {
         },
         null
       )
-    ).toBe(`@@@@@`)
+    ).toBe('@@@@@')
   })
 })

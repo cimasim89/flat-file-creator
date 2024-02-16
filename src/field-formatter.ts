@@ -1,17 +1,17 @@
-import stringFormatter from './string-formatter'
-import dateFormatter from './date-formatter'
-import integerFormatter from './integer-formatter'
-import floatFormatter from './float-formatter'
 import {
-  FieldSpec,
-  StringFieldSpec,
-  RowData,
-  assertFieldSpec,
-  StringFieldValue,
-  IntegerFieldValue,
-  FloatFieldValue,
   DateFieldValue,
-} from './Types'
+  FieldSpec,
+  FloatFieldValue,
+  IntegerFieldValue,
+  RowData,
+  StringFieldSpec,
+  StringFieldValue,
+  assertFieldSpec,
+} from './Types.js'
+import dateFormatter from './date-formatter.js'
+import floatFormatter from './float-formatter.js'
+import integerFormatter from './integer-formatter.js'
+import stringFormatter from './string-formatter.js'
 
 const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
   try {
@@ -38,7 +38,7 @@ const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
     if (map) {
       e.message =
         `Field ${map.name}: ${e.message} ` +
-        `(data: ${data ? `'${data[<keyof T>map.name]}'` : `unknown`})`
+        `(data: ${data ? `'${data[<keyof T>map.name]}'` : 'unknown'})`
     }
     throw e
   }
