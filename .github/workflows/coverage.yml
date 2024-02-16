@@ -51,6 +51,12 @@ jobs:
     - name: Test
       run: pnpm test
 
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-report
+        path: coverage
+
     - name: 'Report Coverage'
       # Set if: always() to also generate the report if tests are failing
       # Only works if you set `reportOnFailure: true` in your vite config as specified above
