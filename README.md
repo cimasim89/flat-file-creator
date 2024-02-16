@@ -5,6 +5,16 @@ Forked from: [Flat File Creator](https://github.com/cimasim89/flat-file-creator)
 This library allows you to read or write flat files according to a given specification passed as
 an argument.
 
+### Install
+
+```bash
+npm add file-positional --save
+# or
+yarn add file-positional
+# or
+pnpm add file-positional
+```
+
 ### TL;DR
 
 The following represents a "normal" usage of this flat file library. In general, you

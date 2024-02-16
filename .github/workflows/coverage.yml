@@ -57,13 +57,15 @@ jobs:
         name: code-coverage-report
         path: coverage
 
-    - name: 'Report Coverage'
+    # Coverage Summary for vitest - with good summary view
+    - name: 'Coverage Summary'
       # Set if: always() to also generate the report if tests are failing
       # Only works if you set `reportOnFailure: true` in your vite config as specified above
       if: always()
       uses:  davelosert/vitest-coverage-report-action@v2
 
-    #Step to generate coverage file
+    # Coverage diff from previous coverage files
+    # Step to generate coverage file
     - name: Generate Coverage Report
       uses: clearlyip/code-coverage-report-action@v4
       id: code_coverage_report_action
@@ -73,7 +75,7 @@ jobs:
         #Location of the generate coverage file
         filename: 'coverage/clover.xml'
         fail_on_negative_difference: true
-        artifact_download_workflow_names: 'ci,cron'
+        artifact_download_workflow_names: 'ci,cron,coverage'
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
       #Make sure the report was generated and that the event is actually a pull request, run if failed or success
