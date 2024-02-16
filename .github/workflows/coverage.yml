@@ -41,8 +41,21 @@ jobs:
         cache: pnpm
     - name: Install dependencies
       run: pnpm install
+
+    - name: Type Check
+      run: pnpm typecheck
+
+    - name: Lint
+      run: pnpm lint
+
     - name: Test
       run: pnpm test
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-report
+        path: coverage
 
     - name: 'Report Coverage'
       # Set if: always() to also generate the report if tests are failing
