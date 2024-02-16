@@ -57,13 +57,15 @@ jobs:
         name: code-coverage-report
         path: coverage
 
-    - name: 'Report Coverage'
+    # Coverage Summary for vitest - with good summary view
+    - name: 'Coverage Summary'
       # Set if: always() to also generate the report if tests are failing
       # Only works if you set `reportOnFailure: true` in your vite config as specified above
       if: always()
       uses:  davelosert/vitest-coverage-report-action@v2
 
-    #Step to generate coverage file
+    # Coverage diff from previous coverage files
+    # Step to generate coverage file
     - name: Generate Coverage Report
       uses: clearlyip/code-coverage-report-action@v4
       id: code_coverage_report_action
