@@ -1,4 +1,4 @@
-# @file/positional
+# @codecarvalho/file-positional
 
 Forked from: [Flat File Creator](https://github.com/cimasim89/flat-file-creator)
 
