@@ -1,4 +1,4 @@
-import stringFormatter from './string-formatter'
+import stringFormatter from '../index'
 import * as _ from 'lodash'
 
 // Version of formatter with type-checking turned off to test runtime functionality
