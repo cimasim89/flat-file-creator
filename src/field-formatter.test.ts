@@ -1,5 +1,4 @@
 import fieldFormatter from './field-formatter'
-import * as _ from 'lodash'
 import { format } from 'date-fns'
 
 // Version of fieldFormatter with type-checking turned off to test runtime functionality
@@ -65,7 +64,7 @@ describe('Field formatter execution raise Exception', () => {
 describe('Field formatter String execution result', () => {
   it('size 4, result lenght is 4 ', () => {
     expect(
-      _.size(rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' })),
+      (rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }).length),
     ).toBe(4)
   })
 
@@ -82,12 +81,10 @@ describe('Field formatter String execution result', () => {
 describe('Field formatter Float execution result', () => {
   it('size 4, result lenght is 4 ', () => {
     expect(
-      _.size(
-        rtFieldFormatter(
-          { name: 'test', size: 4, type: 'float', precision: 2 },
-          { test: 10.4 },
-        ),
-      ),
+      rtFieldFormatter(
+        { name: 'test', size: 4, type: 'float', precision: 2 },
+        { test: 10.4 },
+      ).length,
     ).toBe(4)
   })
 
@@ -104,17 +101,15 @@ describe('Field formatter Float execution result', () => {
 describe('Field formatter Date execution result', () => {
   it('size 10, result lenght is 10 utc', () => {
     expect(
-      _.size(
-        rtFieldFormatter(
-          {
-            name: 'test',
-            size: 10,
-            type: 'date',
-            format: { utc: true, dateFormat: 'yyyy/MM/dd' },
-          },
-          { test: new Date() },
-        ),
-      ),
+      rtFieldFormatter(
+        {
+          name: 'test',
+          size: 10,
+          type: 'date',
+          format: { utc: true, dateFormat: 'yyyy/MM/dd' },
+        },
+        { test: new Date() },
+      ).length,
     ).toBe(10)
   })
 
@@ -139,16 +134,14 @@ describe('Field formatter Date execution result', () => {
 describe('Field formatter Integer execution result', () => {
   it('size 10, result lenght is 10', () => {
     expect(
-      _.size(
-        rtFieldFormatter(
-          {
-            name: 'test',
-            size: 10,
-            type: 'integer',
-          },
-          { test: 10000 },
-        ),
-      ),
+      rtFieldFormatter(
+        {
+          name: 'test',
+          size: 10,
+          type: 'integer',
+        },
+        { test: 10000 },
+      ).length,
     ).toBe(10)
   })
 

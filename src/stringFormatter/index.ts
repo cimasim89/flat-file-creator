@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import {
   isNumeric,
   getPaddingPositionOrDef,
@@ -67,7 +66,7 @@ const stringFormatter = (map: StringFieldSpec, data: StringFieldValue) => {
   )(
     str.substring(0, map.size),
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(str),
+      map.size - str.length,
     ),
   )
 }

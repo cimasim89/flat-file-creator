@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import {
   isNumeric,
   getPaddingPositionOrDef,
@@ -31,7 +30,7 @@ const integerFormatter = (
       throw new Error('field has not compatible type')
     }
     num = Math.round(data).toString()
-    if (_.size(num) > map.size) {
+    if (num.length > map.size) {
       throw new Error(`Value ${num} exceed size ${map.size}`)
     }
   }
@@ -41,7 +40,7 @@ const integerFormatter = (
   )(
     num,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(num),
+      map.size - num.length,
     ),
   )
 }

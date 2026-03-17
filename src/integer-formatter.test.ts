@@ -1,5 +1,4 @@
 import integerFormatter from './integer-formatter'
-import * as _ from 'lodash'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtIntegerFormatter: any = integerFormatter
@@ -73,19 +72,19 @@ describe('Integer formatter execution raise Exception', () => {
 describe('Integer formatter execution result', () => {
   it('size 4 and data 10, result lenght is 4 ', () => {
     expect(
-      _.size(
-        rtIntegerFormatter({ size: 4, name: 'someField', type: 'integer' }, 10),
-      ),
+      (
+        rtIntegerFormatter({ size: 4, name: 'someField', type: 'integer' }, 10)
+      ).length,
     ).toBe(4)
   })
 
   it('size 4 and same size data 1000, result lenght is 4', () => {
     expect(
-      _.size(
+      (
         rtIntegerFormatter(
           { size: 4, name: 'someField', type: 'integer' },
           1000,
-        ),
+        ).length
       ),
     ).toBe(4)
   })
@@ -98,11 +97,12 @@ describe('Integer formatter execution result', () => {
 
   it('size 10 and data 1000, result lenght is 10', () => {
     expect(
-      _.size(
+      (
         rtIntegerFormatter(
           { size: 10, name: 'someField', type: 'integer' },
           1000,
-        ),
+        ).length
+
       ),
     ).toBe(10)
   })

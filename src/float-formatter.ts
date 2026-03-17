@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import {
   isNumeric,
   getPaddingPositionOrDef,
@@ -39,7 +38,7 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
     }
 
     // Make sure it fits
-    if (_.size(str) > map.size) {
+    if (str.length > map.size) {
       throw new Error(`Value ${str} exceed size ${map.size}`)
     }
   }
@@ -49,7 +48,7 @@ const floatFormatter = (map: FloatFieldSpec, data: FloatFieldValue = null) => {
   )(
     str,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(str),
+      map.size - str.length,
     ),
   )
 }

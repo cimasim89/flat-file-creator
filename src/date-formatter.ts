@@ -1,6 +1,5 @@
 import { parseISO, format, isValid } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
-import * as _ from 'lodash'
 import {
   getPaddingPositionOrDef,
   getPaddingSymbol,
@@ -62,7 +61,7 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
 
     resDate = data ? getFormattedDateString(data, map.format || {}) : ''
 
-    if (_.size(resDate) > map.size) {
+    if (resDate.length > map.size) {
       throw new Error(`Date ${resDate} exceed size ${map.size}`)
     }
   }
@@ -72,7 +71,7 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   )(
     resDate,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(resDate),
+      map.size - resDate.length,
     ),
   )
 }

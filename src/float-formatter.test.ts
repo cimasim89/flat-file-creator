@@ -1,5 +1,4 @@
 import floatFormatter from './float-formatter'
-import * as _ from 'lodash'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtFloatFormatter: any = floatFormatter
@@ -99,23 +98,19 @@ describe('Float formatter execution raise Exception', () => {
 describe('Float formatter execution result', () => {
   it('size 4 and data 10, result length is 4 ', () => {
     expect(
-      _.size(
-        rtFloatFormatter(
-          { size: 4, precision: 0, name: 'test', type: 'float' },
-          10,
-        ),
-      ),
+      rtFloatFormatter(
+        { size: 4, precision: 0, name: 'test', type: 'float' },
+        10,
+      ).length,
     ).toBe(4)
   })
 
   it('size 4 precision 2 data 10.05, result length is 4', () => {
     expect(
-      _.size(
-        rtFloatFormatter(
-          { size: 4, precision: 2, name: 'test', type: 'float' },
-          10.05,
-        ),
-      ),
+      rtFloatFormatter(
+        { size: 4, precision: 2, name: 'test', type: 'float' },
+        10.05,
+      ).length,
     ).toBe(4)
   })
 
@@ -130,12 +125,10 @@ describe('Float formatter execution result', () => {
 
   it('size 10 precision 3 data 10.05555, result length is 10', () => {
     expect(
-      _.size(
-        rtFloatFormatter(
-          { size: 10, precision: 3, name: 'test', type: 'float' },
-          10.05555,
-        ),
-      ),
+      rtFloatFormatter(
+        { size: 10, precision: 3, name: 'test', type: 'float' },
+        10.05555,
+      ).length,
     ).toBe(10)
   })
 

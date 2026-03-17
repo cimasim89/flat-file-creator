@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import { isNumeric } from '../utils'
 
 // Options to be used to configure the file creator instance as a whole
@@ -218,7 +217,7 @@ export function assertFieldSpec(
   if (typeof spec !== 'object') {
     throw new Error('map is not an object')
   }
-  if (_.isEmpty(spec)) {
+  if (Object.keys(spec).length === 0) {
     throw new Error('map object is empty')
   }
   if (typeof spec.name === 'undefined') {

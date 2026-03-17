@@ -1,5 +1,4 @@
 import stringFormatter from '../index'
-import * as _ from 'lodash'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtStringFormatter: any = stringFormatter
@@ -85,20 +84,16 @@ describe('String formatter execution raise Exception', () => {
 describe('String formatter execution result', () => {
   it("size 10 and data '', result lenght is 10 ", () => {
     expect(
-      _.size(
-        rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, ''),
-      ),
+        rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, '').length,
     ).toBe(10)
   })
 
   it("size 10 and long data 'somelongstring', result lenght is 10 ", () => {
     expect(
-      _.size(
-        rtStringFormatter(
-          { size: 10, name: 'someField', type: 'string' },
-          'somelongstring',
-        ),
-      ),
+      rtStringFormatter(
+        { size: 10, name: 'someField', type: 'string' },
+        'somelongstring',
+      ).length,
     ).toBe(10)
   })
 
@@ -113,12 +108,10 @@ describe('String formatter execution result', () => {
 
   it("size 10 and same size data 'somestring', result lenght is 10 ", () => {
     expect(
-      _.size(
-        rtStringFormatter(
-          { size: 10, name: 'someField', type: 'string' },
-          'somestring',
-        ),
-      ),
+      rtStringFormatter(
+        { size: 10, name: 'someField', type: 'string' },
+        'somestring',
+      ).length,
     ).toBe(10)
   })
 
@@ -133,12 +126,10 @@ describe('String formatter execution result', () => {
 
   it("size 10 and spaced data 'str ing', result lenght is 10", () => {
     expect(
-      _.size(
-        rtStringFormatter(
-          { size: 10, name: 'someField', type: 'string' },
-          'str ing',
-        ),
-      ),
+      rtStringFormatter(
+        { size: 10, name: 'someField', type: 'string' },
+        'str ing',
+      ).length,
     ).toBe(10)
   })
 

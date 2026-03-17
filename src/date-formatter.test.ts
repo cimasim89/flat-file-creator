@@ -1,5 +1,4 @@
 import dateFormatter from './date-formatter'
-import * as _ from 'lodash'
 import { format } from 'date-fns'
 
 // Version of dateFormatter with type-checking turned off to test runtime functionality
@@ -63,12 +62,10 @@ describe('Date formatter execution raise Exception', () => {
 describe('Date formatter execution result', () => {
   it('size 50 and new Date, result lenght is 50', () => {
     expect(
-      _.size(
-        rtDateFormatter(
-          { size: 50, name: 'someField', type: 'date' },
-          new Date(),
-        ),
-      ),
+      rtDateFormatter(
+        { size: 50, name: 'someField', type: 'date' },
+        new Date(),
+      ).length,
     ).toBe(50)
   })
 

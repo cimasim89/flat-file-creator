@@ -1,4 +1,3 @@
-import * as lodash from 'lodash'
 import fieldFormatter from './field-formatter'
 import { FieldSpec, RowData, WriteOptions } from './types'
 
@@ -25,7 +24,7 @@ const rowFormatter = <T>(
   if (typeof maps !== 'object') {
     throw new Error('mapping is not an array')
   }
-  if (lodash.isEmpty(maps)) {
+  if (maps.length === 0) {
     throw new Error('mapping is empty')
   }
   if (!data) {
