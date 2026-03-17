@@ -1,4 +1,4 @@
-import stringFormatter from './stringFormartter'
+import stringFormatter from './stringFormatter'
 import dateFormatter from './date-formatter'
 import integerFormatter from './integer-formatter'
 import floatFormatter from './float-formatter'
