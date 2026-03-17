@@ -28,21 +28,22 @@
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "moment": "2.29.4"
+    "date-fns": "4.1.0",
+    "date-fns-tz": "3.2.0",
+    "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.200",
     "@commitlint/cli": "18.2.0",
     "@commitlint/config-conventional": "18.1.0",
     "@types/jest": "29.5.7",
+    "@types/lodash": "4.14.200",
     "@types/node": "20.8.10",
     "@typescript-eslint/eslint-plugin": "6.10.0",
     "@typescript-eslint/parser": "6.10.0",
     "eslint": "8.53.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-config-standard": "17.1.0",
-    "eslint-formatter-codeframe": "^7.32.1",
+    "eslint-formatter-codeframe": "7.32.1",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-eslint-plugin": "5.1.1",
     "eslint-plugin-import": "2.29.0",

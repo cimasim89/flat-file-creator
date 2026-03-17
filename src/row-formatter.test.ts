@@ -124,7 +124,7 @@ describe('row formatter execution', () => {
     expect(rtRowFormatter(map, data)).toBe('John      Doe          20 1750')
   })
 
-  it("Concat field birth of size 10 format 'DD/MM/YYYY'", () => {
+  it("Concat field birth of size 10 format 'dd/MM/yyyy'", () => {
     const map = [
       {
         type: 'string',
@@ -153,7 +153,7 @@ describe('row formatter execution', () => {
         paddingPosition: 'start',
         name: 'birth',
         format: {
-          dateFormat: 'DD/MM/YYYY',
+          dateFormat: 'dd/MM/yyyy',
         },
       },
     ]

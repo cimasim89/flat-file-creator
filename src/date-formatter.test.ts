@@ -1,6 +1,6 @@
 import dateFormatter from './date-formatter'
 import * as _ from 'lodash'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 
 // Version of dateFormatter with type-checking turned off to test runtime functionality
 const rtDateFormatter: any = dateFormatter
@@ -99,14 +99,14 @@ describe('Date formatter execution result', () => {
   )
 
   it(
-    "size 10, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD'," +
+    "size 10, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd'," +
       " result iso string '2018-01-01'",
     () => {
       expect(
         rtDateFormatter(
           {
             size: 10,
-            format: { dateFormat: 'YYYY-MM-DD' },
+            format: { dateFormat: 'yyyy-MM-dd' },
             name: 'someField',
             type: 'date',
           },
@@ -117,14 +117,14 @@ describe('Date formatter execution result', () => {
   )
 
   it(
-    "size 10, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD'," +
+    "size 10, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd'," +
       " result iso string '2018-01-01'",
     () => {
       expect(
         rtDateFormatter(
           {
             size: 10,
-            format: { utc: true, dateFormat: 'YYYY-MM-DD' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd' },
             name: 'someField',
             type: 'date',
           },
@@ -135,14 +135,14 @@ describe('Date formatter execution result', () => {
   )
 
   it(
-    "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
+    "size 20, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd HH:mm:ss'," +
       " result iso string '2018-01-01 00:00:00 '",
     () => {
       expect(
         rtDateFormatter(
           {
             size: 20,
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
@@ -153,7 +153,7 @@ describe('Date formatter execution result', () => {
   )
 
   it(
-    "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
+    "size 20, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd HH:mm:ss'," +
       " paddingSymbol '@'" +
       " result iso string '2018-01-01 00:00:00@'",
     () => {
@@ -162,7 +162,7 @@ describe('Date formatter execution result', () => {
           {
             size: 20,
             paddingSymbol: '@',
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
@@ -173,7 +173,7 @@ describe('Date formatter execution result', () => {
   )
 
   it(
-    "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
+    "size 20, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd HH:mm:ss'," +
       " paddingSymbol '@', paddingPosition start" +
       " result iso string '@2018-01-01 00:00:00'",
     () => {
@@ -183,7 +183,7 @@ describe('Date formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
@@ -194,24 +194,23 @@ describe('Date formatter execution result', () => {
   )
 
   it(
-    "size 20, date moment() , dateFormat 'YYYY-MM-DD HH:mm:ss'," +
-      " paddingSymbol '@', paddingPosition start" +
-      " result iso string '@2018-01-01 00:00:00'",
+    "size 20, date new Date() , dateFormat 'yyyy-MM-dd HH:mm:ss'," +
+      " paddingSymbol '@', paddingPosition start",
     () => {
-      const date = moment()
+      const date = new Date()
       expect(
         rtDateFormatter(
           {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
           date,
         ),
-      ).toBe(`@${date.format('YYYY-MM-DD HH:mm:ss')}`)
+      ).toBe(`@${format(date, 'yyyy-MM-dd HH:mm:ss')}`)
     },
   )
 
@@ -225,7 +224,7 @@ describe('Date formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
             default: '2020-01-01 08:00:00',
@@ -245,7 +244,7 @@ describe('Date formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
@@ -262,7 +261,7 @@ describe('Date formatter execution result', () => {
           size: 5,
           paddingSymbol: '@',
           paddingPosition: 'start',
-          format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+          format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
           name: 'someField',
           type: 'date',
           default: null,

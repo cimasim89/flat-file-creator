@@ -1,9 +1,5 @@
 import * as _ from 'lodash'
 import { isNumeric } from '../utils'
-import { Moment } from 'moment'
-
-// Export Moment type for downstream convenience
-export { Moment }
 
 // Options to be used to configure the file creator instance as a whole
 export interface ReadOptions {
@@ -44,7 +40,7 @@ export interface WriteOptions extends ReadOptions {
 export type StringFieldValue = string | null | undefined
 export type IntegerFieldValue = number | null | undefined
 export type FloatFieldValue = number | null | undefined
-export type DateFieldValue = Date | Moment | string | null | undefined
+export type DateFieldValue = Date | string | null | undefined
 export type FieldValue =
   | StringFieldValue
   | IntegerFieldValue
@@ -159,7 +155,7 @@ export type DateFieldSpec = CommonSpec & {
    * If not provided, failure to provide a value for this field will result in an exception unless
    * `options.throwErrors` is set to false.
    */
-  default?: Date | Moment | string | null
+  default?: Date | string | null
 }
 
 declare type CommonSpec = {

@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import * as moment from 'moment'
+import { parseISO, parse } from 'date-fns'
 import {
   FlatFileReadLineError,
   FlatFileReadFieldTypeError,
@@ -212,14 +212,11 @@ export const interpret = <T = unknown>(
         break
       }
 
-      // TODO: Make sure this parses correctly according to the given options
       case 'date': {
-        result[field.name] = moment(
-          result[field.name],
+        result[field.name] =
           field.format && field.format.dateFormat
-            ? field.format.dateFormat
-            : undefined,
-        )
+            ? parse(result[field.name], field.format.dateFormat, new Date())
+            : parseISO(result[field.name])
         break
       }
 

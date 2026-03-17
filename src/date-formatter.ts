@@ -1,4 +1,5 @@
-import * as moment from 'moment'
+import { parseISO, format, isValid } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
 import * as _ from 'lodash'
 import {
   getPaddingPositionOrDef,
@@ -9,22 +10,22 @@ import {
 import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './types'
 
 const paddingDefault = 'end'
-const defaultFormat = {
-  utc: false,
-}
 
 const getFormattedDateString = (
-  date: Date | moment.Moment | string,
+  date: Date | string,
   opts: Partial<NonNullable<DateFieldSpec['format']>>,
 ) => {
-  const base = moment(date, moment.ISO_8601).utc(opts.utc).clone()
-  if (!base.isValid()) {
+  const parsed = typeof date === 'string' ? parseISO(date) : date
+  if (!isValid(parsed)) {
     throw new Error(`Invalid date ${date}`)
   }
   if (!opts.dateFormat) {
-    return base.toISOString()
+    return parsed.toISOString()
   }
-  return base.format(opts.dateFormat)
+  if (opts.utc) {
+    return formatInTimeZone(parsed, 'UTC', opts.dateFormat)
+  }
+  return format(parsed, opts.dateFormat)
 }
 
 function assertDateFieldValue(
@@ -35,8 +36,7 @@ function assertDateFieldValue(
     d !== null &&
     typeof d !== 'undefined' &&
     typeof d !== 'string' &&
-    typeof d.toISOString === 'undefined' &&
-    typeof d.year === 'undefined'
+    !(d instanceof Date)
   ) {
     throw new Error(
       `Value for date field ${fieldName} must be a date or a string representation of a date`,
@@ -60,8 +60,7 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   } else {
     assertDateFieldValue(data, map.name)
 
-    const format = { ...defaultFormat, ...map.format }
-    resDate = data ? getFormattedDateString(data, format) : ''
+    resDate = data ? getFormattedDateString(data, map.format || {}) : ''
 
     if (_.size(resDate) > map.size) {
       throw new Error(`Date ${resDate} exceed size ${map.size}`)

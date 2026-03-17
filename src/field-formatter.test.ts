@@ -1,6 +1,6 @@
 import fieldFormatter from './field-formatter'
 import * as _ from 'lodash'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 
 // Version of fieldFormatter with type-checking turned off to test runtime functionality
 const rtFieldFormatter: any = fieldFormatter
@@ -110,25 +110,25 @@ describe('Field formatter Date execution result', () => {
             name: 'test',
             size: 10,
             type: 'date',
-            format: { utc: true, dateFormat: 'YYYY/MM/DD' },
+            format: { utc: true, dateFormat: 'yyyy/MM/dd' },
           },
-          { test: moment() },
+          { test: new Date() },
         ),
       ),
     ).toBe(10)
   })
 
-  it('size 10, result is 10', () => {
-    const date = moment()
-    const format = 'YYYY/MM/DD HH:mm:ss'
-    const result = `${date.format(format)}      `
+  it('size 25, result is 25', () => {
+    const date = new Date()
+    const dateFormat = 'yyyy/MM/dd HH:mm:ss'
+    const result = `${format(date, dateFormat)}      `
     expect(
       rtFieldFormatter(
         {
           name: 'test',
           size: 25,
           type: 'date',
-          format: { utc: false, dateFormat: format },
+          format: { utc: false, dateFormat },
         },
         { test: date },
       ),

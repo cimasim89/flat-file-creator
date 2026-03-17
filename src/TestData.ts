@@ -1,4 +1,4 @@
-import { FieldSpec, Moment } from './types'
+import { FieldSpec } from './types'
 
 // prettier-ignore
 export const testLines =
@@ -63,7 +63,7 @@ export const testFields: Array<FieldSpec> = [
 export interface TestData {
   firstName: string
   lastName: string
-  dob: Moment
+  dob: Date
   weightKg: number
   heightCm: number
   numFingers: number
