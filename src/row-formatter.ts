@@ -21,7 +21,7 @@ const rowFormatter = <T>(
   data: RowData<T>,
   options: Partial<WriteOptions>,
 ) => {
-  if (typeof maps !== 'object') {
+  if (!Array.isArray(maps)) {
     throw new Error('mapping is not an array')
   }
   if (maps.length === 0) {
