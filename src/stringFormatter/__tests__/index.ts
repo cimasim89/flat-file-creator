@@ -84,7 +84,8 @@ describe('String formatter execution raise Exception', () => {
 describe('String formatter execution result', () => {
   it("size 10 and data '', result lenght is 10 ", () => {
     expect(
-        rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, '').length,
+      rtStringFormatter({ size: 10, name: 'someField', type: 'string' }, '')
+        .length,
     ).toBe(10)
   })
 
