@@ -4,8 +4,8 @@ This library allows you to read or write flat files according to a given specifi
 an argument.
 
 > **Version support**
-> - **v3.x** — current development version (see [Migration Guide](#migrating-from-v2-to-v3))
-> - **v2.x** — stable, receives bugfixes only
+> - **v3.x** — current development version (`npm install flat-file-creator@next`), see [Migration Guide](#migrating-from-v2-to-v3)
+> - **v2.x** — stable, receives bugfixes only (`npm install flat-file-creator`)
 
 ---
 
@@ -16,13 +16,28 @@ continue using v2.x — it will keep receiving bugfixes.
 
 ```bash
 # stay on v2
-npm install flat-file-creator@2
+npm install flat-file-creator
 
-# install v3
-npm install flat-file-creator@3
+# install v3 (published under the next tag during development)
+npm install flat-file-creator@next
 ```
 
-### 1. `moment` removed — date format tokens changed
+### 1. Node.js ≥ 20 required
+
+v3 requires Node.js 20 or later. v2 supports Node.js 10+.
+
+### 2. Pure ESM — no CommonJS support
+
+v3 is a pure ESM package. It cannot be `require()`'d from CommonJS modules.
+
+```ts
+// v3 — ESM only
+import { getAsyncFlatFileCreator } from 'flat-file-creator'
+```
+
+If your project uses CommonJS and you cannot migrate to ESM, stay on v2.
+
+### 3. `moment` removed — date format tokens changed
 
 v3 replaces `moment` with [`date-fns`](https://date-fns.org). If you use custom `dateFormat`
 strings, you must update the tokens:
@@ -41,7 +56,7 @@ strings, you must update the tokens:
 { type: 'date', format: { dateFormat: 'dd/MM/yyyy' } }
 ```
 
-### 2. `Moment` type removed from `DateFieldValue`
+### 4. `Moment` type removed from `DateFieldValue`
 
 `DateFieldValue` no longer accepts `moment` objects. Use `Date` or `string` instead.
 
@@ -56,7 +71,7 @@ const dob = new Date('1986-01-01')
 const dob = '1986-01-01'
 ```
 
-### 3. Date fields parsed as `Date` instead of `Moment`
+### 5. Date fields parsed as `Date` instead of `Moment`
 
 When reading a file, date fields now return native `Date` objects.
 
