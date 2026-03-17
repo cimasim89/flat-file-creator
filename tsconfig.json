@@ -2,8 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
-    "esModuleInterop": false,
-    "target": "es6",
+    "esModuleInterop": true,
+    "target": "es2020",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -14,8 +14,9 @@
     "strictNullChecks": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "types": ["node","jest"],
+    "types": ["node"],
     "noErrorTruncation": true
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["**/*.test.ts", "**/__tests__/**"]
 }
