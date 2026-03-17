@@ -1,8 +1,7 @@
 {
   "env": {
     "node": true,
-    "es6": true,
-    "jest/globals": true
+    "es6": true
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -11,7 +10,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "prettier", "jest"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
@@ -43,10 +42,6 @@
     "no-unexpected-multiline": "off",
     "prettier/prettier": "error",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "error",
-    "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error"
+    "no-restricted-globals": "off"
   }
 }

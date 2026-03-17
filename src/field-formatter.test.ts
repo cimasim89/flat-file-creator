@@ -64,7 +64,7 @@ describe('Field formatter execution raise Exception', () => {
 describe('Field formatter String execution result', () => {
   it('size 4, result lenght is 4 ', () => {
     expect(
-      (rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }).length),
+      rtFieldFormatter({ name: 'test', size: 4 }, { test: 'hello' }).length,
     ).toBe(4)
   })
 

@@ -72,20 +72,15 @@ describe('Integer formatter execution raise Exception', () => {
 describe('Integer formatter execution result', () => {
   it('size 4 and data 10, result lenght is 4 ', () => {
     expect(
-      (
-        rtIntegerFormatter({ size: 4, name: 'someField', type: 'integer' }, 10)
-      ).length,
+      rtIntegerFormatter({ size: 4, name: 'someField', type: 'integer' }, 10)
+        .length,
     ).toBe(4)
   })
 
   it('size 4 and same size data 1000, result lenght is 4', () => {
     expect(
-      (
-        rtIntegerFormatter(
-          { size: 4, name: 'someField', type: 'integer' },
-          1000,
-        ).length
-      ),
+      rtIntegerFormatter({ size: 4, name: 'someField', type: 'integer' }, 1000)
+        .length,
     ).toBe(4)
   })
 
@@ -97,13 +92,8 @@ describe('Integer formatter execution result', () => {
 
   it('size 10 and data 1000, result lenght is 10', () => {
     expect(
-      (
-        rtIntegerFormatter(
-          { size: 10, name: 'someField', type: 'integer' },
-          1000,
-        ).length
-
-      ),
+      rtIntegerFormatter({ size: 10, name: 'someField', type: 'integer' }, 1000)
+        .length,
     ).toBe(10)
   })
 

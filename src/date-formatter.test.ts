@@ -62,10 +62,8 @@ describe('Date formatter execution raise Exception', () => {
 describe('Date formatter execution result', () => {
   it('size 50 and new Date, result lenght is 50', () => {
     expect(
-      rtDateFormatter(
-        { size: 50, name: 'someField', type: 'date' },
-        new Date(),
-      ).length,
+      rtDateFormatter({ size: 50, name: 'someField', type: 'date' }, new Date())
+        .length,
     ).toBe(50)
   })
 

@@ -41,7 +41,7 @@ describe('row formatter execution', () => {
       name: 'John',
       surname: 'Doe',
     }
-    expect((rtRowFormatter(map, data).length)).toBe(20)
+    expect(rtRowFormatter(map, data).length).toBe(20)
   })
 
   it("Two string field of size 10, result is 'John      Doe       '", () => {
