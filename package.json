@@ -18,7 +18,7 @@
     "lint:fix": "eslint --fix src",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "tsc",
-    "postinstall": "husky install"
+    "prepare": "husky"
   },
   "keywords": [
     "positional",
@@ -45,7 +45,7 @@
     "eslint": "10.0.3",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.5",
-    "husky": "9.1.7",
+    "husky": "^9.1.7",
     "prettier": "3.8.1",
     "pretty-quick": "4.2.2",
     "typescript": "5.9.3",
