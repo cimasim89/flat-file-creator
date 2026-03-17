@@ -16,8 +16,9 @@
     "watch": "vitest",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
+    "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "tsc",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build",
     "prepare": "husky"
   },
   "keywords": [
