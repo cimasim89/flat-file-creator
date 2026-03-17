@@ -2,8 +2,15 @@
   "name": "flat-file-creator",
   "version": "3.0.0",
   "description": "Generate a flat positional text file of your dataset",
+  "type": "module",
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/flat-file-creator.js",
+      "types": "./dist/flat-file-creator.d.ts"
+    }
+  },
   "scripts": {
     "test": "vitest run",
     "watch": "vitest",

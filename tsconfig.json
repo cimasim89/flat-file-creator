@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "NodeNext",
     "declaration": true,
     "esModuleInterop": true,
     "target": "es2020",
@@ -9,7 +9,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "sourceMap": true,
     "strictNullChecks": true,
     "outDir": "./dist",

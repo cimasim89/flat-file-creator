@@ -1,4 +1,4 @@
-import { isNumeric } from '../utils'
+import { isNumeric } from '../utils.js'
 
 // Options to be used to configure the file creator instance as a whole
 export interface ReadOptions {

@@ -1,6 +1,6 @@
-import fileAppendPromise from './file-append-promise'
-import rowFormatter from './row-formatter'
-import { FieldSpec, RowData, WriteOptions } from './types'
+import fileAppendPromise from './file-append-promise.js'
+import rowFormatter from './row-formatter.js'
+import { FieldSpec, RowData, WriteOptions } from './types/index.js'
 
 const rowWriterMapper = <T>(
   maps: Array<FieldSpec>,

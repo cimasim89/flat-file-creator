@@ -5,8 +5,12 @@ import {
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from './utils'
-import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './types'
+} from './utils.js'
+import {
+  DateFieldSpec,
+  DateFieldValue,
+  assertFieldSpec,
+} from './types/index.js'
 
 const paddingDefault = 'end'
 

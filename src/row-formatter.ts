@@ -1,5 +1,5 @@
-import fieldFormatter from './field-formatter'
-import { FieldSpec, RowData, WriteOptions } from './types'
+import fieldFormatter from './field-formatter.js'
+import { FieldSpec, RowData, WriteOptions } from './types/index.js'
 
 const defaultOptions = {
   rowEnd: '',

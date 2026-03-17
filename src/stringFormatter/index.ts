@@ -4,9 +4,13 @@ import {
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from '../utils'
-import { StringFieldSpec, StringFieldValue, assertFieldSpec } from '../types'
-import { FlatFileEnumError } from '../Errors'
+} from '../utils.js'
+import {
+  StringFieldSpec,
+  StringFieldValue,
+  assertFieldSpec,
+} from '../types/index.js'
+import { FlatFileEnumError } from '../Errors.js'
 
 const paddingDefault = 'end'
 

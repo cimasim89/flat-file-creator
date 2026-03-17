@@ -4,8 +4,12 @@ import {
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from './utils'
-import { FloatFieldSpec, FloatFieldValue, assertFieldSpec } from './types'
+} from './utils.js'
+import {
+  FloatFieldSpec,
+  FloatFieldValue,
+  assertFieldSpec,
+} from './types/index.js'
 
 const paddingDefault = 'start'
 

@@ -4,8 +4,8 @@ import {
   FlatFileReadLineError,
   FlatFileReadFieldTypeError,
   FlatFileEnumError,
-} from './Errors'
-import { FieldSpec, ReadOptions } from './types'
+} from './Errors.js'
+import { FieldSpec, ReadOptions } from './types/index.js'
 
 // Return a function that can read a flat based on the given spec
 export const getAsyncFlatFileReader = <T = unknown>(

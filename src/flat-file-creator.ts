@@ -1,15 +1,15 @@
 import {
   getAsyncFlatFileCreator,
   dataToLines,
-} from './get-async-flat-file-creator'
+} from './get-async-flat-file-creator.js'
 import {
   getAsyncFlatFileReader,
   linesToData,
   parseLine,
-} from './flat-file-reader'
-import * as rowFormatter from './row-formatter'
-import * as fieldFormatter from './field-formatter'
-import * as Types from './types'
+} from './flat-file-reader.js'
+import * as rowFormatter from './row-formatter.js'
+import * as fieldFormatter from './field-formatter.js'
+import * as Types from './types/index.js'
 
 export {
   getAsyncFlatFileCreator,

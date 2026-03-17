@@ -1,4 +1,4 @@
-import { FieldSpec } from './types'
+import { FieldSpec } from './types/index.js'
 
 // prettier-ignore
 export const testLines =
