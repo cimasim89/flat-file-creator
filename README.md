@@ -3,6 +3,73 @@
 This library allows you to read or write flat files according to a given specification passed as
 an argument.
 
+> **Version support**
+> - **v3.x** — current development version (see [Migration Guide](#migrating-from-v2-to-v3))
+> - **v2.x** — stable, receives bugfixes only
+
+---
+
+## Migrating from v2 to v3
+
+v3 introduces several breaking changes. If you need stability or cannot migrate immediately,
+continue using v2.x — it will keep receiving bugfixes.
+
+```bash
+# stay on v2
+npm install flat-file-creator@2
+
+# install v3
+npm install flat-file-creator@3
+```
+
+### 1. `moment` removed — date format tokens changed
+
+v3 replaces `moment` with [`date-fns`](https://date-fns.org). If you use custom `dateFormat`
+strings, you must update the tokens:
+
+| v2 (moment) | v3 (date-fns) |
+|---|---|
+| `YYYY` | `yyyy` |
+| `DD` | `dd` |
+| `HH`, `mm`, `ss` | unchanged |
+
+```ts
+// v2
+{ type: 'date', format: { dateFormat: 'DD/MM/YYYY' } }
+
+// v3
+{ type: 'date', format: { dateFormat: 'dd/MM/yyyy' } }
+```
+
+### 2. `Moment` type removed from `DateFieldValue`
+
+`DateFieldValue` no longer accepts `moment` objects. Use `Date` or `string` instead.
+
+```ts
+// v2
+import moment from 'moment'
+const dob = moment('1986-01-01')
+
+// v3
+const dob = new Date('1986-01-01')
+// or
+const dob = '1986-01-01'
+```
+
+### 3. Date fields parsed as `Date` instead of `Moment`
+
+When reading a file, date fields now return native `Date` objects.
+
+```ts
+// v2
+const rows = await readFile('./data.txt')
+rows[0].dob.year()        // moment API
+
+// v3
+rows[0].dob.getFullYear() // native Date API
+```
+
+---
 
 ### TL;DR
 
@@ -275,7 +342,9 @@ type DateFieldSpec =
       utc?: boolean
 
       /**
-       * Specify an arbitrary date format (see [`moment`](https://momentjs.com/docs/#/displaying/))
+       * Specify an arbitrary date format using date-fns tokens
+       * (see [date-fns format](https://date-fns.org/docs/format))
+       * e.g. 'yyyy-MM-dd', 'dd/MM/yyyy HH:mm:ss'
        * @default ISO format
        */
       dateFormat?: string
@@ -286,7 +355,7 @@ type DateFieldSpec =
      * If not provided, failure to provide a value for this field will result in an exception unless
      * `options.throwErrors` is set to false.
      */
-    default?: Date | Moment | string | null
+    default?: Date | string | null
 
     /**
      * An optional description of the field. This can be used both for in-line
@@ -319,4 +388,3 @@ type RowData = {
 
 Note that for the file reader, you can pass a type argument on instantiation of the function that
 will determine the type of rows coming out of the file.
-
