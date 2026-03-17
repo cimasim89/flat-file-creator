@@ -5,6 +5,10 @@
   "type": "module",
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "exports": {
     ".": {
       "import": "./dist/flat-file-creator.js",
@@ -16,7 +20,8 @@
     "watch": "vitest",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "build": "tsc",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build",
     "prepare": "husky"
