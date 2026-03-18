@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { parseISO, parse } from 'date-fns'
+import { parseISO, parse, isValid } from 'date-fns'
 import {
   FlatFileReadLineError,
   FlatFileReadFieldTypeError,
@@ -213,10 +213,17 @@ export const interpret = <T = unknown>(
       }
 
       case 'date': {
-        result[field.name] =
+        const parsed =
           field.format && field.format.dateFormat
             ? parse(result[field.name], field.format.dateFormat, new Date())
             : parseISO(result[field.name])
+        if (!isValid(parsed)) {
+          throw new FlatFileReadFieldTypeError(
+            `Field '${field.name}' is supposed to be a date but is not. Actual value: ${result[field.name]}`,
+            field.name,
+          )
+        }
+        result[field.name] = parsed
         break
       }
 

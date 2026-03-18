@@ -1,4 +1,4 @@
-import { parseISO, format, isValid } from 'date-fns'
+import { parseISO, parse, format, isValid } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
 import {
   getPaddingPositionOrDef,
@@ -18,7 +18,17 @@ const getFormattedDateString = (
   date: Date | string,
   opts: Partial<NonNullable<DateFieldSpec['format']>>,
 ) => {
-  const parsed = typeof date === 'string' ? parseISO(date) : date
+  let parsed: Date
+  if (typeof date === 'string') {
+    if (opts.dateFormat) {
+      const withFormat = parse(date, opts.dateFormat, new Date())
+      parsed = isValid(withFormat) ? withFormat : parseISO(date)
+    } else {
+      parsed = parseISO(date)
+    }
+  } else {
+    parsed = date
+  }
   if (!isValid(parsed)) {
     throw new Error(`Invalid date ${date}`)
   }

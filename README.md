@@ -75,7 +75,7 @@ Every field needs at minimum `name` and `size`. The `type` defaults to `'string'
 { name: 'age', type: 'integer', size: 5 }
 ```
 
-Integers are right-padded with spaces by default. All standard `CommonSpec` options apply.
+Integers are left-padded with spaces by default. All standard `CommonSpec` options apply.
 
 ### `float`
 
