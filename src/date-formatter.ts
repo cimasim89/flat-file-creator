@@ -73,7 +73,7 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   } else {
     assertDateFieldValue(data, map.name)
 
-    resDate = data ? getFormattedDateString(data, map.format || {}) : ''
+    resDate = getFormattedDateString(data, map.format || {})
 
     if (resDate.length > map.size) {
       throw new Error(`Date ${resDate} exceed size ${map.size}`)
