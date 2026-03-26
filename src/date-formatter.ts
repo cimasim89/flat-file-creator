@@ -21,7 +21,7 @@ const getFormattedDateString = (
   let parsed: Date
   if (typeof date === 'string') {
     if (opts.dateFormat) {
-      const withFormat = parse(date, opts.dateFormat, new Date())
+      const withFormat = parse(date, opts.dateFormat, new Date(1970, 0, 1))
       parsed = isValid(withFormat) ? withFormat : parseISO(date)
     } else {
       parsed = parseISO(date)

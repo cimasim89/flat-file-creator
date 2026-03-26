@@ -215,7 +215,11 @@ export const interpret = <T = unknown>(
       case 'date': {
         const parsed =
           field.format && field.format.dateFormat
-            ? parse(result[field.name], field.format.dateFormat, new Date())
+            ? parse(
+                result[field.name],
+                field.format.dateFormat,
+                new Date(1970, 0, 1),
+              )
             : parseISO(result[field.name])
         if (!isValid(parsed)) {
           throw new FlatFileReadFieldTypeError(
