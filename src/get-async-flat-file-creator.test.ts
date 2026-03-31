@@ -15,7 +15,7 @@ describe('makeAsyncFlatFileWriter', () => {
 describe('dataToLines', () => {
   it('should serialize data to an array of lines', () => {
     expect(dataToLines<TestData>(testData, testFields).join(`\n`)).toEqual(
-      testLines
+      testLines,
     )
   })
 

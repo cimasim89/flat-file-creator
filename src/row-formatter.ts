@@ -1,6 +1,5 @@
-import * as lodash from 'lodash'
-import fieldFormatter from './field-formatter'
-import { FieldSpec, RowData, WriteOptions } from './Types'
+import fieldFormatter from './field-formatter.js'
+import { FieldSpec, RowData, WriteOptions } from './types/index.js'
 
 const defaultOptions = {
   rowEnd: '',
@@ -20,12 +19,12 @@ const prepareToConcatData =
 const rowFormatter = <T>(
   maps: Array<FieldSpec>,
   data: RowData<T>,
-  options: Partial<WriteOptions>
+  options: Partial<WriteOptions>,
 ) => {
-  if (typeof maps !== 'object') {
+  if (!Array.isArray(maps)) {
     throw new Error('mapping is not an array')
   }
-  if (lodash.isEmpty(maps)) {
+  if (maps.length === 0) {
     throw new Error('mapping is empty')
   }
   if (!data) {

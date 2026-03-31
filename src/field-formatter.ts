@@ -1,7 +1,7 @@
-import stringFormatter from './string-formatter'
-import dateFormatter from './date-formatter'
-import integerFormatter from './integer-formatter'
-import floatFormatter from './float-formatter'
+import stringFormatter from './stringFormatter/index.js'
+import dateFormatter from './date-formatter.js'
+import integerFormatter from './integer-formatter.js'
+import floatFormatter from './float-formatter.js'
 import {
   FieldSpec,
   StringFieldSpec,
@@ -11,7 +11,7 @@ import {
   IntegerFieldValue,
   FloatFieldValue,
   DateFieldValue,
-} from './Types'
+} from './types/index.js'
 
 const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
   try {
@@ -29,7 +29,7 @@ const fieldFormatter = <T>(map: FieldSpec, data: RowData<T>) => {
       case undefined:
         return stringFormatter(
           { ...(map as StringFieldSpec), type: 'string' },
-          <StringFieldValue>data[fieldName]
+          <StringFieldValue>data[fieldName],
         )
       default:
         throw new Error('required field type is not present')

@@ -1,9 +1,4 @@
-import * as _ from 'lodash'
-import { isNumeric } from './utils'
-import { Moment } from 'moment'
-
-// Export Moment type for downstream convenience
-export { Moment }
+import { isNumeric } from '../utils.js'
 
 // Options to be used to configure the file creator instance as a whole
 export interface ReadOptions {
@@ -44,7 +39,7 @@ export interface WriteOptions extends ReadOptions {
 export type StringFieldValue = string | null | undefined
 export type IntegerFieldValue = number | null | undefined
 export type FloatFieldValue = number | null | undefined
-export type DateFieldValue = Date | Moment | string | null | undefined
+export type DateFieldValue = Date | string | null | undefined
 export type FieldValue =
   | StringFieldValue
   | IntegerFieldValue
@@ -159,7 +154,7 @@ export type DateFieldSpec = CommonSpec & {
    * If not provided, failure to provide a value for this field will result in an exception unless
    * `options.throwErrors` is set to false.
    */
-  default?: Date | Moment | string | null
+  default?: Date | string | null
 }
 
 declare type CommonSpec = {
@@ -197,24 +192,24 @@ declare type CommonSpec = {
 // This overloaded method is used to assert that the given field spec is of the given type
 export function assertFieldSpec(
   spec: any,
-  type: 'string'
+  type: 'string',
 ): asserts spec is StringFieldSpec
 export function assertFieldSpec(
   spec: any,
-  type: 'integer'
+  type: 'integer',
 ): asserts spec is IntegerFieldSpec
 export function assertFieldSpec(
   spec: any,
-  type: 'float'
+  type: 'float',
 ): asserts spec is FloatFieldSpec
 export function assertFieldSpec(
   spec: any,
-  type: 'date'
+  type: 'date',
 ): asserts spec is DateFieldSpec
 export function assertFieldSpec(spec: any): asserts spec is FieldSpec
 export function assertFieldSpec(
   spec: any,
-  type?: string
+  type?: string,
 ): asserts spec is FieldSpec {
   if (!spec) {
     throw new Error('map is null or undefined')
@@ -222,7 +217,7 @@ export function assertFieldSpec(
   if (typeof spec !== 'object') {
     throw new Error('map is not an object')
   }
-  if (_.isEmpty(spec)) {
+  if (Object.keys(spec).length === 0) {
     throw new Error('map object is empty')
   }
   if (typeof spec.name === 'undefined') {
@@ -240,7 +235,7 @@ export function assertFieldSpec(
   if (type) {
     if (type !== spec.type) {
       throw new Error(
-        `map field [${spec.name}] is for ${spec.type}, not the required ${type}`
+        `map field [${spec.name}] is for ${spec.type}, not the required ${type}`,
       )
     }
     if (type === 'float' && typeof spec.precision === 'undefined') {

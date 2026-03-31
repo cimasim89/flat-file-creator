@@ -1,6 +1,5 @@
 import dateFormatter from './date-formatter'
-import * as _ from 'lodash'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 
 // Version of dateFormatter with type-checking turned off to test runtime functionality
 const rtDateFormatter: any = dateFormatter
@@ -8,13 +7,13 @@ const rtDateFormatter: any = dateFormatter
 describe('Date formatter execution raise Exception', () => {
   it('If map is null', () => {
     expect(() => rtDateFormatter(null, null)).toThrow(
-      'map is null or undefined'
+      'map is null or undefined',
     )
   })
 
   it('If map is not an object', () => {
     expect(() => rtDateFormatter('something', null)).toThrow(
-      'map is not an object'
+      'map is not an object',
     )
   })
 
@@ -24,20 +23,20 @@ describe('Date formatter execution raise Exception', () => {
 
   it('If field map object not contain size', () => {
     expect(() =>
-      rtDateFormatter({ name: 'test', paddingPosition: 'end' }, null)
+      rtDateFormatter({ name: 'test', paddingPosition: 'end' }, null),
     ).toThrow('map size is required')
   })
 
   it('If data is not a date', () => {
     const date = 'richard pryor'
     expect(() =>
-      rtDateFormatter({ size: 10, name: 'someField' }, date)
+      rtDateFormatter({ size: 10, name: 'someField' }, date),
     ).toThrow(`Invalid date ${date}`)
   })
 
   it('Size is less than 1', () => {
     expect(() => rtDateFormatter({ size: 0, name: 'someField' }, '')).toThrow(
-      'map size must be greater than 0'
+      'map size must be greater than 0',
     )
   })
 
@@ -45,7 +44,7 @@ describe('Date formatter execution raise Exception', () => {
     const date = new Date()
     const paddingPosition = 'notvalidpad'
     expect(() =>
-      rtDateFormatter({ size: 50, name: 'someField', paddingPosition }, date)
+      rtDateFormatter({ size: 50, name: 'someField', paddingPosition }, date),
     ).toThrow(`padding position "${paddingPosition}" not allowed`)
   })
 
@@ -54,8 +53,8 @@ describe('Date formatter execution raise Exception', () => {
     expect(() =>
       rtDateFormatter(
         { size: 50, name: 'someField', paddingSymbol: '@.@' },
-        date
-      )
+        date,
+      ),
     ).toThrow('paddingSymbol cannot have length > 1')
   })
 })
@@ -63,12 +62,8 @@ describe('Date formatter execution raise Exception', () => {
 describe('Date formatter execution result', () => {
   it('size 50 and new Date, result lenght is 50', () => {
     expect(
-      _.size(
-        rtDateFormatter(
-          { size: 50, name: 'someField', type: 'date' },
-          new Date()
-        )
-      )
+      rtDateFormatter({ size: 50, name: 'someField', type: 'date' }, new Date())
+        .length,
     ).toBe(50)
   })
 
@@ -79,10 +74,10 @@ describe('Date formatter execution result', () => {
       expect(
         rtDateFormatter(
           { size: 30, name: 'someField', type: 'date' },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01T00:00:00.000Z      ')
-    }
+    },
   )
 
   it(
@@ -92,68 +87,68 @@ describe('Date formatter execution result', () => {
       expect(
         rtDateFormatter(
           { size: 24, name: 'someField', type: 'date' },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01T00:00:00.000Z')
-    }
+    },
   )
 
   it(
-    "size 10, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD'," +
+    "size 10, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd'," +
       " result iso string '2018-01-01'",
     () => {
       expect(
         rtDateFormatter(
           {
             size: 10,
-            format: { dateFormat: 'YYYY-MM-DD' },
+            format: { dateFormat: 'yyyy-MM-dd' },
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01')
-    }
+    },
   )
 
   it(
-    "size 10, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD'," +
+    "size 10, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd'," +
       " result iso string '2018-01-01'",
     () => {
       expect(
         rtDateFormatter(
           {
             size: 10,
-            format: { utc: true, dateFormat: 'YYYY-MM-DD' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd' },
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01')
-    }
+    },
   )
 
   it(
-    "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
+    "size 20, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd HH:mm:ss'," +
       " result iso string '2018-01-01 00:00:00 '",
     () => {
       expect(
         rtDateFormatter(
           {
             size: 20,
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01 00:00:00 ')
-    }
+    },
   )
 
   it(
-    "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
+    "size 20, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd HH:mm:ss'," +
       " paddingSymbol '@'" +
       " result iso string '2018-01-01 00:00:00@'",
     () => {
@@ -162,18 +157,18 @@ describe('Date formatter execution result', () => {
           {
             size: 20,
             paddingSymbol: '@',
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('2018-01-01 00:00:00@')
-    }
+    },
   )
 
   it(
-    "size 20, date '2018-01-01', utc true, dateFormat 'YYYY-MM-DD HH:mm:ss'," +
+    "size 20, date '2018-01-01', utc true, dateFormat 'yyyy-MM-dd HH:mm:ss'," +
       " paddingSymbol '@', paddingPosition start" +
       " result iso string '@2018-01-01 00:00:00'",
     () => {
@@ -183,36 +178,35 @@ describe('Date formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { utc: true, dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { utc: true, dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
-          '2018-01-01'
-        )
+          '2018-01-01',
+        ),
       ).toBe('@2018-01-01 00:00:00')
-    }
+    },
   )
 
   it(
-    "size 20, date moment() , dateFormat 'YYYY-MM-DD HH:mm:ss'," +
-      " paddingSymbol '@', paddingPosition start" +
-      " result iso string '@2018-01-01 00:00:00'",
+    "size 20, date new Date() , dateFormat 'yyyy-MM-dd HH:mm:ss'," +
+      " paddingSymbol '@', paddingPosition start",
     () => {
-      const date = moment()
+      const date = new Date()
       expect(
         rtDateFormatter(
           {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
-          date
-        )
-      ).toBe(`@${date.format('YYYY-MM-DD HH:mm:ss')}`)
-    }
+          date,
+        ),
+      ).toBe(`@${format(date, 'yyyy-MM-dd HH:mm:ss')}`)
+    },
   )
 
   const t = [0, 1]
@@ -225,13 +219,13 @@ describe('Date formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
             default: '2020-01-01 08:00:00',
           },
-          v
-        )
+          v,
+        ),
       ).toBe(`@2020-01-01 08:00:00`)
     })
   })
@@ -245,11 +239,11 @@ describe('Date formatter execution result', () => {
             size: 20,
             paddingSymbol: '@',
             paddingPosition: 'start',
-            format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+            format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
             name: 'someField',
             type: 'date',
           },
-          v
+          v,
         )
       }).toThrow('No value supplied and no default set')
     })
@@ -262,13 +256,13 @@ describe('Date formatter execution result', () => {
           size: 5,
           paddingSymbol: '@',
           paddingPosition: 'start',
-          format: { dateFormat: 'YYYY-MM-DD HH:mm:ss' },
+          format: { dateFormat: 'yyyy-MM-dd HH:mm:ss' },
           name: 'someField',
           type: 'date',
           default: null,
         },
-        null
-      )
+        null,
+      ),
     ).toBe(`@@@@@`)
   })
 })

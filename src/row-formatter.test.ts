@@ -1,5 +1,4 @@
 import rowFormatter from './row-formatter'
-import * as _ from 'lodash'
 
 // Version of formatter with type-checking turned off to test runtime functionality
 const rtRowFormatter: any = rowFormatter
@@ -19,7 +18,7 @@ describe('row formatter execution exceptions', () => {
 
   it('If data is not an object throw exception', () => {
     expect(() => rtRowFormatter([{}], 'some string')).toThrow(
-      'data is not an object'
+      'data is not an object',
     )
   })
 })
@@ -42,7 +41,7 @@ describe('row formatter execution', () => {
       name: 'John',
       surname: 'Doe',
     }
-    expect(_.size(rtRowFormatter(map, data))).toBe(20)
+    expect(rtRowFormatter(map, data).length).toBe(20)
   })
 
   it("Two string field of size 10, result is 'John      Doe       '", () => {
@@ -124,7 +123,7 @@ describe('row formatter execution', () => {
     expect(rtRowFormatter(map, data)).toBe('John      Doe          20 1750')
   })
 
-  it("Concat field birth of size 10 format 'DD/MM/YYYY'", () => {
+  it("Concat field birth of size 10 format 'dd/MM/yyyy'", () => {
     const map = [
       {
         type: 'string',
@@ -153,7 +152,7 @@ describe('row formatter execution', () => {
         paddingPosition: 'start',
         name: 'birth',
         format: {
-          dateFormat: 'DD/MM/YYYY',
+          dateFormat: 'dd/MM/yyyy',
         },
       },
     ]
@@ -165,7 +164,7 @@ describe('row formatter execution', () => {
       birth: '1989-12-11',
     }
     expect(rtRowFormatter(map, data)).toBe(
-      'John      Doe          20 1750 11/12/1989'
+      'John      Doe          20 1750 11/12/1989',
     )
   })
 })

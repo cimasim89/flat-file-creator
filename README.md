@@ -1,322 +1,200 @@
-# Flat File Creator
+# flat-file-creator
 
-This library allows you to read or write flat files according to a given specification passed as
-an argument.
+Read and write fixed-width flat files from typed TypeScript data — the boring format your bank
+still loves, made painless.
 
+> **Version support**
+> - **v3.x** — current development version (`npm install flat-file-creator@next`), see [Migration Guide](#migrating-from-v2-to-v3)
+> - **v2.x** — stable, receives bugfixes only (`npm install flat-file-creator`)
 
-### TL;DR
+## Install
 
-The following represents a "normal" usage of this flat file library. In general, you
+```bash
+npm install flat-file-creator@next
+```
 
-1. Define the structure of the data you're working with
-2. Use that structure to configure an instance of either a reader or writer
-3. Use the instance to read or write data.
+**Requirements:** Node.js ≥ 20, ESM project (`"type": "module"` or `.mjs` files).
+
+---
+
+## Quick start
 
 ```ts
-// Create row definition
+import { getAsyncFlatFileCreator, getAsyncFlatFileReader } from 'flat-file-creator'
 
-const rowDef: Array<FieldSpec> = [
-  {
-    name: "firstName",
-    size: 25,
-    type: "string",
-    paddingPosition: "start",
-  },
-  {
-    name: "lastName",
-    size: 25,
-    type: "string",
-    paddingPosition: "start",
-  },
-  {
-    name: "dob",
-    size: 20,
-    type: "date",
-    format: {
-      utc: true,
-    }
-  },
-  {
-    name: "newsLetterOptIn",
-    size: "1",
-    type: "integer",
-  }
+// 1. Describe the row layout
+const fields = [
+  { name: 'firstName', type: 'string',  size: 20 },
+  { name: 'lastName',  type: 'string',  size: 20 },
+  { name: 'dob',       type: 'date',    size: 24, format: { utc: true } },
+  { name: 'score',     type: 'float',   size: 8,  precision: 2 },
 ]
 
-// Instantiate a creator and a reader with your definitions
-const createFile = getAsyncFlatFileCreator(rowDef)
-const readFile = getAsyncFlatFileReader<MyData>(rowDef)
+// 2. Create writer and reader from the same definition
+const writeFile = getAsyncFlatFileCreator(fields)
+const readFile  = getAsyncFlatFileReader<Person>(fields)
 
-// Define some data
-const rows: Array<MyData> = [
-  {
-    firstName: "Jo",
-    lastName: "Revelo",
-    dob: new Date("1986-01-01")
-  },
-  {
-    firstName: "Lux",
-    lastName: "Springfield",
-    dob: new Date("1996-01-01")
-  },
-]
-
-// Create a file using your data
-await createFile(rows, "/tmp/my-file.txt")
-
-// Now read that file back into program space
-const data = await readFile("/tmp/my-file.txt")
-
-// Now `data` is the same as `rows`
-// Use it.....
-```
-
-
-## In-Depth Explanation
-
-### Generate your asynchronous file creator or reader
-
-The methods `getAsyncFlatFileCreator` and `getAsyncFlatFileReader` return functions configured
-through the two required parameters, `maps` and `options`.
-
-The `maps` array parameter will contain the definition of the line structure of the text file.
-Using this parameter, you "map" fields to their positions and lengths in the flat file. The
-`options` parameter allows you to configure some general options of the file that will be created
-or read.
-
-```ts
-function getAsyncFlatFileCreator(
-  maps: Array<FieldSpec>,
-  options: Partial<WriteOptions>
-): (dataRows: Array<RowData>, filePath: string) => Promise<Array<unknown>>
-```
-
-Options are as follows:
-
-```ts
-// Read options
-export interface ReadOptions {
-  /**
-   * Defines the terminator character of each line
-   * @default ''
-   */
-  rowEnd?: string
-
-  /**
-   * It's relative to the file encoding provided by the fs node module
-   * @default 'utf8'
-   */
-  encoding?: BufferEncoding
-
-  /**
-   * If true, throw errors when data structure errors are encountered (such as inconsistent line
-   * length or mismatched input or output data). If false errors are simply swallowed.
-   * @default true
-   */
-  throwErrors?: boolean
-}
-
-// Write options (extend Read Options)
-export interface WriteOptions extends ReadOptions {
-  /**
-   * It's relative to the file save mode provided by the fs node module
-   * @default 0o666
-   */
-  mode?: number
-
-  /**
-   * It's relative to the file save flag provided by the fs node module
-   * @default 'a'
-   */
-  flag?: string
-}
-```
-
-The `maps` parameter is somewhat complicated. It is an array of field specifications, where
-the position in the array marks the position of the field in the row. Field specifications are
-defined as follows:
-
-```ts
-// These parameters are common to all field specs
-type CommonSpec = {
-  /**
-   * This attribute is the reference to the name of the attribute that must be present in the
-   * dataset that will be passed to the generated function to process the value and position it
-   * in the desired point
-   */
-  name: string
-
-  /**
-   * The total dimension that the field will have in the generated file
-   */
-  size: number
-
-  /**
-   * Whether padding for this field should be at the beginning or the end
-   * @default 'end' for string and date fields, 'start' for number fields
-   */
-  paddingPosition?: 'start' | 'end'
-
-  /**
-   * What character should be used as padding
-   * @default ' ' (space)
-   */
-  paddingSymbol?: string
-}
-
-// String field parameters
-type StringFieldSpec =
-  CommonSpec &
-  {
-    /**
-     * Type is option for string fields because when type is not specified we default to 'string'
-     */
-    type?: 'string'
-
-    /**
-     * If the field has a set list of values, you can specify them using the 'enum' key. Since
-     * upstream providers may implement various key-value paradigms, this field is an arbitrary map
-     * of string keys to string values, as opposed to an array of fields. For example:
-     *
-     * {
-     *   "01": "received",
-     *   "02": "fulfilled",
-     *   "03": "rejected",
-     * }
-     */
-    enum?: { [serializedKey: string]: string }
-
-    /**
-     * Whether or not to trim whitespace from the value
-     * @default false
-     */
-    preserveEmptySpace?: boolean
-
-    /**
-     * If true, any values that are not string types will throw an exception
-     */
-    straight?: boolean
-
-    /**
-     * If provided, this value is used as the default value when no value is provided in the data.
-     * If not provided, failure to provide a value for this field will result in an exception unless
-     * `options.throwErrors` is set to false.
-     */
-    default?: string | null
-
-    /**
-     * An optional description of the field. This can be used both for in-line
-     * documentation/reference and also to produce better error messages.
-     */
-    desc?: string
-  }
-
-// Integer fields - there are no additional parameters
-type IntegerFieldSpec =
-  CommonSpec & {
-    type: 'integer'
-
-    /**
-     * If provided, this value is used as the default value when no value is provided in the data.
-     * If not provided, failure to provide a value for this field will result in an exception unless
-     * `options.throwErrors` is set to false.
-     */
-    default?: number | null
-
-    /**
-     * An optional description of the field. This can be used both for in-line
-     * documentation/reference and also to produce better error messages.
-     */
-    desc?: string
-  }
-
-// Float field parameters
-type FloatFieldSpec =
-  CommonSpec & {
-    type: 'float'
-
-    /**
-     * When `dotNotation` is true, represents the number of digits to the right of the decimal
-     * point. When `dotNotation` is false, defines the multiplication factor used to obtain the
-     * integer value of the number (see `dotNotation` below).
-     */
-    precision?: number
-
-    /**
-     * When false, number is represented as an integer by multiplying by 10^[precision]. For
-     * example, if precision is 4, then the value `156.34235568183` would be represented as
-     * the integer `1563424`.
-     */
-    dotNotation?: boolean
-
-    /**
-     * If provided, this value is used as the default value when no value is provided in the data.
-     * If not provided, failure to provide a value for this field will result in an exception unless
-     * `options.throwErrors` is set to false.
-     */
-    default?: number | null
-
-    /**
-     * An optional description of the field. This can be used both for in-line
-     * documentation/reference and also to produce better error messages.
-     */
-    desc?: string
-  }
-
-// Date field parameters
-type DateFieldSpec =
-  CommonSpec & {
-    type: 'date'
-    format?: {
-      /**
-       * Use UTC for times
-       * @default false
-       */
-      utc?: boolean
-
-      /**
-       * Specify an arbitrary date format (see [`moment`](https://momentjs.com/docs/#/displaying/))
-       * @default ISO format
-       */
-      dateFormat?: string
-    }
-
-    /**
-     * If provided, this value is used as the default value when no value is provided in the data.
-     * If not provided, failure to provide a value for this field will result in an exception unless
-     * `options.throwErrors` is set to false.
-     */
-    default?: Date | Moment | string | null
-
-    /**
-     * An optional description of the field. This can be used both for in-line
-     * documentation/reference and also to produce better error messages.
-     */
-    desc?: string
-  }
-
-// This is a discriminated union of all field spec types
-type FieldSpec = (
-  | StringFieldSpec
-  | FloatFieldSpec
-  | IntegerFieldSpec
-  | DateFieldSpec
+// 3. Write
+await writeFile(
+  [
+    { firstName: 'Jo',    lastName: 'Revelo',     dob: new Date('1986-01-01'), score: 9.75 },
+    { firstName: 'Ricky', lastName: 'Springfield', dob: new Date('1975-06-15'), score: 8.50 },
+  ],
+  '/tmp/people.txt',
 )
 
+// 4. Read back — `rows` is fully typed as Person[]
+const rows = await readFile('/tmp/people.txt')
+console.log(rows[0].dob.getFullYear()) // 1986
 ```
 
-### Use flat file creator:
+---
 
-Once you have defined the fields and configured your flat file creator or reader, you'll use it to
-convert read or write rows of data to a flat file. Row data is represented as an array of
-`RowData` objects, indexed by the field name:
+## Field types
+
+Every field needs at minimum `name` and `size`. The `type` defaults to `'string'` when omitted.
+
+### `string`
 
 ```ts
-type RowData = {
-    [fieldName: string]: string | number | boolean | Date
+{ name: 'city', type: 'string', size: 30 }
+```
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `paddingPosition` | `'start' \| 'end'` | `'end'` | Where to add padding |
+| `paddingSymbol` | `string` | `' '` | Character used for padding |
+| `preserveEmptySpace` | `boolean` | `false` | Skip trimming whitespace |
+| `straight` | `boolean` | `false` | Throw if value is numeric |
+| `enum` | `{ [key: string]: string }` | — | Serialize/deserialize a set of values |
+| `default` | `string \| null` | — | Fallback when value is missing |
+
+### `integer`
+
+```ts
+{ name: 'age', type: 'integer', size: 5 }
+```
+
+Integers are left-padded with spaces by default. All standard `CommonSpec` options apply.
+
+### `float`
+
+```ts
+{ name: 'score', type: 'float', size: 8, precision: 2 }
+```
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `precision` | `number` | `0` | Decimal places |
+| `dotNotation` | `boolean` | `false` | When `false`, value is stored as integer × 10^precision |
+
+**Example** — `9.75` with `precision: 2, dotNotation: false` → `"     975"`, and back to `9.75` on read.
+
+### `date`
+
+```ts
+{ name: 'dob', type: 'date', size: 24, format: { utc: true, dateFormat: 'yyyy-MM-dd' } }
+```
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `format.dateFormat` | `string` | ISO 8601 | [date-fns format tokens](https://date-fns.org/docs/format) |
+| `format.utc` | `boolean` | `false` | Format in UTC |
+| `default` | `Date \| string \| null` | — | Fallback when value is missing |
+
+On **read**, date fields are always returned as native `Date` objects.
+
+---
+
+## Options
+
+Both `getAsyncFlatFileCreator` and `getAsyncFlatFileReader` accept an optional second argument:
+
+```ts
+interface WriteOptions {
+  rowEnd?:      string          // line terminator, default ''
+  encoding?:    BufferEncoding  // default 'utf8'
+  throwErrors?: boolean         // throw on structural errors, default true
+  mode?:        number          // file mode, default 0o666
+  flag?:        string          // fs flag, default 'a' (append)
 }
 ```
 
-Note that for the file reader, you can pass a type argument on instantiation of the function that
-will determine the type of rows coming out of the file.
+---
 
+## Working with lines directly
+
+If you prefer to work with strings instead of files, two lower-level helpers are available:
+
+```ts
+import { dataToLines, linesToData } from 'flat-file-creator'
+
+const lines = dataToLines(rows, fields)       // string[]
+const rows  = linesToData(lines.join('\n'), fields) // T[]
+```
+
+---
+
+## Migrating from v2 to v3
+
+v3 is a clean break. If you need stability or can't migrate yet, v2.x keeps receiving bugfixes.
+
+```bash
+npm install flat-file-creator        # stay on v2
+npm install flat-file-creator@next   # try v3
+```
+
+### 1. Node.js ≥ 20 required
+
+v2 supports Node.js 10+. v3 requires Node.js 20 or later.
+
+### 2. Pure ESM — no CommonJS support
+
+v3 is a pure ESM package and cannot be `require()`'d. If your project is still on CommonJS
+and cannot migrate, stay on v2.
+
+```ts
+// v3 — ESM only
+import { getAsyncFlatFileCreator } from 'flat-file-creator'
+```
+
+### 3. `moment` removed — date format tokens changed
+
+v3 replaces `moment` with [`date-fns`](https://date-fns.org). Update your `dateFormat` tokens:
+
+| v2 (moment) | v3 (date-fns) |
+|---|---|
+| `YYYY` | `yyyy` |
+| `DD` | `dd` |
+| `HH`, `mm`, `ss` | unchanged |
+
+```ts
+// v2
+{ type: 'date', format: { dateFormat: 'DD/MM/YYYY' } }
+
+// v3
+{ type: 'date', format: { dateFormat: 'dd/MM/yyyy' } }
+```
+
+### 4. `Moment` type removed from `DateFieldValue`
+
+`DateFieldValue` no longer accepts `moment` objects:
+
+```ts
+// v2
+import moment from 'moment'
+const dob = moment('1986-01-01')
+
+// v3
+const dob = new Date('1986-01-01')  // or just '1986-01-01'
+```
+
+### 5. Date fields return `Date` instead of `Moment`
+
+```ts
+// v2
+rows[0].dob.year()        // moment API
+
+// v3
+rows[0].dob.getFullYear() // native Date API
+```

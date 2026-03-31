@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { WriteOptions } from './Types'
+import { WriteOptions } from './types/index.js'
 
 const defaultOptions = {
   encoding: 'utf8' as const,
@@ -18,7 +18,7 @@ const prepareOptions = (opts: Partial<WriteOptions>) => {
 const fileAppendPromise = (
   path: string,
   data: string,
-  options?: Partial<WriteOptions>
+  options?: Partial<WriteOptions>,
 ) => {
   return new Promise((resolve, reject) => {
     const appendCallback = (path: string) => (err: Error) => {
@@ -33,7 +33,7 @@ const fileAppendPromise = (
         path,
         data,
         prepareOptions(options),
-        appendCallback(path)
+        appendCallback(path),
       )
     }
     fs.appendFile(path, data, appendCallback(path))

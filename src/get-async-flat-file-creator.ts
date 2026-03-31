@@ -1,11 +1,11 @@
-import fileAppendPromise from './file-append-promise'
-import rowFormatter from './row-formatter'
-import { FieldSpec, RowData, WriteOptions } from './Types'
+import fileAppendPromise from './file-append-promise.js'
+import rowFormatter from './row-formatter.js'
+import { FieldSpec, RowData, WriteOptions } from './types/index.js'
 
 const rowWriterMapper = <T>(
   maps: Array<FieldSpec>,
   path: string,
-  options: Partial<WriteOptions>
+  options: Partial<WriteOptions>,
 ) => {
   return (data: RowData<T>) =>
     fileAppendPromise(path, rowFormatter<T>(maps, data, options), options)
@@ -13,7 +13,7 @@ const rowWriterMapper = <T>(
 
 export const getAsyncFlatFileCreator = <T>(
   maps: Array<FieldSpec>,
-  options: Partial<WriteOptions>
+  options: Partial<WriteOptions>,
 ) => {
   return (data: Array<RowData<T>>, path: string) =>
     Promise.all(data.map(rowWriterMapper(maps, path, options)))
@@ -28,7 +28,7 @@ export const getAsyncFlatFileCreator = <T>(
 export const dataToLines = <T>(
   data: Array<RowData<T>>,
   fields: Array<FieldSpec>,
-  options?: { throwErrors?: boolean }
+  options?: { throwErrors?: boolean },
 ): Array<string> => {
   return data.map((d) => rowFormatter<T>(fields, d, options || {}))
 }

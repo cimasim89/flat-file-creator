@@ -11,7 +11,7 @@ export const checkValidPaddingPosition = (paddingPosition: 'start' | 'end') => {
 
 export const getPaddingPositionOrDef = (
   paddingPosition: 'start' | 'end' | undefined | null,
-  def: 'start' | 'end'
+  def: 'start' | 'end',
 ) => checkValidPaddingPosition(paddingPosition ? paddingPosition : def)
 
 export const checkValidSymbol = (sym: string) => {

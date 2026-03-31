@@ -1,46 +1,58 @@
-import * as moment from 'moment'
-import * as _ from 'lodash'
+import { parseISO, parse, format, isValid } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
 import {
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from './utils'
-import { DateFieldSpec, DateFieldValue, assertFieldSpec } from './Types'
+} from './utils.js'
+import {
+  DateFieldSpec,
+  DateFieldValue,
+  assertFieldSpec,
+} from './types/index.js'
 
 const paddingDefault = 'end'
-const defaultFormat = {
-  utc: false,
-}
 
 const getFormattedDateString = (
-  date: Date | moment.Moment | string,
-  opts: Partial<NonNullable<DateFieldSpec['format']>>
+  date: Date | string,
+  opts: Partial<NonNullable<DateFieldSpec['format']>>,
 ) => {
-  const base = moment(date)
-  if (!base.isValid()) {
+  let parsed: Date
+  if (typeof date === 'string') {
+    if (opts.dateFormat) {
+      const withFormat = parse(date, opts.dateFormat, new Date(1970, 0, 1))
+      parsed = isValid(withFormat) ? withFormat : parseISO(date)
+    } else {
+      parsed = parseISO(date)
+    }
+  } else {
+    parsed = date
+  }
+  if (!isValid(parsed)) {
     throw new Error(`Invalid date ${date}`)
   }
-  const convention = opts.utc ? base.utc() : base
   if (!opts.dateFormat) {
-    return convention.toISOString()
+    return parsed.toISOString()
   }
-  return convention.format(opts.dateFormat)
+  if (opts.utc) {
+    return formatInTimeZone(parsed, 'UTC', opts.dateFormat)
+  }
+  return format(parsed, opts.dateFormat)
 }
 
 function assertDateFieldValue(
   d: any,
-  fieldName: string
+  fieldName: string,
 ): asserts d is DateFieldValue {
   if (
     d !== null &&
     typeof d !== 'undefined' &&
     typeof d !== 'string' &&
-    typeof d.toISOString === 'undefined' &&
-    typeof d.year === 'undefined'
+    !(d instanceof Date)
   ) {
     throw new Error(
-      `Value for date field ${fieldName} must be a date or a string representation of a date`
+      `Value for date field ${fieldName} must be a date or a string representation of a date`,
     )
   }
 }
@@ -61,21 +73,20 @@ const dateFormatter = (map: DateFieldSpec, data: DateFieldValue) => {
   } else {
     assertDateFieldValue(data, map.name)
 
-    const format = { ...defaultFormat, ...map.format }
-    resDate = data ? getFormattedDateString(data, format) : ''
+    resDate = getFormattedDateString(data, map.format || {})
 
-    if (_.size(resDate) > map.size) {
+    if (resDate.length > map.size) {
       throw new Error(`Date ${resDate} exceed size ${map.size}`)
     }
   }
 
   return getPadder(
-    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault),
   )(
     resDate,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(resDate)
-    )
+      map.size - resDate.length,
+    ),
   )
 }
 

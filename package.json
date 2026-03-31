@@ -1,16 +1,30 @@
 {
   "name": "flat-file-creator",
-  "version": "2.2.1",
+  "version": "3.0.0",
   "description": "Generate a flat positional text file of your dataset",
+  "type": "module",
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/flat-file-creator.js",
+      "types": "./dist/flat-file-creator.d.ts"
+    }
+  },
   "scripts": {
-    "test": "jest",
-    "watch": "jest --watch",
-    "lint": "eslint --cache --format codeframe src/*.ts",
-    "lint:fix": "eslint --fix --cache --format codeframe src/*.ts",
-    "typecheck": "yarn ttsc --noEmit",
-    "prepublishOnly": "tsc"
+    "test": "vitest run",
+    "watch": "vitest",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build",
+    "prepare": "husky"
   },
   "keywords": [
     "positional",
@@ -27,51 +41,24 @@
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.172",
-    "husky": "^7.0.2",
-    "lodash": "^4.17.20",
-    "moment": "^2.29.1"
+    "date-fns": "4.1.0",
+    "date-fns-tz": "3.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "13.1.0",
-    "@commitlint/config-conventional": "13.1.0",
-    "@types/jest": "27.0.1",
-    "@types/node": "16.7.10",
-    "@typescript-eslint/eslint-plugin": "4.31.0",
-    "@typescript-eslint/parser": "4.31.1",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-config-standard": "16.0.3",
-    "eslint-import-resolver-typescript": "2.4.0",
-    "eslint-plugin-eslint-plugin": "3.5.3",
-    "eslint-plugin-import": "2.24.2",
-    "eslint-plugin-jest": "24.4.0",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-promise": "5.1.0",
-    "eslint-plugin-standard": "5.0.0",
-    "jest": "27.1.1",
-    "prettier": "2.3.2",
-    "pretty-quick": "3.1.1",
-    "ts-jest": "^27.0.5",
-    "ttypescript": "1.5.12",
-    "typescript": "4.4.3"
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "proseWrap": "always"
+    "@commitlint/cli": "20.5.0",
+    "@commitlint/config-conventional": "20.5.0",
+    "@types/node": "25.5.0",
+    "eslint": "10.0.3",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.5",
+    "husky": "^9.1.7",
+    "prettier": "3.8.1",
+    "pretty-quick": "4.2.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.57.1",
+    "vitest": "4.1.0"
   },
   "engines": {
-    "node": ">10.0.4"
-  },
-  "jest": {
-    "globalSetup": "./jest-global-setup.js",
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "roots": [
-      "src/"
-    ]
+    "node": ">=20"
   }
 }

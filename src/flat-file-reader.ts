@@ -1,16 +1,16 @@
 import * as fs from 'fs'
-import * as moment from 'moment'
+import { parseISO, parse, isValid } from 'date-fns'
 import {
   FlatFileReadLineError,
   FlatFileReadFieldTypeError,
   FlatFileEnumError,
-} from './Errors'
-import { FieldSpec, ReadOptions } from './Types'
+} from './Errors.js'
+import { FieldSpec, ReadOptions } from './types/index.js'
 
 // Return a function that can read a flat based on the given spec
 export const getAsyncFlatFileReader = <T = unknown>(
   fields: Array<FieldSpec>,
-  options: Partial<ReadOptions> = {}
+  options: Partial<ReadOptions> = {},
 ) => {
   // The returned function is a generic function whose output can be typed by passing a type
   // argument to the call
@@ -38,7 +38,7 @@ export const getAsyncFlatFileReader = <T = unknown>(
           } catch (e) {
             rej(e)
           }
-        }
+        },
       )
     })
   }
@@ -52,7 +52,7 @@ export const getAsyncFlatFileReader = <T = unknown>(
 export const linesToData = <T>(
   contents: string | Array<string>,
   fields: Array<FieldSpec>,
-  options: { throwErrors?: boolean } = {}
+  options: { throwErrors?: boolean } = {},
 ): Array<T> => {
   // Determine the size of the final line according to our field specs for later validation
   const lineLength = fields.reduce((n: number, f: FieldSpec) => n + f.size, 0)
@@ -68,8 +68,8 @@ export const linesToData = <T>(
         parseLine<T>(
           lines[i],
           fields,
-          options.throwErrors !== false ? lineLength : undefined
-        )
+          options.throwErrors !== false ? lineLength : undefined,
+        ),
       )
     }
   }
@@ -85,7 +85,7 @@ export const linesToData = <T>(
 export const parseLine = <T = unknown>(
   line: string,
   fields: Array<FieldSpec>,
-  expectedLineLength?: number
+  expectedLineLength?: number,
 ): T => {
   // Throw an exception if any line is not as expected
   if (
@@ -95,7 +95,7 @@ export const parseLine = <T = unknown>(
     throw new FlatFileReadLineError(
       `FlatFileReader: The given line must be ${expectedLineLength} characters long according ` +
         `to the data specification. The current line is ${line.length} characters long.`,
-      line
+      line,
     )
   }
 
@@ -144,7 +144,7 @@ export const trim = (val: string, fieldSpec: FieldSpec): string => {
  */
 export const interpret = <T = unknown>(
   result: any,
-  fields: Array<FieldSpec>
+  fields: Array<FieldSpec>,
 ): T => {
   // Iterate through the fields defined in the spec
   for (let i = 0; i < fields.length; i++) {
@@ -158,7 +158,7 @@ export const interpret = <T = unknown>(
       } else {
         throw new FlatFileReadFieldTypeError(
           `Field '${field.name}' is required, but not defined`,
-          field.name
+          field.name,
         )
       }
     }
@@ -172,7 +172,7 @@ export const interpret = <T = unknown>(
       } else {
         throw new FlatFileReadFieldTypeError(
           `Field '${fieldName}' is supposed to be an integer but is not. Actual value: ${val}`,
-          fieldName
+          fieldName,
         )
       }
     }
@@ -204,7 +204,7 @@ export const interpret = <T = unknown>(
           throw new FlatFileReadFieldTypeError(
             `Field '${field.name}' is supposed to be a float but is not. Actual value: ` +
               result[field.name],
-            field.name
+            field.name,
           )
         }
 
@@ -212,14 +212,22 @@ export const interpret = <T = unknown>(
         break
       }
 
-      // TODO: Make sure this parses correctly according to the given options
       case 'date': {
-        result[field.name] = moment(
-          result[field.name],
+        const parsed =
           field.format && field.format.dateFormat
-            ? field.format.dateFormat
-            : undefined
-        )
+            ? parse(
+                result[field.name],
+                field.format.dateFormat,
+                new Date(1970, 0, 1),
+              )
+            : parseISO(result[field.name])
+        if (!isValid(parsed)) {
+          throw new FlatFileReadFieldTypeError(
+            `Field '${field.name}' is supposed to be a date but is not. Actual value: ${result[field.name]}`,
+            field.name,
+          )
+        }
+        result[field.name] = parsed
         break
       }
 
@@ -237,7 +245,7 @@ export const interpret = <T = unknown>(
                     ? ` or null`
                     : ``
                 }, but found '${result[field.name]}'`,
-              field.name
+              field.name,
             )
           }
         }

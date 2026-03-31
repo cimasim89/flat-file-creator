@@ -1,18 +1,21 @@
-import * as _ from 'lodash'
 import {
   isNumeric,
   getPaddingPositionOrDef,
   getPaddingSymbol,
   getPadder,
   getFillStringOfSymbol,
-} from './utils'
-import { IntegerFieldSpec, IntegerFieldValue, assertFieldSpec } from './Types'
+} from './utils.js'
+import {
+  IntegerFieldSpec,
+  IntegerFieldValue,
+  assertFieldSpec,
+} from './types/index.js'
 
 const paddingDefault = 'start'
 
 const integerFormatter = (
   map: IntegerFieldSpec,
-  data: IntegerFieldValue = null
+  data: IntegerFieldValue = null,
 ) => {
   assertFieldSpec(map, 'integer')
 
@@ -31,18 +34,18 @@ const integerFormatter = (
       throw new Error('field has not compatible type')
     }
     num = Math.round(data).toString()
-    if (_.size(num) > map.size) {
+    if (num.length > map.size) {
       throw new Error(`Value ${num} exceed size ${map.size}`)
     }
   }
 
   return getPadder(
-    getPaddingPositionOrDef(map.paddingPosition, paddingDefault)
+    getPaddingPositionOrDef(map.paddingPosition, paddingDefault),
   )(
     num,
     getFillStringOfSymbol(getPaddingSymbol(map.paddingSymbol))(
-      map.size - _.size(num)
-    )
+      map.size - num.length,
+    ),
   )
 }
 
