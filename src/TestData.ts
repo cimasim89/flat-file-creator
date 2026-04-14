@@ -1,4 +1,4 @@
-import { FieldSpec, Moment } from '../src/Types'
+import { FieldSpec, Moment } from './Types'
 
 // prettier-ignore
 export const testLines =
@@ -75,7 +75,7 @@ export const testData = [
   {
     firstName: `Jo`,
     lastName: `Revelo`,
-    dob: `1986-01-01`,
+    dob: new Date(`1986-01-01`),
     weightKg: 72.52,
     heightCm: 183.5508,
     numFingers: 10,
@@ -85,7 +85,7 @@ export const testData = [
   {
     firstName: `Ricky`,
     lastName: `Revelo`,
-    dob: `1975-01-01`,
+    dob: new Date(`1975-01-01`),
     weightKg: 85239.5232,
     heightCm: 166.32313992,
     numFingers: 9,
