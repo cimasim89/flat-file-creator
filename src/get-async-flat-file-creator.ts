@@ -1,22 +1,30 @@
-import fileAppendPromise from './file-append-promise'
+import * as fs from 'fs'
 import rowFormatter from './row-formatter'
 import { FieldSpec, RowData, WriteOptions } from './Types'
-
-const rowWriterMapper = <T>(
-  maps: Array<FieldSpec>,
-  path: string,
-  options: Partial<WriteOptions>
-) => {
-  return (data: RowData<T>) =>
-    fileAppendPromise(path, rowFormatter<T>(maps, data, options), options)
-}
 
 export const getAsyncFlatFileCreator = <T>(
   maps: Array<FieldSpec>,
   options: Partial<WriteOptions>
 ) => {
   return (data: Array<RowData<T>>, path: string) =>
-    Promise.all(data.map(rowWriterMapper(maps, path, options)))
+    new Promise<void>((resolve, reject) => {
+      const stream = fs.createWriteStream(path, {
+        flags: options.flag ?? 'a',
+        encoding: options.encoding ?? 'utf8',
+        mode: options.mode ?? 0o666,
+      })
+      stream.on('finish', resolve)
+      stream.on('error', reject)
+      try {
+        for (const row of data) {
+          stream.write(rowFormatter<T>(maps, row, options))
+        }
+        stream.end()
+      } catch (err) {
+        stream.destroy()
+        reject(err)
+      }
+    })
 }
 
 /**

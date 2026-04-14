@@ -3,6 +3,37 @@
 This library allows you to read or write flat files according to a given specification passed as
 an argument.
 
+> **Note:** v2.x is in maintenance mode. v3.x is in active development and will become
+> the new stable release soon. Consider migrating when v3.0.0 is released.
+
+## Migration Guide
+
+### v2.2.x → v2.3.0
+
+#### Row ordering is now guaranteed
+
+Prior to v2.3.0, rows could be written to the file in a non-deterministic order due to a race
+condition in the concurrent write implementation. This is now fixed — rows are always written in
+the same order as the input data array.
+
+If your code was working around this bug (e.g. sorting the output file after writing), that
+workaround can be removed.
+
+#### Return type of `getAsyncFlatFileCreator` ⚠️ Breaking Change
+
+The function returned by `getAsyncFlatFileCreator` now resolves to `Promise<void>` instead of
+`Promise<string[]>`. The previous return value was an array of file paths (one per row) with no
+practical use. If you were awaiting the result and using it, simply stop consuming it:
+
+```typescript
+// Before
+const result = await createFile(rows, '/tmp/my-file.txt')
+
+// After
+await createFile(rows, '/tmp/my-file.txt')
+```
+
+---
 
 ### TL;DR
 
@@ -88,7 +119,7 @@ or read.
 function getAsyncFlatFileCreator(
   maps: Array<FieldSpec>,
   options: Partial<WriteOptions>
-): (dataRows: Array<RowData>, filePath: string) => Promise<Array<unknown>>
+): (dataRows: Array<RowData>, filePath: string) => Promise<void>
 ```
 
 Options are as follows:
@@ -319,4 +350,5 @@ type RowData = {
 
 Note that for the file reader, you can pass a type argument on instantiation of the function that
 will determine the type of rows coming out of the file.
+
 
