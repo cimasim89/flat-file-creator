@@ -4,6 +4,10 @@
   "description": "Generate a flat positional text file of your dataset",
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "prepare": "husky install",
     "pretty-quick": "pretty-quick --staged",

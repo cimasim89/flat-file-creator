@@ -17,5 +17,6 @@
     "types": ["node","jest"],
     "noErrorTruncation": true
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["**/*.test.ts", "src/TestData.ts"]
 }
