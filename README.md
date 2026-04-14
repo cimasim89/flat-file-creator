@@ -106,18 +106,84 @@ On **read**, date fields are always returned as native `Date` objects.
 
 ---
 
+## API
+
+```ts
+function getAsyncFlatFileCreator(
+  maps: Array<FieldSpec>,
+  options?: Partial<WriteOptions>
+): (dataRows: Array<RowData>, filePath: string) => Promise<void>
+
+function getAsyncFlatFileReader<T>(
+  maps: Array<FieldSpec>,
+  options?: Partial<ReadOptions>
+): (filePath: string) => Promise<Array<T>>
+```
+
+> **Note:** rows are always written in the same order as the input array. Each call to the
+> returned writer opens the file, streams all rows sequentially, then closes it.
+
+---
+
 ## Options
 
 Both `getAsyncFlatFileCreator` and `getAsyncFlatFileReader` accept an optional second argument:
 
 ```ts
-interface WriteOptions {
+interface ReadOptions {
   rowEnd?:      string          // line terminator, default ''
   encoding?:    BufferEncoding  // default 'utf8'
   throwErrors?: boolean         // throw on structural errors, default true
+}
+
+interface WriteOptions extends ReadOptions {
   mode?:        number          // file mode, default 0o666
   flag?:        string          // fs flag, default 'a' (append)
 }
+```
+
+---
+
+## Type definitions
+
+```ts
+type RowData = { [fieldName: string]: string | number | boolean | Date | null | undefined }
+
+type CommonSpec = {
+  name:             string
+  size:             number
+  paddingPosition?: 'start' | 'end'
+  paddingSymbol?:   string
+  desc?:            string
+}
+
+type StringFieldSpec = CommonSpec & {
+  type?:               'string'
+  enum?:               { [serializedKey: string]: string }
+  preserveEmptySpace?: boolean
+  straight?:           boolean
+  default?:            string | null
+}
+
+type IntegerFieldSpec = CommonSpec & {
+  type:     'integer'
+  default?: number | null
+}
+
+type FloatFieldSpec = CommonSpec & {
+  type:          'float'
+  precision?:    number
+  dotNotation?:  boolean
+  default?:      number | null
+}
+
+type DateFieldSpec = CommonSpec & {
+  type:     'date'
+  format?:  { utc?: boolean; dateFormat?: string }
+  default?: Date | string | null
+}
+
+type FieldSpec = StringFieldSpec | IntegerFieldSpec | FloatFieldSpec | DateFieldSpec
 ```
 
 ---
@@ -198,3 +264,19 @@ rows[0].dob.year()        // moment API
 // v3
 rows[0].dob.getFullYear() // native Date API
 ```
+
+### 6. `getAsyncFlatFileCreator` return type changed
+
+The writer now returns `Promise<void>` instead of `Promise<string[]>`. The previous return value
+was an array of file paths (one per row) with no practical use. If your code consumed it, remove it:
+
+```ts
+// before
+const result = await writeFile(rows, '/tmp/out.txt') // result was string[]
+
+// after
+await writeFile(rows, '/tmp/out.txt')
+```
+
+Row ordering is now **guaranteed** — rows are always written in the same order as the input array.
+If your code worked around the previous non-deterministic ordering, that workaround can be removed.
