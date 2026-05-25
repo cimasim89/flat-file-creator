@@ -41,7 +41,7 @@
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "date-fns": "4.1.0",
+    "date-fns": "4.3.0",
     "date-fns-tz": "3.2.0"
   },
   "devDependencies": {
