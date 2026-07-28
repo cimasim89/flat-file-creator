@@ -3,8 +3,18 @@
 This library allows you to read or write flat files according to a given specification passed as
 an argument.
 
-> **Note:** v2.x is in maintenance mode. v3.x is in active development and will become
-> the new stable release soon. Consider migrating when v3.0.0 is released.
+> **Note:** v2.x is in maintenance mode and receives security fixes only. v3.x is the
+> actively developed line — see the [v3 README](https://github.com/cimasim89/flat-file-creator/blob/v3.x/README.md#migrating-from-v2-to-v3)
+> for the migration guide.
+>
+> Once v3 becomes the default install, pin v2 explicitly:
+>
+> ```bash
+> npm install flat-file-creator@v2
+> ```
+>
+> v3 requires Node.js >= 20 and is ESM-only. If your project is on CommonJS or an older
+> Node.js, v2 remains the supported choice.
 
 ## Migration Guide
 
