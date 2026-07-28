@@ -41,19 +41,13 @@ export type IntegerFieldValue = number | null | undefined
 export type FloatFieldValue = number | null | undefined
 export type DateFieldValue = Date | string | null | undefined
 export type FieldValue =
-  | StringFieldValue
-  | IntegerFieldValue
-  | FloatFieldValue
-  | DateFieldValue
+  StringFieldValue | IntegerFieldValue | FloatFieldValue | DateFieldValue
 export type RowData<T> = { [fieldName in keyof T]: FieldValue }
 
 // FieldSpec is a discriminated union of all possible field spec types
 // Here, we make 'type' optional since field specs default to string-type
 export type FieldSpec =
-  | StringFieldSpec
-  | FloatFieldSpec
-  | IntegerFieldSpec
-  | DateFieldSpec
+  StringFieldSpec | FloatFieldSpec | IntegerFieldSpec | DateFieldSpec
 
 // String field parameters
 export type StringFieldSpec = CommonSpec & {
