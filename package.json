@@ -1,6 +1,6 @@
 {
   "name": "flat-file-creator",
-  "version": "2.3.1",
+  "version": "2.3.0",
   "description": "Generate a flat positional text file of your dataset",
   "main": "./dist/flat-file-creator.js",
   "types": "./dist/flat-file-creator.d.ts",
@@ -34,8 +34,8 @@
     "url": "https://github.com/cimasim89/flat-file-creator/issues"
   },
   "dependencies": {
-    "lodash": "^4.18.1",
-    "moment": "^2.30.1"
+    "lodash": "4.17.21",
+    "moment": "2.29.4"
   },
   "devDependencies": {
     "@commitlint/cli": "13.1.0",
