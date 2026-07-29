@@ -4,13 +4,13 @@ Read and write fixed-width flat files from typed TypeScript data — the boring 
 still loves, made painless.
 
 > **Version support**
-> - **v3.x** — current development version (`npm install flat-file-creator@next`), see [Migration Guide](#migrating-from-v2-to-v3)
-> - **v2.x** — stable, receives bugfixes only (`npm install flat-file-creator`)
+> - **v3.x** — current stable version (`npm install flat-file-creator`), see [Migration Guide](#migrating-from-v2-to-v3)
+> - **v2.x** — maintenance, security fixes only (`npm install flat-file-creator@v2`)
 
 ## Install
 
 ```bash
-npm install flat-file-creator@next
+npm install flat-file-creator
 ```
 
 **Requirements:** Node.js ≥ 20, ESM project (`"type": "module"` or `.mjs` files).
@@ -203,11 +203,11 @@ const rows  = linesToData(lines.join('\n'), fields) // T[]
 
 ## Migrating from v2 to v3
 
-v3 is a clean break. If you need stability or can't migrate yet, v2.x keeps receiving bugfixes.
+v3 is a clean break. If you can't migrate yet, v2.x stays available and receives security fixes.
 
 ```bash
-npm install flat-file-creator        # stay on v2
-npm install flat-file-creator@next   # try v3
+npm install flat-file-creator      # v3, current stable
+npm install flat-file-creator@v2   # stay on v2
 ```
 
 ### 1. Node.js ≥ 20 required
