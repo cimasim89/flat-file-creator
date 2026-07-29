@@ -58,10 +58,29 @@ for the full upgrade guide.
   `brace-expansion`, `fast-uri`, `js-yaml`). These were development-only and never
   reached consumers: the published package contains only `dist` and `README.md`.
 
+## [2.3.1] - 2026-07-28
+
+Maintenance release of the v2 line. v2 receives security fixes only from here on.
+`npm install flat-file-creator@v2` resolves to the latest 2.x.
+
+### Security
+
+- `lodash` 4.17.21 -> `^4.18.1` — code injection via `_.template`, prototype pollution
+  in `_.unset` and `_.omit`. Only `isEmpty` and `size` are used there, so exploitability
+  through the library was nil, but every consumer audit flagged it.
+- `moment` 2.29.4 -> `^2.30.1`.
+- Lockfile regenerated: it declared `moment` 2.29.4 but resolved 2.29.1, which is
+  affected by GHSA-8hfj-j24r-96c4 and GHSA-wc69-rhjr-hc9g.
+
+### Changed
+
+- Runtime dependencies use caret ranges so npm can dedupe them.
+- CI repaired: it targeted Node 10.x with `setup-node@v1` and had never run on the
+  branch. Now Node 20/22/24 with `npm ci`, so lockfile drift fails the build.
+
 ## [2.3.0] - 2026-04-14
 
-Last feature release of the v2 line. v2 is now in maintenance and receives security
-fixes only. Install it explicitly with `npm install flat-file-creator@v2`.
+Last feature release of the v2 line.
 
 ### Fixed
 
@@ -74,5 +93,6 @@ Releases before 2.3.0 predate this changelog. See the
 [releases page](https://github.com/cimasim89/flat-file-creator/releases) and the
 commit history for details.
 
-[3.0.3]: https://github.com/cimasim89/flat-file-creator/compare/v2.3.0...v3.0.3
+[3.0.3]: https://github.com/cimasim89/flat-file-creator/compare/v2.3.1...v3.0.3
+[2.3.1]: https://github.com/cimasim89/flat-file-creator/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/cimasim89/flat-file-creator/compare/v2.2.1...v2.3.0
